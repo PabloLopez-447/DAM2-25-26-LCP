@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Elecciones</string>
+    <string name="log_in">Log in</string>
+    <string name="nif_no_registrado">NIF no registrado</string>
+    <string name="nif">NIF</string>
+    <string name="partido">Partido</string>
+    <string name="votar">Votar</string>
+    <string name="selecciona_un_candidato">Selecciona un candidato:</string>
+</resources>

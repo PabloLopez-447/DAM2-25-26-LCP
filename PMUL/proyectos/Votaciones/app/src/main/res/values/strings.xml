@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Votaciones</string>
+    <string name="pregunta">Pregunta</string>
+    <string name="opcion">Opcion</string>
+    <string name="btnAnadir">+</string>
+    <string name="numero_de_votos">Numero de votos</string>
+    <string name="continuar">Continuar</string>
+</resources>

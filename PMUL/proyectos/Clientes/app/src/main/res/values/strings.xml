@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Clientes</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="dni">DNI</string>
+    <string name="vip">VIP</string>
+    <string name="latitud">Latitud</string>
+    <string name="longitud">Longitud</string>
+    <string name="guardar">Guardar</string>
+</resources>

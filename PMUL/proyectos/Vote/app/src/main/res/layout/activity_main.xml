@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <!-- Primera línea: EditText y botón añadir -->
+    <EditText
+        android:id="@+id/etPregunta"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="@string/pregunta"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bAdd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <Button
+        android:id="@+id/bAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/a_adir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etPregunta" />
+
+    <!-- Segunda línea: ListView -->
+    <ListView
+        android:id="@+id/lvPreguntas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        app:layout_constraintTop_toBottomOf="@id/etPregunta"
+        app:layout_constraintBottom_toTopOf="@id/bEliminar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Tercera línea: botón eliminar -->
+    <Button
+        android:id="@+id/bEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eliminar"
+        app:layout_constraintTop_toBottomOf="@id/lvPreguntas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Cuarta línea: EditText -->
+    <EditText
+        android:id="@+id/etNumVotantes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/numero_de_votantes"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/bEliminar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Quinta línea: botón comenzar votación -->
+    <Button
+        android:id="@+id/bComenzar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comenzar_votacion"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/etNumVotantes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</LinearLayout>

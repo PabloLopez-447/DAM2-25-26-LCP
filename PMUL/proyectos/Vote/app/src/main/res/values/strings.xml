@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Vote</string>
+    <string name="pregunta">Pregunta</string>
+    <string name="a_adir">Añadir</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="numero_de_votantes">Número de votantes</string>
+    <string name="comenzar_votacion">Comenzar votación</string>
+    <string name="votar">Votar</string>
+
+</resources>
