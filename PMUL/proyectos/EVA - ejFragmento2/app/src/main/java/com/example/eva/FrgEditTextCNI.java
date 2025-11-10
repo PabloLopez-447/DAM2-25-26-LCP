@@ -19,10 +19,10 @@ public class FrgEditTextCNI extends Fragment {
 
     private EditText editTextCNI;
     private List<String> listaNegra;
-    OnFrgEditTextCNI listener;
+    private OnFrgEditTextCNI listener;
 
-    interface OnFrgEditTextCNI{
-        String onTextoEncontrado();
+    public interface OnFrgEditTextCNI{
+        void onTextoEncontrado(String palabra);
     }
 
     @Override
@@ -42,12 +42,11 @@ public class FrgEditTextCNI extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                encontrar();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                encontrar();
             }
         });
     }
@@ -63,7 +62,7 @@ public class FrgEditTextCNI extends Fragment {
     public void encontrar(){
         for (String palabra: listaNegra) {
             if (editTextCNI.getText().toString().trim().contains(palabra)){
-                listener.onTextoEncontrado();
+                listener.onTextoEncontrado(palabra);
             }
         }
     }
