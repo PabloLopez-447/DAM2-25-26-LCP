@@ -17,6 +17,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     FrgEditTextCNI frgCNIPara, frgCNIAsunto;
     ListView list;
+    List<String> paraBan = new ArrayList<>();
     List<String> asuntoBan = new ArrayList<>();
     List<String> encontradas = new ArrayList<>();
 
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        paraBan.add("petersancius@gmail.com");
+        paraBan.add("manin@gmail.com");
         asuntoBan.add("bomba");
         asuntoBan.add("fuego");
 
@@ -38,7 +41,16 @@ public class MainActivity extends AppCompatActivity {
         frgCNIPara = (FrgEditTextCNI) fm.findFragmentById(R.id.frgCNIPara);
         frgCNIAsunto = (FrgEditTextCNI) fm.findFragmentById(R.id.frgCNIAsunto);
 
+        frgCNIPara.setListaNegra(paraBan);
         frgCNIAsunto.setListaNegra(asuntoBan);
+
+        frgCNIPara.setListener(new FrgEditTextCNI.OnFrgEditTextCNI() {
+            @Override
+            public void onTextoEncontrado(String palabra) {
+                poblarLista(palabra);
+            }
+        });
+
         frgCNIAsunto.setListener(new FrgEditTextCNI.OnFrgEditTextCNI() {
             @Override
             public void onTextoEncontrado(String palabra) {
@@ -50,9 +62,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void poblarLista(String palabra) {
-        encontradas.add(palabra);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, encontradas);
-        list.setAdapter(adapter);
+        if (!encontradas.contains(palabra)) {
+            encontradas.add(palabra);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, encontradas);
+            list.setAdapter(adapter);
+        }
     }
 
 
