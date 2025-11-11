@@ -7,6 +7,10 @@ public class Puntuacion implements Serializable {
     private int anio;
     private float puntos;
 
+    public Puntuacion(){
+        
+    }
+
     public Puntuacion(int anio, float puntos) {
         this.anio = anio;
         this.puntos = puntos;

@@ -19,7 +19,7 @@ public class Velocista extends Corredor {
         return velocidadMedia;
     }
 
-    public void setDistanciaMax(float velocidadMedia) {
+    public void setVelocidadMedia(float velocidadMedia) {
         this.velocidadMedia = velocidadMedia;
     }
 
