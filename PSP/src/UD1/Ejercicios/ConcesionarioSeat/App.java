@@ -15,10 +15,10 @@ public class App {
             coches.add(new Coche(i, "Leon"));
         }
         for (int i = 1; i <= NUM_IBIZA; i++) {
-            coches.add(new Coche(i, "Leon"));
+            coches.add(new Coche(i, "Ibiza"));
         }
         for (int i = 1; i <= NUM_ATECA; i++) {
-            coches.add(new Coche(i, "Leon"));
+            coches.add(new Coche(i, "Ateca"));
         }
 
         Vendedor v = new Vendedor(coches);
@@ -32,7 +32,7 @@ public class App {
             try {
                 cliente.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }
