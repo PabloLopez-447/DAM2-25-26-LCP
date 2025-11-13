@@ -1,10 +1,17 @@
 package UD1.Ejercicios.Votaciones;
 
+import java.util.List;
+import java.util.Random;
 
 public class Urna {
-    int[] votosPartido;
+    List<Partido> partidos;
+    Random rand = new Random();
 
-    public Urna(int nPartidos) {
-        this.votosPartido = new int[nPartidos];
+    public Urna(List<Partido> partidos) {
+        this.partidos = partidos;
+    }
+
+    public synchronized Partido darPartido() {
+        return partidos.get(rand.nextInt(partidos.size()));
     }
 }
