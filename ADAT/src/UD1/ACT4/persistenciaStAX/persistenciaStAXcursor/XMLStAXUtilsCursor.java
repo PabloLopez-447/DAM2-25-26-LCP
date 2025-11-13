@@ -2,10 +2,13 @@ package UD1.ACT4.persistenciaStAX.persistenciaStAXcursor;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -43,6 +46,15 @@ public class XMLStAXUtilsCursor {
         }
     }
 
+    public static XMLStreamWriter crearWriterStax(String rutaSalida) throws Exception {
+        try {
+            XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+            return outputFactory.createXMLStreamWriter(new FileWriter(rutaSalida));
+        } catch (Exception e) {
+            throw new Exception();
+        }
+    }
+
     private static void validarDTD(File filexml) {
         System.out.println("no");
     }
@@ -70,4 +82,48 @@ public class XMLStAXUtilsCursor {
         return reader.isStartElement() || reader.isEndElement() ? reader.getLocalName() : null;
 
     }
+
+    public static void addSaltoLinea(XMLStreamWriter writer, int nivel) {
+        try {
+            String indentacion = "\n" + "\t".repeat(nivel);
+            writer.writeCharacters(indentacion);
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static void addAtributo(XMLStreamWriter writer, String nombreAtributo, String valor) {
+        try {
+            writer.writeAttribute(nombreAtributo, valor);
+        } catch (Exception e) {
+        }
+    }
+
+    public static void addTextoElemento(XMLStreamWriter writer, String texto) {
+        try {
+            if (texto != null) {
+                writer.writeCharacters(texto);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public static void addEndElement(XMLStreamWriter writer) {
+        try {
+            writer.writeEndElement();
+        } catch (Exception e) {
+        }
+    }
+
+    public static void addElemento(XMLStreamWriter writer, String nombre, String valor) {
+        try {
+            writer.writeStartElement(nombre);
+            writer.writeCharacters(valor);
+            writer.writeEndElement();
+        } catch (Exception e) {
+
+        }
+    }
+
 }

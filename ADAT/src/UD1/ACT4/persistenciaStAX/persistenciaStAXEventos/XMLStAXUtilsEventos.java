@@ -2,10 +2,15 @@ package UD1.ACT4.persistenciaStAX.persistenciaStAXEventos;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
@@ -41,6 +46,14 @@ public class XMLStAXUtilsEventos {
             }
             XMLInputFactory factory = XMLInputFactory.newInstance();
             return factory.createXMLEventReader(new FileInputStream(ruta), "UTF-8");
+        } catch (Exception e) {
+            throw new Exception();
+        }
+    }
+
+    public static XMLEventWriter crearWriterStax(String rutaSalida) throws Exception {
+        try {
+            return XMLOutputFactory.newInstance().createXMLEventWriter(new FileWriter(rutaSalida));
         } catch (Exception e) {
             throw new Exception();
         }
@@ -87,5 +100,15 @@ public class XMLStAXUtilsEventos {
 
         } else
             return null;
+    }
+
+    public static void addSaltoLinea(XMLEventWriter writer, int nivel, XMLEventFactory factory) {
+        try {
+            String indentacion = "\n" + "\t".repeat(nivel);
+            writer.add(factory.createCharacters(indentacion));
+
+        } catch (Exception e) {
+
+        }
     }
 }

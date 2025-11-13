@@ -70,6 +70,7 @@ public class CorredoresStAXCursor {
                                 corredorActual.setHistorial(historialActual);
                             }
                         }
+                        contenidoActual = "";
                     }
 
                 }
