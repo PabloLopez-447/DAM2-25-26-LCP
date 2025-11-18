@@ -1,6 +1,6 @@
-package UD1.ACT5.util;
+package UD1.ACT5.corredoresYEquipos.util;
 
-import UD1.ACT5.clases.Equipos;
+import UD1.ACT5.corredoresYEquipos.clases.Equipos;
 import jakarta.xml.bind.JAXBException;
 
 public class EquiposJAXB {

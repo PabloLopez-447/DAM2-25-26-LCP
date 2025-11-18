@@ -1,14 +1,11 @@
 package UD1.ACT3.Actividad3Corregido.persistencia;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import UD1.ACT3.Actividad3Corregido.clases.Corredor;
+
+import java.io.*;
 import java.util.ArrayList;
 
-import UD1.ACT3.Actividad3Corregido.*;
-import UD1.ACT3.Actividad3Corregido.clases.Corredor;
+
 
 public class CorredorReader extends Archivo {
 

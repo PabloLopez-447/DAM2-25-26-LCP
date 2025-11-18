@@ -1,4 +1,4 @@
-package UD1.ACT5.util;
+package UD1.ACT5.corredoresYEquipos.util;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;

@@ -1,10 +1,15 @@
-package UD1.ACT5.clases;
+package UD1.ACT5.corredoresYEquipos.clases;
 
-import java.io.Serializable;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlValue;
 
-public class Puntuacion implements Serializable {
-    private static final long serialVersionUID = 1L;
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Puntuacion {
+    @XmlAttribute(name = "anio")
     private int anio;
+    @XmlValue
     private float puntos;
 
     public Puntuacion(){

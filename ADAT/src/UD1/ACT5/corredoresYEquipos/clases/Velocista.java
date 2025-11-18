@@ -1,9 +1,16 @@
-package UD1.ACT5.clases;
+package UD1.ACT5.corredoresYEquipos.clases;
+
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+
 public class Velocista extends Corredor {
+    @XmlElement(name = "velocidad_media")
     private float velocidadMedia;
 
     public Velocista(String codigo, int dorsal, String equipo, String nombre, LocalDate fechaNacimiento, List<Puntuacion> historial,

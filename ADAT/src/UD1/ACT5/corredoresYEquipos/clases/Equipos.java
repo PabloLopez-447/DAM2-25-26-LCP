@@ -1,4 +1,4 @@
-package UD1.ACT5.clases;
+package UD1.ACT5.corredoresYEquipos.clases;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;

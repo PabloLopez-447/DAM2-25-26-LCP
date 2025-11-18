@@ -1,6 +1,6 @@
-package UD1.ACT5.clases;
+package UD1.ACT5.corredoresYEquipos.clases;
 
-import UD1.ACT5.util.LocalDateAdapter;
+import UD1.ACT5.corredoresYEquipos.util.LocalDateAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;

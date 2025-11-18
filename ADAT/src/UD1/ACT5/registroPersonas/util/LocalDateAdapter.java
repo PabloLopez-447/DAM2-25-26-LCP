@@ -1,4 +1,4 @@
-package UD1.ACT5.util;
+package UD1.ACT5.registroPersonas.util;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
