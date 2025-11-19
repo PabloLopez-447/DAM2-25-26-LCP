@@ -1,6 +1,10 @@
 package UD1.actividad1;
 
+import javafx.stage.FileChooser;
+
 import java.io.File;
+import java.io.FilenameFilter;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -62,14 +66,44 @@ public class OperacionesIO {
         }
     }
 
+    private static void filtrarPorExtension(String ruta, String extension){
+        File dir = new File(ruta);
+
+        Filtro filtro = new Filtro(extension);
+        File[] lista = dir.listFiles(filtro);
+        for (File f : lista) {
+            if (filtro.accept(f, f.getName())) {
+                mostrarInfo(f,"");
+            }
+        }
+
+    }
+
+    public static void mostrarInfo(File f, String sangria) {
+        SimpleDateFormat formateador =
+                new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+
+        String tipoDir = f.isDirectory() ? "<DIR>" : "<FICHERO>";
+        String fecha = formateador.format(f.lastModified());
+
+        if (f.isFile()) {
+            String detalle = String.format("%s %s KB %s", tipoDir, f.length() / 1024, fecha);
+            System.out.printf("%s - %s %s %n", sangria, detalle, f.getName());
+        } else {
+            System.out.printf("%s - %s %s %s%n", sangria, tipoDir, f.getName(), fecha);
+        }
+    }
+
     public static void main(String[] args) {
         OperacionesIO operaciones = new OperacionesIO();
         //operaciones.visualizarContenido("D:\\Datos\\DAM\\DAM2-25-26-LCP\\ADAT\\src\\UD1\\ACT1");
 
-        try {
+        /*try {
             recorrerRecursivo("D:\\Datos\\DAM\\DAM2-25-26-LCP\\ADAT\\src\\UD1\\ACT1");
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
+
+        filtrarPorExtension("D:\\Datos\\DAM\\DAM2-25-26-LCP\\ADAT\\src\\UD1\\ACT1", ".java");
     }
 }
