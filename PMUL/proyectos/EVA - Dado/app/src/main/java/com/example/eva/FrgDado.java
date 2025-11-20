@@ -11,15 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.List;
 import java.util.Random;
 
-public class Dado extends Fragment {
+public class FrgDado extends Fragment {
     Button dado;
-    int nCaras;
+    int nSides;
+    List<Integer> history;
+    int streak = 0;
     OnFrgDadoListener listener;
 
     public interface OnFrgDadoListener {
-        void OnRoll(int numero, Dado d);
+        void OnRoll(int numero,int streak, FrgDado d);
     }
 
     @Override
@@ -40,25 +43,40 @@ public class Dado extends Fragment {
         });
     }
 
-    public int getnCaras() {
-        return nCaras;
+    public int getnSides() {
+        return nSides;
     }
 
-    public void setnCaras(int nCaras) {
-        this.nCaras = nCaras;
-    }
-
-    public OnFrgDadoListener getListener() {
-        return listener;
+    public void setnSides(int nSides) {
+        this.nSides = nSides;
     }
 
     public void setOnFrgDadoListener(OnFrgDadoListener listener) {
         this.listener = listener;
     }
 
+    public void setStreak(int streak) {
+        this.streak = streak;
+    }
+
     public void roll() {
         Random rnd = new Random();
-        int n = rnd.nextInt(this.nCaras);
-        this.listener.OnRoll(n, this);
+        int n = rnd.nextInt(this.nSides) + 1;
+        dado.setText(String.valueOf(n));
+        checkStreak(n);
+        this.listener.OnRoll(n, streak, this);
+    }
+
+    private void checkStreak(int n){
+        if (history.isEmpty()){
+            history.add(n);
+        }
+        if (history.contains(n)){
+            streak++;
+        }else {
+            history.clear();
+            setStreak(0);
+        }
+
     }
 }

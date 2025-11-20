@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
+    FrgDado dado1,dado2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,5 +21,23 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        FragmentManager fm = getSupportFragmentManager();
+        dado1 = (FrgDado) fm.findFragmentById(R.id.dado1);
+        dado2 = (FrgDado) fm.findFragmentById(R.id.dado2);
+
+        dado1.setnSides(6);
+        dado2.setnSides(6);
+
+        FrgDado.OnFrgDadoListener listener = new FrgDado.OnFrgDadoListener() {
+            @Override
+            public void OnRoll(int numero, int streak, FrgDado d) {
+
+            }
+        };
+
+        dado1.setOnFrgDadoListener(listener);
+        dado2.setOnFrgDadoListener(listener);
+
     }
 }
