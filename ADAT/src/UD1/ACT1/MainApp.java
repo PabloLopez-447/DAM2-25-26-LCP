@@ -1,12 +1,9 @@
 package UD1.ACT1;
 
-import java.io.File;
-
 import UD1.ACT1.excepciones.ArchivoNoExisteException;
 import UD1.ACT1.excepciones.DirectorioNoExisteException;
 import UD1.ACT1.excepciones.NoEsDirectorioException;
-import UD1.ACT1.servicios.OperacionesIO;
-import UD1.ACT1.servicios.Utilidades;
+import UD1.actividad1.OperacionesIO;
 
 public class MainApp {
 

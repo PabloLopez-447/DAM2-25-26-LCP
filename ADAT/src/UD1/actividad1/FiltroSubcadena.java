@@ -1,4 +1,4 @@
-package UD1.ACT1.servicios;
+package UD1.actividad1;
 
 public class FiltroSubcadena {
     public static void FiltroSubcadena(String nombreArchivo) {
