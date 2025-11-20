@@ -12,4 +12,8 @@ public class EquiposJAXB {
         }
         return null;
     }
+
+    public void addEquiposNuevos(String rutaXML, String rutaTexto, String rutaOutput) {
+
+    }
 }

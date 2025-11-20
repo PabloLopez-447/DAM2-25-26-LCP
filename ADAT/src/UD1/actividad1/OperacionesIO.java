@@ -1,10 +1,6 @@
 package UD1.actividad1;
 
-import javafx.stage.FileChooser;
-
 import java.io.File;
-import java.io.FilenameFilter;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 

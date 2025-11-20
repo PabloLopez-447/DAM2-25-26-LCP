@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Registro version="1.0" fechaCreacion="19-11-25">
+    <Categorias>Estudios Trabajo Deporte</Categorias>
+    <Personas>
+        <Trabajador>
+            <Nombre>Carlos Alba</Nombre>
+            <FechaNacimiento>12-03-99</FechaNacimiento>
+            <Empresa puesto="Director">LaColmena</Empresa>
+            <Salario>8000.0</Salario>
+        </Trabajador>
+        <Estudiante>
+            <Nombre>Angel Rodríguez</Nombre>
+            <FechaNacimiento>21-07-01</FechaNacimiento>
+            <Universidad>Santiago</Universidad>
+            <Carrera>Informatica</Carrera>
+        </Estudiante>
+        <Trabajador>
+            <Nombre>Manuel Sánchez</Nombre>
+            <FechaNacimiento>04-11-79</FechaNacimiento>
+            <Empresa puesto="ElTornillo">Gerente</Empresa>
+            <Salario>2000.0</Salario>
+        </Trabajador>
+    </Personas>
+</Registro>
