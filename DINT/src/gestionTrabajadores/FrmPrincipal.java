@@ -1,365 +1,465 @@
 package gestionTrabajadores;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.BevelBorder;
-import java.awt.Color;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTextArea;
-import javax.swing.BoxLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class FrmPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textProfesion;
-	private JTable table;
-	private JButton btnAddTrabajador;
-	private JTextField textDNI;
-	private JTextField textNombre;
-	private JTextField textAP1;
-	private JTextField textAP2;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrmPrincipal frame = new FrmPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// -------- CAMPOS --------
+	private JTextField textDNI, textNombre, textAP1, textAP2, textProfesion;
+	private JComboBox<String> comboBox;
+	private DefaultListModel<String> modeloProfesiones;
+	private JTable tablaTrabajadores;
+	private DefaultTableModel modeloTrabajadores;
+	private JButton btnAddTrabajador, btnEliminarProvincia, btnEliminarProfesion, btnDelTrabajador;
+	private JTextArea textDetalle;
 
-	KeyAdapter listener = new KeyAdapter() {
-		public void keyTyped(KeyEvent e) {
-			if (!textDNI.getText().isEmpty() || !textNombre.getText().isEmpty() || !textAP1.getText().isEmpty()
-					|| !textAP2.getText().isEmpty()) {
-				btnAddTrabajador.setEnabled(true);
-			} else {
-				btnAddTrabajador.setEnabled(false);
-			}
-		}
-	};
+	private String emailSesion = "usuario@example.com";
+	private String tokenSesion = "token_12345";
 
 	public FrmPrincipal() {
+		setTitle("Gestión de Trabajadores");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 805, 563);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setSize(980, 600);
+		setLocationRelativeTo(null);
+
+		// ------------------------- MENU ------------------------------
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		// -------- MENU SESION --------
+
+		JMenu menuSesion = new JMenu("Sesión");
+		JMenuItem itemDetalles = new JMenuItem("Detalles de sesión");
+		JMenuItem itemCerrar = new JMenuItem("Cerrar sesión");
+		JMenuItem itemSalir = new JMenuItem("Salir");
+
+		menuSesion.add(itemDetalles);
+		menuSesion.add(itemCerrar);
+		menuSesion.addSeparator();
+		menuSesion.add(itemSalir);
+		menuBar.add(menuSesion);
+
+		itemDetalles.addActionListener(
+				e -> JOptionPane.showMessageDialog(this, "Email: " + emailSesion + "\nAccess Token: " + tokenSesion,
+						"Detalles de sesión", JOptionPane.INFORMATION_MESSAGE));
+
+		itemCerrar.addActionListener(e -> {
+			JOptionPane.showMessageDialog(this, "Sesión cerrada. Regresando al login...");
+			dispose();
+			// hacer login
+		});
+
+		itemSalir.addActionListener(e -> System.exit(0));
+
+		// -------- MENU ACCIONES --------
+
+		JMenu menuAcciones = new JMenu("Acciones");
+		JMenuItem itemValidar = new JMenuItem("Validación datos del trabajador");
+		JMenuItem itemLimpiar = new JMenuItem("Limpiar datos del trabajador");
+		JMenuItem itemAdd = new JMenuItem("Añadir trabajador");
+		JMenuItem itemDel = new JMenuItem("Eliminar trabajador");
+
+		menuAcciones.add(itemValidar);
+		menuAcciones.add(itemLimpiar);
+		menuAcciones.add(itemAdd);
+		menuAcciones.add(itemDel);
+		menuBar.add(menuAcciones);
+
+		itemValidar.addActionListener(e -> validar());
+		itemLimpiar.addActionListener(e -> limpiarDatos());
+		itemAdd.addActionListener(e -> btnAddTrabajador.doClick());
+		itemDel.addActionListener(e -> btnDelTrabajador.doClick());
+
+		// -------- MENU MODO --------
+
+		JMenu menuModo = new JMenu("Modo");
+		JCheckBoxMenuItem modoOffline = new JCheckBoxMenuItem("Offline", true);
+		JCheckBoxMenuItem modoOnline = new JCheckBoxMenuItem("Online", false);
+
+		menuModo.add(modoOffline);
+		menuModo.add(modoOnline);
+		menuBar.add(menuModo);
+
+		modoOffline.addActionListener(e -> {
+			if (modoOffline.isSelected())
+				modoOnline.setSelected(false);
+		});
+
+		modoOnline.addActionListener(e -> {
+			if (modoOnline.isSelected())
+				modoOffline.setSelected(false);
+		});
+
+		// --------------------- LAYOUT PRINCIPAL ----------------------
+
+		JPanel contentPane = new JPanel(new GridLayout(1, 2));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JPanel Izquierda = new JPanel();
-		contentPane.add(Izquierda);
-		GridBagLayout gbl_Izquierda = new GridBagLayout();
-		gbl_Izquierda.columnWidths = new int[] { 282, 0 };
-		gbl_Izquierda.rowHeights = new int[] { 162, 102, 245, 67, 0 };
-		gbl_Izquierda.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_Izquierda.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		Izquierda.setLayout(gbl_Izquierda);
+		// ----------------------- PANEL IZQUIERDO ---------------------
 
-		JPanel infoTrabajador = new JPanel();
-		infoTrabajador.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
-				"Identificaci\u00F3n del trabajador", TitledBorder.LEADING, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
-		GridBagConstraints gbc_infoTrabajador = new GridBagConstraints();
-		gbc_infoTrabajador.fill = GridBagConstraints.BOTH;
-		gbc_infoTrabajador.insets = new Insets(0, 0, 5, 0);
-		gbc_infoTrabajador.gridx = 0;
-		gbc_infoTrabajador.gridy = 0;
-		Izquierda.add(infoTrabajador, gbc_infoTrabajador);
-		GridBagLayout gbl_infoTrabajador = new GridBagLayout();
-		gbl_infoTrabajador.columnWidths = new int[] { 0, 0, 0 };
-		gbl_infoTrabajador.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-		gbl_infoTrabajador.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_infoTrabajador.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		infoTrabajador.setLayout(gbl_infoTrabajador);
+		JPanel izquierda = new JPanel(new GridBagLayout());
+		contentPane.add(izquierda);
 
-		JLabel lblDNI = new JLabel("DNI");
-		GridBagConstraints gbc_lblDNI = new GridBagConstraints();
-		gbc_lblDNI.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDNI.anchor = GridBagConstraints.EAST;
-		gbc_lblDNI.gridx = 0;
-		gbc_lblDNI.gridy = 0;
-		infoTrabajador.add(lblDNI, gbc_lblDNI);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 
+		// 1. IDENTIFICACION
+
+		JPanel panelId = new JPanel(new GridLayout(4, 2, 5, 5));
+		panelId.setBorder(new TitledBorder("Identificación del trabajador"));
+
+		panelId.add(new JLabel("DNI:"));
 		textDNI = new JTextField();
-		textDNI.addKeyListener(listener);
-		GridBagConstraints gbc_textDNI = new GridBagConstraints();
-		gbc_textDNI.insets = new Insets(0, 0, 5, 0);
-		gbc_textDNI.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textDNI.gridx = 1;
-		gbc_textDNI.gridy = 0;
-		infoTrabajador.add(textDNI, gbc_textDNI);
-		textDNI.setColumns(10);
+		panelId.add(textDNI);
 
-		JLabel lblNombre = new JLabel("Nombre");
-		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
-		gbc_lblNombre.anchor = GridBagConstraints.EAST;
-		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNombre.gridx = 0;
-		gbc_lblNombre.gridy = 1;
-		infoTrabajador.add(lblNombre, gbc_lblNombre);
-
+		panelId.add(new JLabel("Nombre:"));
 		textNombre = new JTextField();
-		textNombre.addKeyListener(listener);
-		textNombre.setColumns(10);
-		GridBagConstraints gbc_textNombre = new GridBagConstraints();
-		gbc_textNombre.insets = new Insets(0, 0, 5, 0);
-		gbc_textNombre.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textNombre.gridx = 1;
-		gbc_textNombre.gridy = 1;
-		infoTrabajador.add(textNombre, gbc_textNombre);
+		panelId.add(textNombre);
 
-		JLabel lblAP1 = new JLabel("Apellido1");
-		GridBagConstraints gbc_lblAP1 = new GridBagConstraints();
-		gbc_lblAP1.anchor = GridBagConstraints.EAST;
-		gbc_lblAP1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAP1.gridx = 0;
-		gbc_lblAP1.gridy = 2;
-		infoTrabajador.add(lblAP1, gbc_lblAP1);
-
+		panelId.add(new JLabel("Apellido 1:"));
 		textAP1 = new JTextField();
-		textAP1.addKeyListener(listener);
-		textAP1.setColumns(10);
-		GridBagConstraints gbc_textAP1 = new GridBagConstraints();
-		gbc_textAP1.insets = new Insets(0, 0, 5, 0);
-		gbc_textAP1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textAP1.gridx = 1;
-		gbc_textAP1.gridy = 2;
-		infoTrabajador.add(textAP1, gbc_textAP1);
+		panelId.add(textAP1);
 
-		JLabel lblAP2 = new JLabel("Apellido2");
-		GridBagConstraints gbc_lblAP2 = new GridBagConstraints();
-		gbc_lblAP2.anchor = GridBagConstraints.EAST;
-		gbc_lblAP2.insets = new Insets(0, 0, 0, 5);
-		gbc_lblAP2.gridx = 0;
-		gbc_lblAP2.gridy = 3;
-		infoTrabajador.add(lblAP2, gbc_lblAP2);
-
+		panelId.add(new JLabel("Apellido 2:"));
 		textAP2 = new JTextField();
-		textAP2.addKeyListener(listener);
-		textAP2.setColumns(10);
-		GridBagConstraints gbc_textAP2 = new GridBagConstraints();
-		gbc_textAP2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textAP2.gridx = 1;
-		gbc_textAP2.gridy = 3;
-		infoTrabajador.add(textAP2, gbc_textAP2);
+		panelId.add(textAP2);
 
-		JPanel provTrabajador = new JPanel();
-		provTrabajador.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
-				"Provincia del trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		GridBagConstraints gbc_provTrabajador = new GridBagConstraints();
-		gbc_provTrabajador.fill = GridBagConstraints.BOTH;
-		gbc_provTrabajador.insets = new Insets(0, 0, 5, 0);
-		gbc_provTrabajador.gridx = 0;
-		gbc_provTrabajador.gridy = 1;
-		Izquierda.add(provTrabajador, gbc_provTrabajador);
-		GridBagLayout gbl_provTrabajador = new GridBagLayout();
-		gbl_provTrabajador.columnWidths = new int[] { 253, 97, 0 };
-		gbl_provTrabajador.rowHeights = new int[] { 0, 0, 0 };
-		gbl_provTrabajador.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_provTrabajador.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
-		provTrabajador.setLayout(gbl_provTrabajador);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		izquierda.add(panelId, gbc);
 
-		JComboBox<?> comboBox = new JComboBox<>();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 0;
-		provTrabajador.add(comboBox, gbc_comboBox);
+		// 2. PROVINCIAS
 
-		JButton btnNewButton = new JButton("New button");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 0;
-		provTrabajador.add(btnNewButton, gbc_btnNewButton);
+		JPanel panelProv = new JPanel(new GridBagLayout());
+		panelProv.setBorder(new TitledBorder("Provincia del trabajador"));
 
-		JButton btnNewButton_1 = new JButton("New button");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_1.gridwidth = 2;
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_1.gridx = 0;
-		gbc_btnNewButton_1.gridy = 1;
-		provTrabajador.add(btnNewButton_1, gbc_btnNewButton_1);
+		comboBox = new JComboBox<>();
+		comboBox.setSelectedIndex(-1);
 
-		JPanel profTrabajador = new JPanel();
-		profTrabajador.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
-				"Profesi\u00F3n del trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		GridBagConstraints gbc_profTrabajador = new GridBagConstraints();
-		gbc_profTrabajador.fill = GridBagConstraints.BOTH;
-		gbc_profTrabajador.insets = new Insets(0, 0, 5, 0);
-		gbc_profTrabajador.gridx = 0;
-		gbc_profTrabajador.gridy = 2;
-		Izquierda.add(profTrabajador, gbc_profTrabajador);
-		GridBagLayout gbl_profTrabajador = new GridBagLayout();
-		gbl_profTrabajador.columnWidths = new int[] { 188, 188, 0 };
-		gbl_profTrabajador.rowHeights = new int[] { 224, 0, 0 };
-		gbl_profTrabajador.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-		gbl_profTrabajador.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-		profTrabajador.setLayout(gbl_profTrabajador);
+		btnEliminarProvincia = new JButton("Eliminar provincia");
+		btnEliminarProvincia.setEnabled(false);
 
-		JList<String> listProfesiones = new JList<>();
-		GridBagConstraints gbc_listProfesiones = new GridBagConstraints();
-		gbc_listProfesiones.fill = GridBagConstraints.BOTH;
-		gbc_listProfesiones.insets = new Insets(0, 0, 5, 5);
-		gbc_listProfesiones.gridx = 0;
-		gbc_listProfesiones.gridy = 0;
-		profTrabajador.add(listProfesiones, gbc_listProfesiones);
+		JButton btnAddProv = new JButton("Añadir provincia");
 
-		JButton btnEliminarProfesion = new JButton("Eliminar Profesion");
-		GridBagConstraints gbc_btnEliminarProfesion = new GridBagConstraints();
-		gbc_btnEliminarProfesion.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEliminarProfesion.anchor = GridBagConstraints.NORTH;
-		gbc_btnEliminarProfesion.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnEliminarProfesion.gridx = 1;
-		gbc_btnEliminarProfesion.gridy = 0;
-		profTrabajador.add(btnEliminarProfesion, gbc_btnEliminarProfesion);
+		GridBagConstraints g2 = new GridBagConstraints();
+		g2.insets = new Insets(5, 5, 5, 5);
+		g2.fill = GridBagConstraints.HORIZONTAL;
+
+		g2.gridx = 0;
+		g2.gridy = 0;
+		g2.weightx = 1;
+		panelProv.add(comboBox, g2);
+
+		g2.gridx = 1;
+		g2.gridy = 0;
+		panelProv.add(btnEliminarProvincia, g2);
+
+		g2.gridx = 0;
+		g2.gridy = 1;
+		g2.gridwidth = 2;
+		panelProv.add(btnAddProv, g2);
+
+		gbc.gridy = 1;
+		izquierda.add(panelProv, gbc);
+
+		// 3. PROFESIONES
+
+		JPanel panelProf = new JPanel(new GridBagLayout());
+		panelProf.setBorder(new TitledBorder("Profesión del trabajador"));
+
+		modeloProfesiones = new DefaultListModel<>();
+		JList<String> listaProfesiones = new JList<>(modeloProfesiones);
+		JScrollPane scrollProf = new JScrollPane(listaProfesiones);
+
+		btnEliminarProfesion = new JButton("Eliminar profesión");
+		btnEliminarProfesion.setEnabled(false);
 
 		textProfesion = new JTextField();
-		GridBagConstraints gbc_textProfesion = new GridBagConstraints();
-		gbc_textProfesion.insets = new Insets(0, 0, 0, 5);
-		gbc_textProfesion.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textProfesion.gridx = 0;
-		gbc_textProfesion.gridy = 1;
-		profTrabajador.add(textProfesion, gbc_textProfesion);
-		textProfesion.setColumns(10);
+		JButton btnAddProf = new JButton("Añadir profesión");
 
-		JButton btnAddProfesion = new JButton("Añadir profesion");
-		GridBagConstraints gbc_btnAddProfesion = new GridBagConstraints();
-		gbc_btnAddProfesion.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnAddProfesion.gridx = 1;
-		gbc_btnAddProfesion.gridy = 1;
-		profTrabajador.add(btnAddProfesion, gbc_btnAddProfesion);
+		GridBagConstraints g3 = new GridBagConstraints();
+		g3.insets = new Insets(5, 5, 5, 5);
 
-		JPanel panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 3;
-		Izquierda.add(panel, gbc_panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 282, 0 };
-		gbl_panel.rowHeights = new int[] { 49, 0 };
-		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
-		panel.setLayout(gbl_panel);
+		g3.gridx = 0;
+		g3.gridy = 0;
+		g3.weightx = 1;
+		g3.weighty = 1;
+		g3.fill = GridBagConstraints.BOTH;
+		panelProf.add(scrollProf, g3);
+
+		g3.gridx = 1;
+		g3.gridy = 0;
+		g3.weightx = 0;
+		g3.fill = GridBagConstraints.HORIZONTAL;
+		panelProf.add(btnEliminarProfesion, g3);
+
+		g3.gridx = 0;
+		g3.gridy = 1;
+		g3.weightx = 1;
+		g3.fill = GridBagConstraints.HORIZONTAL;
+		panelProf.add(textProfesion, g3);
+
+		g3.gridx = 1;
+		g3.gridy = 1;
+		panelProf.add(btnAddProf, g3);
+
+		gbc.gridy = 2;
+		izquierda.add(panelProf, gbc);
+
+		// 4. BOTÓN AÑADIR TRABAJADOR
 
 		btnAddTrabajador = new JButton("Añadir trabajador");
-		btnAddTrabajador.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				validar();
+		btnAddTrabajador.setEnabled(false);
+		gbc.gridy = 3;
+		izquierda.add(btnAddTrabajador, gbc);
+
+		// ----------------------- PANEL DERECHA -----------------------
+
+		JPanel derecha = new JPanel(new GridBagLayout());
+		contentPane.add(derecha);
+
+		// TABLA
+
+		modeloTrabajadores = new DefaultTableModel(
+				new Object[] { "Nombre y apellidos", "Provincia", "Profesión", "DNI" }, 0);
+
+		tablaTrabajadores = new JTable(modeloTrabajadores);
+		JScrollPane scrollTabla = new JScrollPane(tablaTrabajadores);
+
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		derecha.add(scrollTabla, gbc);
+
+		// BOTÓN ELIMINAR
+
+		btnDelTrabajador = new JButton("Eliminar trabajador");
+		btnDelTrabajador.setEnabled(false);
+
+		gbc.gridy = 1;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		derecha.add(btnDelTrabajador, gbc);
+
+		// DETALLE TRABAJADOR
+
+		JPanel panelDetalle = new JPanel(new BorderLayout());
+		panelDetalle.setBorder(new TitledBorder("Detalle del trabajador"));
+
+		textDetalle = new JTextArea();
+		textDetalle.setEditable(false);
+		panelDetalle.add(textDetalle);
+
+		gbc.gridy = 2;
+		gbc.weighty = 0.4;
+		gbc.fill = GridBagConstraints.BOTH;
+		derecha.add(panelDetalle, gbc);
+
+		// ---------------- EVENTOS Y LÓGICA --------------------------
+
+		// Provincias
+
+		comboBox.addActionListener(e -> btnEliminarProvincia.setEnabled(comboBox.getSelectedIndex() != -1));
+
+		btnEliminarProvincia.addActionListener(e -> {
+			if (comboBox.getSelectedIndex() != -1)
+				comboBox.removeItemAt(comboBox.getSelectedIndex());
+			comboBox.setSelectedIndex(-1);
+			comprobarEstadoBtnTrabajador();
+		});
+
+		btnAddProv.addActionListener(e -> {
+			DlgAddProvincia dlg = new DlgAddProvincia(this);
+			dlg.setVisible(true);
+			String provincia = dlg.getProvinciaSeleccionada();
+			if (provincia != null) {
+				DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) comboBox.getModel();
+				if (model.getIndexOf(provincia) == -1)
+					comboBox.addItem(provincia);
+			}
+			comprobarEstadoBtnTrabajador();
+		});
+
+		// Profesiones
+
+		listaProfesiones.addListSelectionListener(
+				e -> btnEliminarProfesion.setEnabled(listaProfesiones.getSelectedIndex() != -1));
+
+		btnAddProf.addActionListener(e -> {
+			String prof = textProfesion.getText().trim();
+			if (prof.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "La profesión no puede estar vacía.");
+				return;
+			}
+			if (modeloProfesiones.contains(prof)) {
+				JOptionPane.showMessageDialog(this, "La profesión ya existe en la lista.");
+				return;
+			}
+			modeloProfesiones.addElement(prof);
+			textProfesion.setText("");
+			comprobarEstadoBtnTrabajador();
+		});
+
+		btnEliminarProfesion.addActionListener(e -> {
+			int index = listaProfesiones.getSelectedIndex();
+			if (index != -1)
+				modeloProfesiones.remove(index);
+			comprobarEstadoBtnTrabajador();
+		});
+
+		// Habilitar botón añadir trabajador
+
+		DocumentListener doc = new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) {
+				comprobarEstadoBtnTrabajador();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				comprobarEstadoBtnTrabajador();
+			}
+
+			public void changedUpdate(DocumentEvent e) {
+				comprobarEstadoBtnTrabajador();
+			}
+		};
+
+		textDNI.getDocument().addDocumentListener(doc);
+		textNombre.getDocument().addDocumentListener(doc);
+		textAP1.getDocument().addDocumentListener(doc);
+		textAP2.getDocument().addDocumentListener(doc);
+
+		// Añadir trabajador
+
+		btnAddTrabajador.addActionListener(e -> {
+			if (!validar())
+				return;
+			if (!dniUnico())
+				return;
+
+			String nombreCompleto = textNombre.getText().trim() + " " + textAP1.getText().trim() + " "
+					+ textAP2.getText().trim();
+
+			modeloTrabajadores.addRow(new Object[] { nombreCompleto, comboBox.getSelectedItem(),
+					modeloProfesiones.getElementAt(0), textDNI.getText().trim() });
+
+			actualizarDetalle(null);
+			limpiarDatos();
+			comprobarEstadoBtnTrabajador();
+
+			JOptionPane.showMessageDialog(this, "Trabajador añadido correctamente.");
+		});
+
+		// Tabla
+
+		tablaTrabajadores.getSelectionModel().addListSelectionListener(e -> {
+			int fila = tablaTrabajadores.getSelectedRow();
+			btnDelTrabajador.setEnabled(fila != -1);
+
+			if (fila != -1) {
+				actualizarDetalle(fila);
 			}
 		});
-		btnAddTrabajador.setEnabled(false);
-		GridBagConstraints gbc_btnAddTrabajador = new GridBagConstraints();
-		gbc_btnAddTrabajador.anchor = GridBagConstraints.SOUTH;
-		gbc_btnAddTrabajador.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnAddTrabajador.gridx = 0;
-		gbc_btnAddTrabajador.gridy = 0;
-		panel.add(btnAddTrabajador, gbc_btnAddTrabajador);
 
-		JPanel derecha = new JPanel();
-		contentPane.add(derecha);
-		GridBagLayout gbl_derecha = new GridBagLayout();
-		gbl_derecha.columnWidths = new int[] { 0, 0 };
-		gbl_derecha.rowHeights = new int[] { 303, 28, 0, 0 };
-		gbl_derecha.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_derecha.rowWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		derecha.setLayout(gbl_derecha);
+		// Eliminar trabajador
 
-		JPanel trabajadoresDisponibles = new JPanel();
-		trabajadoresDisponibles.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
-				"Trabajadores disponibles", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		GridBagConstraints gbc_trabajadoresDisponibles = new GridBagConstraints();
-		gbc_trabajadoresDisponibles.fill = GridBagConstraints.BOTH;
-		gbc_trabajadoresDisponibles.insets = new Insets(0, 0, 5, 0);
-		gbc_trabajadoresDisponibles.gridx = 0;
-		gbc_trabajadoresDisponibles.gridy = 0;
-		derecha.add(trabajadoresDisponibles, gbc_trabajadoresDisponibles);
-		trabajadoresDisponibles.setLayout(new BoxLayout(trabajadoresDisponibles, BoxLayout.X_AXIS));
-
-		JScrollPane scrollPane = new JScrollPane();
-		trabajadoresDisponibles.add(scrollPane);
-
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Nombre y apellidos", "Provincia", "Profesi\u00F3n" }));
-		table.getColumnModel().getColumn(0).setPreferredWidth(120);
-		scrollPane.setViewportView(table);
-
-		JButton btnDelTrabajador = new JButton("Eliminar Trabajador");
-		GridBagConstraints gbc_btnDelTrabajador = new GridBagConstraints();
-		gbc_btnDelTrabajador.anchor = GridBagConstraints.NORTH;
-		gbc_btnDelTrabajador.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnDelTrabajador.insets = new Insets(0, 0, 5, 0);
-		gbc_btnDelTrabajador.gridx = 0;
-		gbc_btnDelTrabajador.gridy = 1;
-		derecha.add(btnDelTrabajador, gbc_btnDelTrabajador);
-
-		JPanel detalleTrabajador = new JPanel();
-		detalleTrabajador.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
-				"Detalle del trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_detalleTrabajador = new GridBagConstraints();
-		gbc_detalleTrabajador.fill = GridBagConstraints.BOTH;
-		gbc_detalleTrabajador.gridx = 0;
-		gbc_detalleTrabajador.gridy = 2;
-		derecha.add(detalleTrabajador, gbc_detalleTrabajador);
-		detalleTrabajador.setLayout(new BoxLayout(detalleTrabajador, BoxLayout.X_AXIS));
-
-		JTextArea textArea = new JTextArea();
-		detalleTrabajador.add(textArea);
-
+		btnDelTrabajador.addActionListener(e -> {
+			int fila = tablaTrabajadores.getSelectedRow();
+			if (fila != -1) {
+				modeloTrabajadores.removeRow(fila);
+				actualizarDetalle(null);
+			}
+		});
 	}
 
-	public boolean validar() {
+	// --------------------- VALIDACIONES Y UTILIDADES ----------------------------
 
+	private boolean validar() {
 		String msg = "";
-		// dni stuf
 
-		if (textNombre.getText().contentEquals(" ")) {
-			msg += "\n El nombre no puede estar vacio";
+		if (!textDNI.getText().matches("^[0-9]{8}[A-Z]$"))
+			msg += "\n - DNI inválido (8 dígitos + letra mayúscula)";
+
+		if (!textNombre.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$"))
+			msg += "\n - Nombre inválido";
+
+		if (!textAP1.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$"))
+			msg += "\n - Apellido 1 inválido";
+
+		if (!textAP2.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$"))
+			msg += "\n - Apellido 2 inválido";
+
+		if (!msg.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Errores:\n" + msg);
+			return false;
 		}
-
-		if (textAP1.getText().contentEquals(" ")) {
-			msg += "\n El apellido 1 no puede estar vacio";
-		}
-
-		if (textAP2.getText().contentEquals(" ")) {
-			msg += "\n El apellido 2 no puede estar vacio";
-		}
-
 		return true;
 	}
 
-	public void validarDNI() {
-
+	private boolean dniUnico() {
+		String dni = textDNI.getText().trim();
+		for (int i = 0; i < modeloTrabajadores.getRowCount(); i++) {
+			if (modeloTrabajadores.getValueAt(i, 3).equals(dni)) {
+				JOptionPane.showMessageDialog(this, "El DNI ya existe.");
+				return false;
+			}
+		}
+		return true;
 	}
 
+	private void comprobarEstadoBtnTrabajador() {
+		boolean ok = true;
+		if (textDNI.getText().trim().isEmpty())
+			ok = false;
+		if (textNombre.getText().trim().isEmpty())
+			ok = false;
+		if (textAP1.getText().trim().isEmpty())
+			ok = false;
+		if (textAP2.getText().trim().isEmpty())
+			ok = false;
+		if (comboBox.getSelectedIndex() == -1)
+			ok = false;
+		if (modeloProfesiones.isEmpty())
+			ok = false;
+		btnAddTrabajador.setEnabled(ok);
+	}
+
+	private void limpiarDatos() {
+		textDNI.setText("");
+		textNombre.setText("");
+		textAP1.setText("");
+		textAP2.setText("");
+		comboBox.setSelectedIndex(-1);
+		modeloProfesiones.clear();
+		textProfesion.setText("");
+	}
+
+	private void actualizarDetalle(Integer fila) {
+		if (fila == null) {
+			textDetalle.setText("");
+			return;
+		}
+
+		String nombre = modeloTrabajadores.getValueAt(fila, 0).toString();
+		String provincia = modeloTrabajadores.getValueAt(fila, 1).toString();
+		String profesion = modeloTrabajadores.getValueAt(fila, 2).toString();
+		String dni = modeloTrabajadores.getValueAt(fila, 3).toString();
+
+		textDetalle.setText(dni + " - " + nombre + " - " + provincia + " - " + profesion);
+	}
+
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new FrmPrincipal().setVisible(true));
+	}
 }
