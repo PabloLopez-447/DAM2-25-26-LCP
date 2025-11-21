@@ -162,7 +162,7 @@ public class OperacionesIO {
         }
 
         File[] archivosArray = filtrados.toArray(new File[0]);
-        Arrays.sort(archivosArray, new ComparaNombres(descendente));
+        //Arrays.sort(archivosArray, new ComparaNombres(descendente));
 
         System.out.println("encontrados y ordenados:");
         for (File archivo : archivosArray) {

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<biblioteca>
+    <facultad>Informática</facultad>
+    <Campus>Escuela Politécnica de Valencia</Campus>
+    <secciones>
+        <seccion nombre="Programación">
+            <libros>
+                <libro ID="A001" isbn="666-1234567890" titulo="Introducción a la Programación en Java" numero_de_paginas="300">
+                    <autores>
+                        <autor>John Smith</autor>
+                        <autor>María Pérez</autor>
+                        <autor>Carlos Rodríguez</autor>
+                    </autores>
+                    <fechaEdicion>12-12-2012</fechaEdicion>
+                    <editorial>Paraninfo</editorial>
+                    <precio>29.99</precio>
+                    <copias>
+                        <copia numero="1" estado="Disponible"/>
+                        <copia numero="2" estado="Prestado"/>
+                        <copia numero="3" estado="Disponible"/>
+                    </copias>
+                </libro>
+
+                <libro ID="A002" isbn="978-1111111111" titulo="Aprende Java en 21 días" numero_de_paginas="400">
+                    <autores>
+                        <autor>Luis Martínez</autor>
+                        <autor>John Smith</autor>
+                        <autor>María Pérez</autor>
+                    </autores>
+                    <fechaEdicion>2-10-2015</fechaEdicion>
+                    <editorial>Anaya Multimedias</editorial>
+                    <precio>39.99</precio>
+                    <copias>
+                        <copia numero="1" estado="Disponible"/>
+                        <copia numero="2" estado="Prestado"/>
+                    </copias>
+                </libro>
+
+                <libro ID="A003" isbn="978-2222222222" titulo="Python para Principiantes" numero_de_paginas="250">
+                    <autores>
+                        <autor>María López</autor>
+                        <autor>Carlos Rodríguez</autor>
+                    </autores>
+                    <fechaEdicion>02-09-2015</fechaEdicion>
+                    <editorial>Coders Press</editorial>
+                    <precio>24.99</precio>
+                    <copias>
+                        <copia numero="1" estado="Disponible"/>
+                        <copia numero="2" estado="Prestado"/>
+                    </copias>
+                </libro>
+            </libros>
+        </seccion>
+    </secciones>
+</biblioteca>

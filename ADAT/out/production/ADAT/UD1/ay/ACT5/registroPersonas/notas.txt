@@ -1,0 +1,15 @@
+Categorías es para usar el List, te pide valores en cadena
+Contacto es abstracta porque no se crea directamente, pero hay objetos del XML (Telefono e Email)
+
+al pasar fechas con formato que no sean yyyy-MM-dd hayq eu ponerle formatter o se muere
+t1.setFechaNacimiento(LocalDate.parse("12-03-99",DateTimeFormatter.ofPattern("dd-MM-yy")));
+
+ERRORES:
+
+org.glassfish.jaxb.runtime.v2.runtime.IllegalAnnotationsException:
+    4 counts of IllegalAnnotationExceptions
+    La clase tiene dos propiedades con el mismo nombre "categorias"
+    SOLUCION:
+    si la clase está marcada como FIELD, a veces se lia cogiendo los getters
+        marcar los setters como @XmlTransient
+
