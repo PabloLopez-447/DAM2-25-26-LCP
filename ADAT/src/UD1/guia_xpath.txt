@@ -1,0 +1,71 @@
+Guía rápida de XPath
+
+1. Selección básica
+
+-   / → raíz
+-   // → búsqueda en cualquier nivel
+-   . → nodo actual
+-   .. → nodo padre
+-   @ → atributo
+
+2. Seleccionar nodos
+
+-   //libro → todos los libros
+-   /biblioteca/libro → libros hijos directos
+-   //libro[@id] → libros que tengan atributo id
+-   //libro[@id='3'] → libro con id=3
+
+3. Filtros
+
+-   //libro[1] → primer libro
+-   //libro[last()] → último libro
+-   //libro[precio > 20] → libros con precio > 20
+-   //libro[autor='Juan'] → libros cuyo autor sea Juan
+
+4. Operadores
+
+-   = igualdad
+-   != distinto
+-   < > <= >=
+-   and or
+-   not()
+
+Ej: //libro[precio < 30 and autor='Ana'] → libros con precio menor de 30 y con autor Ana 
+
+5. Funciones útiles
+
+-   text() → contenido del nodo
+-   contains(a, b)
+-   starts-with(a, b)
+-   string-length()
+-   count()
+-   position()
+
+Ej: //libro[contains(titulo,'XML')] → libros que el titulo contenga XML
+
+6. Seleccionar atributos
+
+-   //@id → todos los atributos id
+-   //libro/@id → atributo id de cada libro
+
+7. Seleccionar texto
+
+-   //titulo/text() → texto del nodo
+
+8. Combinar condiciones
+
+-   //libro[precio > 10][autor='Luis']
+-   //libro[autor='Luis' or autor='Ana']
+
+9. Ejes (Axes)
+
+-   child:: hijos
+-   parent:: padre
+-   descendant::
+-   ancestor::
+-   following-sibling::
+-   preceding-sibling::
+
+Ej: //libro/ancestor::biblioteca
+
+------------------------------------------------------------------------
