@@ -35,7 +35,7 @@
                   
             <patrocinador donacion="1000.0" fecha_inicio="2022-11-05">Adidas</patrocinador>
                 
-            <patrocinador donacion="1800.0" fecha_inicio="2025-03-01">Columbia</patrocinador>
+            <patrocinador donacion="1800.0" fecha_inicio="2025-03-01"/>
         </patrocinadores>
           
     </equipo>
@@ -70,7 +70,7 @@
                   
             <patrocinador donacion="950.0" fecha_inicio="2021-08-15">HOKA</patrocinador>
                 
-            <patrocinador donacion="950.0" fecha_inicio="2025-04-15">Merrell</patrocinador>
+            <patrocinador donacion="950.0" fecha_inicio="2025-04-15"/>
         </patrocinadores>
           
     </equipo>
@@ -152,9 +152,9 @@
     </equipo>
     
     <equipo id="E9">
-        <nombre>Relámpagos del Este</nombre>
+        <nombre/>
         <patrocinadores numPatrocinadores="1">
-            <patrocinador donacion="1200.0" fecha_inicio="2025-05-10">Joma</patrocinador>
+            <patrocinador donacion="1200.0" fecha_inicio="2025-05-10"/>
         </patrocinadores>
     </equipo>
 </equipos>
