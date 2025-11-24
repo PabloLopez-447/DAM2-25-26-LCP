@@ -167,6 +167,7 @@ public class FrmPrincipal extends JFrame {
 
 		// -- Botón añadir provincia --
 		GridBagConstraints gbc_btnAddProv = new GridBagConstraints();
+		gbc_btnAddProv.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAddProv.insets = new Insets(5, 5, 5, 5);
 		gbc_btnAddProv.gridx = 0;
 		gbc_btnAddProv.gridy = 1;
