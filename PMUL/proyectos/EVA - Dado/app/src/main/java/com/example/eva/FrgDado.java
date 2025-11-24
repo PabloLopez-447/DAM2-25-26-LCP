@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class FrgDado extends Fragment {
     Button dado;
     int nSides;
-    List<Integer> history;
+    List<Integer> history = new ArrayList<>();
     int streak = 0;
     OnFrgDadoListener listener;
 
@@ -75,7 +76,7 @@ public class FrgDado extends Fragment {
             streak++;
         }else {
             history.clear();
-            setStreak(0);
+            setStreak(1);
         }
 
     }

@@ -1,6 +1,9 @@
 package com.example.eva;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -10,6 +13,9 @@ import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
     FrgDado dado1,dado2;
+    TextView nTiradas;
+    Button btnStart;
+    int numTiradas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        nTiradas = findViewById(R.id.textView);
+        btnStart = findViewById(R.id.buttonStart);
         FragmentManager fm = getSupportFragmentManager();
         dado1 = (FrgDado) fm.findFragmentById(R.id.dado1);
         dado2 = (FrgDado) fm.findFragmentById(R.id.dado2);
@@ -32,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         FrgDado.OnFrgDadoListener listener = new FrgDado.OnFrgDadoListener() {
             @Override
             public void OnRoll(int numero, int streak, FrgDado d) {
-
+                numTiradas++;
+                nTiradas.setText(numTiradas);
             }
         };
 

@@ -27,5 +27,17 @@
             android:name="com.example.eva.FrgDado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/comenzar" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="aaaaa" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
