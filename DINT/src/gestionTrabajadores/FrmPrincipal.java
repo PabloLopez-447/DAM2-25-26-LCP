@@ -21,6 +21,7 @@ public class FrmPrincipal extends JFrame {
 
 	private String emailSesion = "usuario@example.com";
 	private String tokenSesion = "token_12345";
+	JMenuItem itemAdd;
 
 	public FrmPrincipal() {
 		setTitle("Gestión de Trabajadores");
@@ -53,7 +54,6 @@ public class FrmPrincipal extends JFrame {
 		itemCerrar.addActionListener(e -> {
 			JOptionPane.showMessageDialog(this, "Sesión cerrada. Regresando al login...");
 			dispose();
-			// hacer login
 		});
 
 		itemSalir.addActionListener(e -> System.exit(0));
@@ -63,7 +63,7 @@ public class FrmPrincipal extends JFrame {
 		JMenu menuAcciones = new JMenu("Acciones");
 		JMenuItem itemValidar = new JMenuItem("Validación datos del trabajador");
 		JMenuItem itemLimpiar = new JMenuItem("Limpiar datos del trabajador");
-		JMenuItem itemAdd = new JMenuItem("Añadir trabajador");
+		itemAdd = new JMenuItem("Añadir trabajador");
 		JMenuItem itemDel = new JMenuItem("Eliminar trabajador");
 
 		menuAcciones.add(itemValidar);
@@ -107,10 +107,6 @@ public class FrmPrincipal extends JFrame {
 		JPanel izquierda = new JPanel(new GridBagLayout());
 		contentPane.add(izquierda);
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-
 		// 1. IDENTIFICACION
 
 		JPanel panelId = new JPanel(new GridLayout(4, 2, 5, 5));
@@ -132,9 +128,12 @@ public class FrmPrincipal extends JFrame {
 		textAP2 = new JTextField();
 		panelId.add(textAP2);
 
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		izquierda.add(panelId, gbc);
+		GridBagConstraints gbc_id = new GridBagConstraints();
+		gbc_id.insets = new Insets(5, 5, 5, 5);
+		gbc_id.fill = GridBagConstraints.HORIZONTAL;
+		gbc_id.gridx = 0;
+		gbc_id.gridy = 0;
+		izquierda.add(panelId, gbc_id);
 
 		// 2. PROVINCIAS
 
@@ -149,26 +148,38 @@ public class FrmPrincipal extends JFrame {
 
 		JButton btnAddProv = new JButton("Añadir provincia");
 
-		GridBagConstraints g2 = new GridBagConstraints();
-		g2.insets = new Insets(5, 5, 5, 5);
-		g2.fill = GridBagConstraints.HORIZONTAL;
+		// -- ComboBox --
+		GridBagConstraints gbc_cb = new GridBagConstraints();
+		gbc_cb.insets = new Insets(5, 5, 5, 5);
+		gbc_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cb.gridx = 0;
+		gbc_cb.gridy = 0;
+		gbc_cb.weightx = 1;
+		panelProv.add(comboBox, gbc_cb);
 
-		g2.gridx = 0;
-		g2.gridy = 0;
-		g2.weightx = 1;
-		panelProv.add(comboBox, g2);
+		// -- Botón eliminar provincia --
+		GridBagConstraints gbc_btnDelProv = new GridBagConstraints();
+		gbc_btnDelProv.insets = new Insets(5, 5, 5, 5);
+		gbc_btnDelProv.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnDelProv.gridx = 1;
+		gbc_btnDelProv.gridy = 0;
+		panelProv.add(btnEliminarProvincia, gbc_btnDelProv);
 
-		g2.gridx = 1;
-		g2.gridy = 0;
-		panelProv.add(btnEliminarProvincia, g2);
+		// -- Botón añadir provincia --
+		GridBagConstraints gbc_btnAddProv = new GridBagConstraints();
+		gbc_btnAddProv.insets = new Insets(5, 5, 5, 5);
+		gbc_btnAddProv.gridx = 0;
+		gbc_btnAddProv.gridy = 1;
+		gbc_btnAddProv.gridwidth = 2;
+		panelProv.add(btnAddProv, gbc_btnAddProv);
 
-		g2.gridx = 0;
-		g2.gridy = 1;
-		g2.gridwidth = 2;
-		panelProv.add(btnAddProv, g2);
-
-		gbc.gridy = 1;
-		izquierda.add(panelProv, gbc);
+		// Añadir panelProv a la izquierda
+		GridBagConstraints gbc_prov = new GridBagConstraints();
+		gbc_prov.insets = new Insets(5, 5, 5, 5);
+		gbc_prov.fill = GridBagConstraints.HORIZONTAL;
+		gbc_prov.gridx = 0;
+		gbc_prov.gridy = 1;
+		izquierda.add(panelProv, gbc_prov);
 
 		// 3. PROFESIONES
 
@@ -185,41 +196,60 @@ public class FrmPrincipal extends JFrame {
 		textProfesion = new JTextField();
 		JButton btnAddProf = new JButton("Añadir profesión");
 
-		GridBagConstraints g3 = new GridBagConstraints();
-		g3.insets = new Insets(5, 5, 5, 5);
+		// --- Scroll profesiones ---
+		GridBagConstraints gbc_scrollProf = new GridBagConstraints();
+		gbc_scrollProf.insets = new Insets(5, 5, 5, 5);
+		gbc_scrollProf.gridx = 0;
+		gbc_scrollProf.gridy = 0;
+		gbc_scrollProf.weightx = 1;
+		gbc_scrollProf.weighty = 1;
+		gbc_scrollProf.fill = GridBagConstraints.BOTH;
+		panelProf.add(scrollProf, gbc_scrollProf);
 
-		g3.gridx = 0;
-		g3.gridy = 0;
-		g3.weightx = 1;
-		g3.weighty = 1;
-		g3.fill = GridBagConstraints.BOTH;
-		panelProf.add(scrollProf, g3);
+		// --- Botón eliminar profesion ---
+		GridBagConstraints gbc_btnElimProf = new GridBagConstraints();
+		gbc_btnElimProf.insets = new Insets(5, 5, 5, 5);
+		gbc_btnElimProf.gridx = 1;
+		gbc_btnElimProf.gridy = 0;
+		gbc_btnElimProf.fill = GridBagConstraints.HORIZONTAL;
+		panelProf.add(btnEliminarProfesion, gbc_btnElimProf);
 
-		g3.gridx = 1;
-		g3.gridy = 0;
-		g3.weightx = 0;
-		g3.fill = GridBagConstraints.HORIZONTAL;
-		panelProf.add(btnEliminarProfesion, g3);
+		// --- Texto profesión ---
+		GridBagConstraints gbc_textProf = new GridBagConstraints();
+		gbc_textProf.insets = new Insets(5, 5, 5, 5);
+		gbc_textProf.gridx = 0;
+		gbc_textProf.gridy = 1;
+		gbc_textProf.weightx = 1;
+		gbc_textProf.fill = GridBagConstraints.HORIZONTAL;
+		panelProf.add(textProfesion, gbc_textProf);
 
-		g3.gridx = 0;
-		g3.gridy = 1;
-		g3.weightx = 1;
-		g3.fill = GridBagConstraints.HORIZONTAL;
-		panelProf.add(textProfesion, g3);
+		// --- Botón añadir profesión ---
+		GridBagConstraints gbc_btnAddProf2 = new GridBagConstraints();
+		gbc_btnAddProf2.insets = new Insets(5, 5, 5, 5);
+		gbc_btnAddProf2.gridx = 1;
+		gbc_btnAddProf2.gridy = 1;
+		gbc_btnAddProf2.fill = GridBagConstraints.HORIZONTAL;
+		panelProf.add(btnAddProf, gbc_btnAddProf2);
 
-		g3.gridx = 1;
-		g3.gridy = 1;
-		panelProf.add(btnAddProf, g3);
-
-		gbc.gridy = 2;
-		izquierda.add(panelProf, gbc);
+		// --- Añadir panelProf a la izquierda ---
+		GridBagConstraints gbc_prof = new GridBagConstraints();
+		gbc_prof.insets = new Insets(5, 5, 5, 5);
+		gbc_prof.fill = GridBagConstraints.HORIZONTAL;
+		gbc_prof.gridx = 0;
+		gbc_prof.gridy = 2;
+		izquierda.add(panelProf, gbc_prof);
 
 		// 4. BOTÓN AÑADIR TRABAJADOR
 
 		btnAddTrabajador = new JButton("Añadir trabajador");
 		btnAddTrabajador.setEnabled(false);
-		gbc.gridy = 3;
-		izquierda.add(btnAddTrabajador, gbc);
+
+		GridBagConstraints gbc_btnAdd = new GridBagConstraints();
+		gbc_btnAdd.insets = new Insets(5, 5, 5, 5);
+		gbc_btnAdd.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAdd.gridx = 0;
+		gbc_btnAdd.gridy = 3;
+		izquierda.add(btnAddTrabajador, gbc_btnAdd);
 
 		// ----------------------- PANEL DERECHA -----------------------
 
@@ -234,24 +264,26 @@ public class FrmPrincipal extends JFrame {
 		tablaTrabajadores = new JTable(modeloTrabajadores);
 		JScrollPane scrollTabla = new JScrollPane(tablaTrabajadores);
 
-		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-		derecha.add(scrollTabla, gbc);
+		GridBagConstraints gbc_tabla = new GridBagConstraints();
+		gbc_tabla.insets = new Insets(5, 5, 5, 5);
+		gbc_tabla.gridx = 0;
+		gbc_tabla.gridy = 0;
+		gbc_tabla.weightx = 1;
+		gbc_tabla.weighty = 1;
+		gbc_tabla.fill = GridBagConstraints.BOTH;
+		derecha.add(scrollTabla, gbc_tabla);
 
 		// BOTÓN ELIMINAR
 
 		btnDelTrabajador = new JButton("Eliminar trabajador");
 		btnDelTrabajador.setEnabled(false);
 
-		gbc.gridy = 1;
-		gbc.weighty = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		derecha.add(btnDelTrabajador, gbc);
+		GridBagConstraints gbc_btnDelTrab = new GridBagConstraints();
+		gbc_btnDelTrab.insets = new Insets(5, 5, 5, 5);
+		gbc_btnDelTrab.gridx = 0;
+		gbc_btnDelTrab.gridy = 1;
+		gbc_btnDelTrab.fill = GridBagConstraints.HORIZONTAL;
+		derecha.add(btnDelTrabajador, gbc_btnDelTrab);
 
 		// DETALLE TRABAJADOR
 
@@ -262,14 +294,15 @@ public class FrmPrincipal extends JFrame {
 		textDetalle.setEditable(false);
 		panelDetalle.add(textDetalle);
 
-		gbc.gridy = 2;
-		gbc.weighty = 0.4;
-		gbc.fill = GridBagConstraints.BOTH;
-		derecha.add(panelDetalle, gbc);
+		GridBagConstraints gbc_detalle = new GridBagConstraints();
+		gbc_detalle.insets = new Insets(5, 5, 5, 5);
+		gbc_detalle.gridx = 0;
+		gbc_detalle.gridy = 2;
+		gbc_detalle.weighty = 0.4;
+		gbc_detalle.fill = GridBagConstraints.BOTH;
+		derecha.add(panelDetalle, gbc_detalle);
 
 		// ---------------- EVENTOS Y LÓGICA --------------------------
-
-		// Provincias
 
 		comboBox.addActionListener(e -> btnEliminarProvincia.setEnabled(comboBox.getSelectedIndex() != -1));
 
@@ -291,8 +324,6 @@ public class FrmPrincipal extends JFrame {
 			}
 			comprobarEstadoBtnTrabajador();
 		});
-
-		// Profesiones
 
 		listaProfesiones.addListSelectionListener(
 				e -> btnEliminarProfesion.setEnabled(listaProfesiones.getSelectedIndex() != -1));
@@ -319,8 +350,6 @@ public class FrmPrincipal extends JFrame {
 			comprobarEstadoBtnTrabajador();
 		});
 
-		// Habilitar botón añadir trabajador
-
 		DocumentListener doc = new DocumentListener() {
 			public void insertUpdate(DocumentEvent e) {
 				comprobarEstadoBtnTrabajador();
@@ -339,8 +368,6 @@ public class FrmPrincipal extends JFrame {
 		textNombre.getDocument().addDocumentListener(doc);
 		textAP1.getDocument().addDocumentListener(doc);
 		textAP2.getDocument().addDocumentListener(doc);
-
-		// Añadir trabajador
 
 		btnAddTrabajador.addActionListener(e -> {
 			if (!validar())
@@ -361,8 +388,6 @@ public class FrmPrincipal extends JFrame {
 			JOptionPane.showMessageDialog(this, "Trabajador añadido correctamente.");
 		});
 
-		// Tabla
-
 		tablaTrabajadores.getSelectionModel().addListSelectionListener(e -> {
 			int fila = tablaTrabajadores.getSelectedRow();
 			btnDelTrabajador.setEnabled(fila != -1);
@@ -371,8 +396,6 @@ public class FrmPrincipal extends JFrame {
 				actualizarDetalle(fila);
 			}
 		});
-
-		// Eliminar trabajador
 
 		btnDelTrabajador.addActionListener(e -> {
 			int fila = tablaTrabajadores.getSelectedRow();
@@ -388,16 +411,16 @@ public class FrmPrincipal extends JFrame {
 	private boolean validar() {
 		String msg = "";
 
-		if (!textDNI.getText().matches("^[0-9]{8}[A-Z]$"))
+		if (!textDNI.getText().matches("^[0-9]{8}[A-Z]$") || textDNI.getText() == null)
 			msg += "\n - DNI inválido (8 dígitos + letra mayúscula)";
 
-		if (!textNombre.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$"))
+		if (!textNombre.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$") || textNombre.getText() == null)
 			msg += "\n - Nombre inválido";
 
-		if (!textAP1.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$"))
+		if (!textAP1.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$") || textAP1.getText() == null)
 			msg += "\n - Apellido 1 inválido";
 
-		if (!textAP2.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$"))
+		if (!textAP2.getText().matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$") || textAP2.getText() == null)
 			msg += "\n - Apellido 2 inválido";
 
 		if (!msg.isEmpty()) {
@@ -432,7 +455,9 @@ public class FrmPrincipal extends JFrame {
 			ok = false;
 		if (modeloProfesiones.isEmpty())
 			ok = false;
+
 		btnAddTrabajador.setEnabled(ok);
+		itemAdd.setEnabled(ok);
 	}
 
 	private void limpiarDatos() {
