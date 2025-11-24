@@ -1,0 +1,122 @@
+package UD1.examen.parte1.ejercicio2.persistencia;
+
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+
+import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+// Pablo López Couso DNI:77550221V
+public class XMLDOMUtils {
+    static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+    static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+
+    public static Document cargarDocumentoXMLDOM(String nombreArchivo, TipoValidacion validacion) throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory dbf = configurarFactory(validacion);
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document document = db.parse(new File(nombreArchivo));
+        System.out.println("Documento cargado con exito");
+        return document;
+    }
+
+    public static DocumentBuilderFactory configurarFactory(TipoValidacion validacion) {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        switch (validacion) {
+            case DTD:
+                dbf.setValidating(true);
+                break;
+            case XSD:
+                dbf.setValidating(true);
+                dbf.setNamespaceAware(true);
+                dbf.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+                break;
+            case NO_VALIDAR:
+                dbf.setValidating(false);
+                break;
+
+            default:
+                break;
+        }
+        return dbf;
+    }
+
+    public static void guardarDocumentoXML(Document doc, String rutaDestino) {
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new FileWriter(rutaDestino));
+            transformer.transform(source, result);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static Object evaluarXPath(Object contexto, String expresion, QName tipoResultado) {
+        try {
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            return xPath.evaluate(expresion, contexto, tipoResultado);
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public static Attr addAtributo(Document doc, String nombre, String valor, Element element) {
+        Attr atrib = doc.createAttribute(nombre);
+        atrib.setValue(valor);
+        element.setAttribute(nombre, valor);
+        return atrib;
+    }
+
+    public static Element addElement(Document doc, String nombre, String valor, Element padre) {
+        Element elemento = doc.createElement(nombre);
+        padre.appendChild(elemento);
+        return elemento;
+    }
+
+    public static void modificarAtributo(Element elemento, String nombre, Object valor) {
+        String valorStr = String.valueOf(valor);
+        elemento.setAttribute(nombre, valorStr);
+    }
+
+    public static void modificarValorElemento(Element elemento, Object valor) {
+        elemento.setTextContent(String.valueOf(valor));
+    }
+
+    public static Element buscarElementoPorId(Document doc, String idValue) {
+        return doc.getElementById(idValue);
+    }
+
+    public Node evaluarXPathNodo(Object contexto, String expresion, QName tipoResultado) {
+        return (Node) evaluarXPath(contexto, expresion, tipoResultado);
+    }
+
+    public NodeList evaluarXPathNodeList(Object contexto, String expresion, QName tipoResultado) {
+        return (NodeList) evaluarXPath(contexto, expresion, tipoResultado);
+    }
+
+    public boolean evaluarXPathBoolean(Object contexto, String expresion, QName tipoResultado) {
+        return (boolean) evaluarXPath(contexto, expresion, tipoResultado);
+    }
+
+    public double evaluarXPathNumero(Object contexto, String expresion, QName tipoResultado) {
+        return (double) evaluarXPath(contexto, expresion, tipoResultado);
+    }
+}
