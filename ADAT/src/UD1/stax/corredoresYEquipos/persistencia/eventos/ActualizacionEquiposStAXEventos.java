@@ -26,9 +26,6 @@ public class ActualizacionEquiposStAXEventos {
 
             switch (event.getEventType()) {
 
-                // ----------------------------------------------------
-                // START ELEMENT
-                // ----------------------------------------------------
                 case XMLEvent.START_ELEMENT -> {
 
                     switch (tag) {
@@ -45,17 +42,11 @@ public class ActualizacionEquiposStAXEventos {
                     }
                 }
 
-                // ----------------------------------------------------
-                // CHARACTERS
-                // ----------------------------------------------------
                 case XMLEvent.CHARACTERS -> {
                     String txt = XMLStAXUtilsEventos.leerTexto(event);
                     if (!txt.isBlank()) contenidoActual = txt;
                 }
 
-                // ----------------------------------------------------
-                // END ELEMENT
-                // ----------------------------------------------------
                 case XMLEvent.END_ELEMENT -> {
 
                     switch (tag) {

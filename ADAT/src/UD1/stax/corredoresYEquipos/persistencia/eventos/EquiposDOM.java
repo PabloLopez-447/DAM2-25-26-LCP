@@ -16,9 +16,6 @@ public class EquiposDOM {
         this.doc = XMLDOMUtils.cargarDocumentoXMLDOM(rutaXML, TipoValidacion.NO_VALIDAR);
     }
 
-    // ------------------------------------------------------------
-    // Buscar equipo por id
-    // ------------------------------------------------------------
     private Element buscarEquipoPorId(String idEquipo) {
         return (Element) XMLDOMUtils.evaluarXPath(
                 doc,
@@ -27,9 +24,7 @@ public class EquiposDOM {
         );
     }
 
-    // ------------------------------------------------------------
-    // Buscar patrocinador por nombre dentro de un equipo
-    // ------------------------------------------------------------
+
     private Element buscarPatrocinador(Element equipo, String nombrePatro) {
 
         return (Element) XMLDOMUtils.evaluarXPath(
@@ -39,16 +34,12 @@ public class EquiposDOM {
         );
     }
 
-    // ------------------------------------------------------------
-    // Aplicar una sola actualización
-    // ------------------------------------------------------------
+
     public void aplicarActualizacion(ActualizacionPatrocinador act) {
 
         Element equipo = buscarEquipoPorId(act.getIdEquipo());
 
-        // ------------------------------------------------------------
-        // Caso: equipo NO existe → crear equipo
-        // ------------------------------------------------------------
+
         if (equipo == null) {
 
             Element raiz = doc.getDocumentElement();
@@ -71,23 +62,17 @@ public class EquiposDOM {
             return;
         }
 
-        // ------------------------------------------------------------
-        // Caso: equipo existe → buscar patrocinador
-        // ------------------------------------------------------------
+
         Element patrocinador = buscarPatrocinador(equipo, act.getNombrePatrocinador());
 
-        // ------------------------------------------------------------
-        // Caso: patrocinador existe → actualizar
-        // ------------------------------------------------------------
+
         if (patrocinador != null) {
             XMLDOMUtils.modificarAtributo(patrocinador, "donacion", act.getDonacion());
             XMLDOMUtils.modificarAtributo(patrocinador, "fecha_inicio", act.getFecha().toString());
             return;
         }
 
-        // ------------------------------------------------------------
-        // Caso: NO existe → añadir patrocinador nuevo
-        // ------------------------------------------------------------
+
         Element lista = (Element) XMLDOMUtils.evaluarXPath(
                 equipo,
                 "./patrocinadores",
@@ -103,18 +88,14 @@ public class EquiposDOM {
         lista.setAttribute("numPatrocinadores", String.valueOf(num + 1));
     }
 
-    // ------------------------------------------------------------
-    // Aplicar lista completa de actualizaciones
-    // ------------------------------------------------------------
+
     public void aplicarActualizaciones(List<ActualizacionPatrocinador> lista) {
         for (ActualizacionPatrocinador a : lista) {
             aplicarActualizacion(a);
         }
     }
 
-    // ------------------------------------------------------------
-    // Guardar XML
-    // ------------------------------------------------------------
+
     public void guardar(String rutaDestino) {
         XMLDOMUtils.guardarDocumentoXML(doc, rutaDestino);
     }
