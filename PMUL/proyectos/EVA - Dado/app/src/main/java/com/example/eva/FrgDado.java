@@ -9,14 +9,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class FrgDado extends Fragment {
+    final static Random rnd = new Random();
     Button dado;
+    Spinner spinner;
     int nSides;
     List<Integer> history = new ArrayList<>();
     int streak = 0;
@@ -28,18 +35,36 @@ public class FrgDado extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        dado = new Button(this.getContext());
-        dado.setText("");
-        return dado;
+        return inflater.inflate(R.layout.fragment_dado, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dado = view.findViewById(R.id.dado);
+        spinner = view.findViewById(R.id.spinnerTrampa);
+        List<Integer> sides = new ArrayList<>();
+        for (int i = 1; i <= nSides; i++) {
+            sides.add(i);
+        }
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sides);
+        adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
         dado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                roll();
+                roll(rnd.nextInt(nSides + 1));
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    roll((Integer) spinner.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -60,9 +85,7 @@ public class FrgDado extends Fragment {
         this.streak = streak;
     }
 
-    public void roll() {
-        Random rnd = new Random();
-        int n = rnd.nextInt(this.nSides) + 1;
+    public void roll(int n) {
         dado.setText(String.valueOf(n));
         checkStreak(n);
         this.listener.OnRoll(n, streak, this);
