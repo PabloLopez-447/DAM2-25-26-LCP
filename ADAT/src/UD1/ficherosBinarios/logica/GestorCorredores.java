@@ -26,7 +26,7 @@ public class GestorCorredores {
         try {
             int ultimoDorsal = cr.obtenerUltimoDorsal();
             c.setDorsal(ultimoDorsal + 1);
-            cr.iniciarLectura();
+            cw.iniciarEscritura();
             cw.escribirCorredor(c);
             System.out.println("Corredor escribido");
         } catch (Exception e) {

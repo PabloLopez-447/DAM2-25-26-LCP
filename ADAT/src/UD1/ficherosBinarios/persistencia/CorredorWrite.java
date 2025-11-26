@@ -38,19 +38,19 @@ public class CorredorWrite extends Archivo{
         }
     }
 
-//    public boolean verificarEquipoValido(int idEquipo) {
-//        EquipoRandom archivoEquipos = new EquipoRandom("equipos.dat");
-//        archivoEquipos.abrirArchivo;
-//        try{
-//            Equipo equipo = archivoEquipos.leerEquipo(idEquipo);
-//            return equipo != null && equipo.isBorrado();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        finally {
-//            archivoEquipos.cerrarArchivo;
-//        }
-//    }
+    public boolean verificarEquipoValido(int idEquipo) {
+        EquipoRandom archivoEquipos = new EquipoRandom("equipos.dat");
+        archivoEquipos.abrirArchivo();
+        try{
+            Equipo equipo = archivoEquipos.leerEquipo(idEquipo);
+            return equipo != null && equipo.isBorrado();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            archivoEquipos.cerrarArchivo();
+        }
+    }
 
     public void escribirCorredor (Corredor corredor) {
         if (oos == null) {
@@ -58,10 +58,10 @@ public class CorredorWrite extends Archivo{
             return;
         }
 
-//        if (!verificarEquipoValido(corredor.getEquipo())){
-//            System.out.println("el equipo no es valido");
-//            return;
-//        }
+        if (!verificarEquipoValido(corredor.getEquipo())){
+            System.out.println("el equipo no es valido");
+            return;
+        }
 
         try {
             oos.writeObject(corredor);

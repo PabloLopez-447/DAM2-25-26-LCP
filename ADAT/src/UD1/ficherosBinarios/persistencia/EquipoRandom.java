@@ -41,7 +41,7 @@ public class EquipoRandom extends Archivo {
             if (raf == null) {
                 abrirArchivo();
             }
-            long posicion = (equipo.getIdEquipo() + 1L) * TAM_REGISTRO;
+            long posicion = (equipo.getIdEquipo() - 1L) * TAM_REGISTRO;
             raf.seek(posicion);
             raf.writeBoolean(equipo.isBorrado());
             raf.writeInt(equipo.getIdEquipo());
