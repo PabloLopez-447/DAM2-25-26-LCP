@@ -1,0 +1,110 @@
+----------------------------------------------
+EstudioInstantánea
+----------------------------------------------
+Codigo 1 Licencia: LIC-1003Nombre: Jorge RamosEstudio: InstantáneaNúmero de fotografias: 2
+Fotografias: 
+Puente antiguo, 2023-06-12, Color, 3.3
+Calle principal, 2023-07-01, Digital, 3.0
+Codigo 12 Licencia: LIC-1014Nombre: Laura LópezEstudio: InstantáneaNúmero de fotografias: 2
+Fotografias: 
+Puente iluminado, 2023-07-18, Color, 3.0
+Desierto árido, 2023-08-05, Color, 3.2
+Codigo 19 Licencia: LIC-1007Nombre: María GómezEstudio: InstantáneaNúmero de fotografias: 2
+Fotografias: 
+Vida urbana, 2023-06-10, Color, 2.0
+Río al atardecer, 2023-06-25, Blanco y Negro, 2.0
+----------------------------------------------
+EstudioMirada Creativa
+----------------------------------------------
+Codigo 2 Licencia: LIC-1004Nombre: Ana MorenoEstudio: Mirada CreativaNúmero de fotografias: 2
+Fotografias: 
+Montañas rocosas, 2023-05-05, Color, 3.7
+Lago cristalino, 2023-06-15, Blanco y Negro, 2.9
+Codigo 6 Licencia: LIC-1008Nombre: Javier MartínezEstudio: Mirada CreativaNúmero de fotografias: 3
+Fotografias: 
+Bosque otoñal, 2023-10-03, Color, 3.8
+Río al amanecer, 2023-04-22, Color, 2.9
+Niebla matutina, 2023-01-15, Digital, 2.5
+Codigo 11 Licencia: LIC-1013Nombre: Pablo DíazEstudio: Mirada CreativaNúmero de fotografias: 2
+Fotografias: 
+Desierto ardiente, 2023-08-18, Color, 3.8
+Callejón antiguo, 2023-09-02, Digital, 3.0
+Codigo 25 Licencia: LIC-1015Nombre: Sara LópezEstudio: Mirada CreativaNúmero de fotografias: 2
+Fotografias: 
+Puente antiguo, 2023-10-10, Color, 2.0
+Lago cristalino, 2023-10-20, Color, 2.0
+----------------------------------------------
+EstudioPixelFlash
+----------------------------------------------
+Codigo 3 Licencia: LIC-1005Nombre: Laura MoralesEstudio: PixelFlashNúmero de fotografias: 2
+Fotografias: 
+Ciudad nocturna, 2023-10-20, Color, 3.5
+Retrato en estudio, 2023-10-22, Color, 3.0
+Codigo 7 Licencia: LIC-1009Nombre: David MartínEstudio: PixelFlashNúmero de fotografias: 3
+Fotografias: 
+Naturaleza salvaje, 2023-09-15, Blanco y Negro, 3.0
+Montañas verdes, 2023-10-05, Color, 3.8
+Río al atardecer, 2023-11-01, Color, 3.1
+Codigo 8 Licencia: LIC-1010Nombre: Lucía CamposEstudio: PixelFlashNúmero de fotografias: 3
+Fotografias: 
+Bosque encantado, 2023-05-05, Color, 3.7
+Lago reflejado, 2023-06-12, Blanco y Negro, 2.8
+Río serpenteante, 2023-07-20, Color, 3.6
+Codigo 13 Licencia: LIC-1015Nombre: Carlos TorresEstudio: PixelFlashNúmero de fotografias: 3
+Fotografias: 
+Montañas nevadas, 2023-12-05, Color, 4.0
+Bosque otoñal, 2023-10-03, Color, 3.8
+Río al amanecer, 2023-04-22, Color, 2.9
+----------------------------------------------
+EstudioFotoArte
+----------------------------------------------
+Codigo 4 Licencia: LIC-1006Nombre: Miguel TorresEstudio: FotoArteNúmero de fotografias: 3
+Fotografias: 
+Bosque nevado, 2023-12-03, Color, 4.2
+Río cristalino, 2023-08-14, Color, 3.5
+Callejón antiguo, 2023-09-01, Digital, 3.0
+Codigo 10 Licencia: LIC-1012Nombre: María LópezEstudio: FotoArteNúmero de fotografias: 2
+Fotografias: 
+Ciudad antigua, 2023-07-15, Color, 3.3
+Puente iluminado, 2023-07-18, Color, 3.0
+----------------------------------------------
+EstudioEnfoque
+----------------------------------------------
+Codigo 5 Licencia: LIC-1007Nombre: Sara RuizEstudio: EnfoqueNúmero de fotografias: 2
+Fotografias: 
+Playa desierta, 2023-05-20, Color, 3.4
+Ciudad iluminada, 2023-06-25, Digital, 3.7
+Codigo 9 Licencia: LIC-1011Nombre: Miguel FernándezEstudio: EnfoqueNúmero de fotografias: 2
+Fotografias: 
+Ciudad iluminada, 2023-08-01, Color, 3.2
+Atardecer en el río, 2023-09-10, Digital, 2.9
+Codigo 22 Licencia: LIC-1010Nombre: Lucía MorenoEstudio: EnfoqueNúmero de fotografias: 2
+Fotografias: 
+Parque primaveral, 2023-08-05, Color, 2.0
+Montañas nevadas, 2023-08-15, Blanco y Negro, 2.0
+----------------------------------------------
+Estudio
+----------------------------------------------
+Codigo 14 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+Codigo 15 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+Codigo 17 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+Codigo 18 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+Codigo 20 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+Codigo 21 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+Codigo 23 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+Codigo 24 Licencia: Nombre: Estudio: Número de fotografias: 0
+Fotografias: 
+----------------------------------------------
+EstudioFotoarte
+----------------------------------------------
+Codigo 16 Licencia: LIC-1004Nombre: Ana MoralesEstudio: FotoarteNúmero de fotografias: 2
+Fotografias: 
+Puente antiguo, 2023-04-01, Blanco y Negro, 2.0
+Atardecer en el río, 2023-04-20, Color, 2.0

@@ -1,7 +1,8 @@
 package UD1.examen.parte1.ejercicio2;
 
-import exud1p1pablolc.ejercicio2.logica.GestorAlojamientos;
-import exud1p1pablolc.ejercicio2.persistencia.TipoValidacion;
+
+import UD1.examen.parte1.ejercicio2.logica.GestorAlojamientos;
+import UD1.examen.parte1.ejercicio2.persistencia.TipoValidacion;
 
 // Pablo López Couso DNI:77550221V
 public class Main {

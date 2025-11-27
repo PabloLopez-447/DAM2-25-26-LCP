@@ -1,5 +1,7 @@
 package UD1.examen.parte1.ejercicio1;
 
+import UD1.examen.parte1.ejercicio1.logica.GestorAlojamientos;
+
 // Pablo López Couso DNI:77550221V
 public class Main {
 

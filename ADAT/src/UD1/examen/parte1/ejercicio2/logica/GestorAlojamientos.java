@@ -1,8 +1,8 @@
 package UD1.examen.parte1.ejercicio2.logica;
 
-import exud1p1pablolc.ejercicio2.persistencia.AlojamientosDOM;
-import exud1p1pablolc.ejercicio2.persistencia.TipoValidacion;
-import exud1p1pablolc.ejercicio2.persistencia.XMLDOMUtils;
+import UD1.examen.parte1.ejercicio2.persistencia.AlojamientosDOM;
+import UD1.examen.parte1.ejercicio2.persistencia.TipoValidacion;
+import UD1.examen.parte1.ejercicio2.persistencia.XMLDOMUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
