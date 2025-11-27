@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void OnRoll(int numero, int streak, FrgDado d) {
                 numTiradas++;
-                nTiradas.setText(String.valueOf(numTiradas));
+                nTiradas.setText(String.valueOf(numTiradas - 2));
             }
         };
 
