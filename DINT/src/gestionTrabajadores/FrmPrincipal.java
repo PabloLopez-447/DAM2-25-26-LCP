@@ -485,7 +485,18 @@ public class FrmPrincipal extends JFrame {
 		textDetalle.setText(dni + " - " + nombre + " - " + provincia + " - " + profesion);
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new FrmPrincipal().setVisible(true));
-	}
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            DlgLogin login = new DlgLogin(null);
+            login.setVisible(true);
+
+            if(login.getToken() != null){    // acceso permitido
+                FrmPrincipal app = new FrmPrincipal();
+                app.emailSesion = login.getEmail();
+                app.tokenSesion = login.getToken();
+                app.setVisible(true);
+            }
+        });
+    }
+
 }
