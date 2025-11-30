@@ -1,0 +1,103 @@
+package UD1.dom.corredoresYequipos.persistencia;
+
+import UD1.dom.XMLDOMUtils;
+import UD1.dom.corredoresYequipos.TipoValidacion;
+import UD1.stax.corredoresYEquipos.clases.equipos.ActualizacionPatrocinador;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.xpath.XPathConstants;
+import java.util.List;
+
+public class EquiposDOM {
+
+    private Document doc;
+
+    public EquiposDOM(String rutaXML) throws Exception {
+        this.doc = XMLDOMUtils.cargarDocumentoXMLDOM(rutaXML, TipoValidacion.NO_VALIDAR);
+    }
+
+    private Element buscarEquipoPorId(String idEquipo) {
+        return (Element) XMLDOMUtils.evaluarXPath(
+                doc,
+                "/equipos/equipo[@id='" + idEquipo + "']",
+                XPathConstants.NODE
+        );
+    }
+
+
+    private Element buscarPatrocinador(Element equipo, String nombrePatro) {
+
+        return (Element) XMLDOMUtils.evaluarXPath(
+                equipo,
+                "./patrocinadores/patrocinador[text()='" + nombrePatro + "']",
+                XPathConstants.NODE
+        );
+    }
+
+
+    public void aplicarActualizacion(ActualizacionPatrocinador act) {
+
+        Element equipo = buscarEquipoPorId(act.getIdEquipo());
+
+
+        if (equipo == null) {
+
+            Element raiz = doc.getDocumentElement();
+
+            equipo = XMLDOMUtils.addElement(doc, "equipo", null, raiz);
+            XMLDOMUtils.addAtributo(doc, "id", act.getIdEquipo(), equipo);
+
+            // nombre del nuevo equipo
+            Element nombre = XMLDOMUtils.addElement(doc, "nombre", act.getNombreEquipo(), equipo);
+
+            // nodo patrocinadores
+            Element listaPat = XMLDOMUtils.addElement(doc, "patrocinadores", null, equipo);
+            XMLDOMUtils.addAtributo(doc, "numPatrocinadores", "1", listaPat);
+
+            // añadir patrocinador
+            Element pat = XMLDOMUtils.addElement(doc, "patrocinador", act.getNombrePatrocinador(), listaPat);
+            XMLDOMUtils.addAtributo(doc, "donacion", String.valueOf(act.getDonacion()), pat);
+            XMLDOMUtils.addAtributo(doc, "fecha_inicio", act.getFecha().toString(), pat);
+
+            return;
+        }
+
+
+        Element patrocinador = buscarPatrocinador(equipo, act.getNombrePatrocinador());
+
+
+        if (patrocinador != null) {
+            XMLDOMUtils.modificarAtributo(patrocinador, "donacion", act.getDonacion());
+            XMLDOMUtils.modificarAtributo(patrocinador, "fecha_inicio", act.getFecha().toString());
+            return;
+        }
+
+
+        Element lista = (Element) XMLDOMUtils.evaluarXPath(
+                equipo,
+                "./patrocinadores",
+                XPathConstants.NODE
+        );
+
+        Element nuevo = XMLDOMUtils.addElement(doc, "patrocinador", act.getNombrePatrocinador(), lista);
+        XMLDOMUtils.addAtributo(doc, "donacion", String.valueOf(act.getDonacion()), nuevo);
+        XMLDOMUtils.addAtributo(doc, "fecha_inicio", act.getFecha().toString(), nuevo);
+
+        // actualizar contador
+        int num = Integer.parseInt(lista.getAttribute("numPatrocinadores"));
+        lista.setAttribute("numPatrocinadores", String.valueOf(num + 1));
+    }
+
+
+    public void aplicarActualizaciones(List<ActualizacionPatrocinador> lista) {
+        for (ActualizacionPatrocinador a : lista) {
+            aplicarActualizacion(a);
+        }
+    }
+
+
+    public void guardar(String rutaDestino) {
+        XMLDOMUtils.guardarDocumentoXML(doc, rutaDestino);
+    }
+}
