@@ -53,7 +53,7 @@ public class FrgDado extends Fragment {
         dado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                roll(rnd.nextInt(nSides + 1));
+                roll(rnd.nextInt(nSides) + 1);
             }
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
