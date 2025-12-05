@@ -1,4 +1,4 @@
-package UD2.Ejemplos;
+package UD2.Ejercicios.clienteSimple;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
