@@ -6,25 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".NebActivity">
 
-    <EditText
-        android:id="@+id/errs"
+    <TextView
+        android:id="@+id/textName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/n_maximo_de_errores" />
+        android:layout_height="60dp"
+        android:text="" />
 
-    <Button
-        android:id="@+id/ERC"
+    <TextView
+        android:id="@+id/textDesc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/erc" />
+        android:layout_height="60dp"
+        android:text="" />
 
-    <Button
-        android:id="@+id/NEB"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/botones"
+        android:name="com.example.botonedireccion.FrgBotonesDir"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/neb" />
+        android:layout_height="212dp" />
 </LinearLayout>

@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">EVA</string>
-    <string name="ajustes">Ajustes</string>
-    <string name="boton">boton</string>
+    <string name="app_name">Botone Direccion</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="neb">NEB</string>
+    <string name="erc">ERC</string>
+    <string name="n_maximo_de_errores">Nº maximo de errores</string>
 </resources>
