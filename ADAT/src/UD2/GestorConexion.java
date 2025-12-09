@@ -1,8 +1,6 @@
 package UD2;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class GestorConexion {
 
@@ -29,6 +27,31 @@ public class GestorConexion {
             return DriverManager.getConnection(url);
         } else {
             return DriverManager.getConnection(url, usuario, pass);
+        }
+    }
+
+    public static void  cerrarConexion(Connection connection) throws ClassNotFoundException, SQLException {
+        connection.close();
+    }
+
+    public static ResultSet ejecutarConsulta(Connection con, String consulta, Object... parametros) throws ClassNotFoundException, SQLException {
+        PreparedStatement sentencia = con.prepareStatement(consulta);
+        for (int i = 0; i < parametros.length; i++) {
+            sentencia.setObject(i + 1, parametros[i]);
+        }
+        return sentencia.executeQuery();
+    }
+
+    public static void ejecutarSentencia(Connection con, String sentencia, Object... parametros) throws ClassNotFoundException, SQLException {
+        try (PreparedStatement ps = con.prepareStatement(sentencia)) {
+            setParametros(ps, parametros);
+            ps.executeUpdate();
+        }
+    }
+
+    public static void setParametros(PreparedStatement ps, Object... parametros) throws SQLException {
+        for (int i = 0; i < parametros.length; i++) {
+            ps.setObject(i + 1, parametros[i]);
         }
     }
 }
