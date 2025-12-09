@@ -22,7 +22,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/botones"
-        android:name="com.example.botonedireccion.FrgBotonesDir"
+        android:name="com.example.eva.FrgBotonesDir"
         android:layout_width="match_parent"
         android:layout_height="212dp" />
 </LinearLayout>

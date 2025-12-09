@@ -10,12 +10,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BotoneDireccion">
+        android:theme="@style/Theme.EVA"
+        tools:targetApi="31">
         <activity
             android:name=".NebActivity"
             android:exported="false" />
         <activity
             android:name=".ErcActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
