@@ -1,8 +1,11 @@
-package com.example.eva;
+package com.example.dadosclase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +14,21 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 
-public class MainActivity extends AppCompatActivity {
-    FrgDado dado1,dado2;
-    TextView nTiradas;
-    Button btnStart;
-    int numTiradas;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class MainActivity extends AppCompatActivity implements FrgDado.OnFrgDado {
+    int[] ids = {R.id.dado1, R.id.dado2};
+    FrgDado[] dados = new FrgDado[ids.length];
+    TextView textTiradas;
+    Button btnEmpezar;
+    boolean empezar = false;
+    int nTiradas;
+    int dificultad;
+    int rachaMax;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,25 +40,50 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        nTiradas = findViewById(R.id.textView);
-        btnStart = findViewById(R.id.buttonStart);
+        int i = 0;
         FragmentManager fm = getSupportFragmentManager();
-        dado1 = (FrgDado) fm.findFragmentById(R.id.dado1);
-        dado2 = (FrgDado) fm.findFragmentById(R.id.dado2);
+        for(int id : ids){
+            FrgDado dado = (FrgDado) fm.findFragmentById(id);
+            dado.setnCaras(6);
+            dado.setOnFrgDadoListener(this);
+            dados[i++] = dado;
+        }
+        textTiradas = findViewById(R.id.textTiradas);
+        btnEmpezar = findViewById(R.id.btnEmpezar);
 
-        dado1.setnSides(6);
-        dado2.setnSides(6);
+        btnEmpezar.setOnClickListener(v -> {
+            empezar = !empezar;
+        });
 
-        FrgDado.OnFrgDadoListener listener = new FrgDado.OnFrgDadoListener() {
-            @Override
-            public void OnRoll(int numero, int streak, FrgDado d) {
-                numTiradas++;
-                nTiradas.setText(String.valueOf(numTiradas - 2));
-            }
-        };
-
-        dado1.setOnFrgDadoListener(listener);
-        dado2.setOnFrgDadoListener(listener);
-
+        for (FrgDado d: dados) {
+            dificultad+=d.getnCaras();
+        }
     }
+
+    @Override
+    public void onTirada(FrgDado dado, int numero, int racha) {
+        if (empezar){
+            nTiradas++;
+            textTiradas.setText(String.valueOf(String.valueOf(nTiradas)));
+            for (FrgDado d: dados) {
+                if (racha > rachaMax){
+                    rachaMax = racha;
+                }
+                if (d.getNumero() != numero){
+                    return;
+                }
+            }
+            Toast.makeText(this, "Has ganado!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ResultadosActivity.class);
+            intent.putExtra("nTiradas", nTiradas);
+            intent.putExtra("rachaMax", rachaMax);
+            intent.putExtra("dificultad", dificultad);
+            startActivity(intent);
+            empezar = false;
+            nTiradas = 0;
+            rachaMax = 0;
+            textTiradas.setText(String.valueOf(""));
+        }
+    }
+
 }
