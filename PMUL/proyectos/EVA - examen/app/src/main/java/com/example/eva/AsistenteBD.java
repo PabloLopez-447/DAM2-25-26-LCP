@@ -5,68 +5,92 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-    public class AsistenteBD extends SQLiteOpenHelper {
+public class AsistenteBD extends SQLiteOpenHelper {
 
-        private static final String NOMBRE_BD = "juegosBtnDir.db";
-        private static final int VERSION_BD = 2;
+    private static final String NOMBRE_BD = "canales.db";
+    private static final int VERSION_BD = 5;
 
-        public AsistenteBD(Context context) {
-            super(context, NOMBRE_BD, null, VERSION_BD);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-//            String sqlCreateEscapeRoom =
-//                    "CREATE TABLE EscapeRoom (" +
-//                            "codRoom INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                            "nombre TEXT, " +
-//                            "solucion TEXT)";
-//            db.execSQL(sqlCreateEscapeRoom);
-//
-//            String sqlCreateLibro =
-//                    "CREATE TABLE Libro (" +
-//                            "codLibro INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                            "nombre TEXT, " +
-//                            "fila INTEGER, " +
-//                            "columna INTEGER, " +
-//                            "descripcion TEXT)";
-//            db.execSQL(sqlCreateLibro);
-//
-//            ContentValues cv = new ContentValues();
-//            cv.put("nombre", "Salir por el ascensor");
-//            cv.put("solucion", "UR");
-//            db.insert("EscapeRoom", null, cv);
-//
-//            cv.clear();
-//            cv.put("nombre", "Camino del baño");
-//            cv.put("solucion", "ULLRL");
-//            db.insert("EscapeRoom", null, cv);
-//
-//            insertarLibro(db, "El Quijote", 1, 1, "Novela clásica de Cervantes");
-//            insertarLibro(db, "Cien años de soledad", 1, 2, "Obra de Gabriel García Márquez");
-//            insertarLibro(db, "La sombra del viento", 1, 3, "Novela de Carlos Ruiz Zafón");
-//            insertarLibro(db, "1984", 2, 1, "Distopía de George Orwell");
-//            insertarLibro(db, "Rebelión en la granja", 2, 2, "Sátira política");
-//            insertarLibro(db, "El principito", 2, 3, "Cuento filosófico");
-//            insertarLibro(db, "Harry Potter", 3, 1, "Saga de magia");
-//            insertarLibro(db, "El señor de los anillos", 3, 2, "Fantasía épica");
-//            insertarLibro(db, "Crónica de una muerte anunciada", 3, 3, "Novela corta");
-//            insertarLibro(db, "Drácula", 4, 1, "Novela de terror");
-        }
-
-//        private void insertarLibro(SQLiteDatabase db, String nombre, int fila, int columna, String descripcion) {
-//            ContentValues cv = new ContentValues();
-//            cv.put("nombre", nombre);
-//            cv.put("fila", fila);
-//            cv.put("columna", columna);
-//            cv.put("descripcion", descripcion);
-//            db.insert("Libro", null, cv);
-//        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//            db.execSQL("DROP TABLE IF EXISTS EscapeRoom");
-//            db.execSQL("DROP TABLE IF EXISTS Libro");
-            onCreate(db);
-        }
+    public AsistenteBD(Context context) {
+        super(context, NOMBRE_BD, null, VERSION_BD);
     }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String sqlCreateCanal =
+                "CREATE TABLE Canal (" +
+                        "codCanal INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "nombre TEXT, " +
+                        "precioBase INTEGER, " +
+                        "precioPorVisualizacion INTEGER, " +
+                        "visibilidad TEXT)";
+        db.execSQL(sqlCreateCanal);
+
+        String sqlCreateBar =
+                "CREATE TABLE Bar (" +
+                        "codBar INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "nombre TEXT)";
+        db.execSQL(sqlCreateBar);
+
+        String sqlCreateSuscripcion =
+                "CREATE TABLE Suscripcion (" +
+                        "codSuscripcion INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "codBar INTEGER, " +
+                        "codCanal INTEGER, " +
+                        "nomCanal TEXT, " +
+                        "precioBase INTEGER, " +
+                        "precioPorVisualizacion INTEGER, " +
+                        "nVisualizaciones INTEGER)";
+        db.execSQL(sqlCreateSuscripcion);
+
+        insertarBar(db, "Bar 1");
+        insertarCanal(db, "La 1", 0, 0, "Público");
+        insertarCanal(db, "La 2", 0, 0, "Público");
+        insertarCanal(db, "F1", 10, 2, "Privado");
+        insertarCanal(db, "Moto GP", 5, 1, "Privado");
+        insertarCanal(db, "Champions", 50, 6, "Privado");
+        insertarCanal(db, "Liga", 120, 5, "Privado");
+        insertarCanal(db, "Caza y Pesca", 7, 3, "Privado");
+        insertarSuscripcion(db, 1, 3, "F1", 10, 2, 1);
+        insertarSuscripcion(db, 1, 4, "Moto GP", 5, 1, 2);
+        insertarSuscripcion(db, 1, 7, "Caza y Pesca", 7, 3, 3);
+    }
+
+    void insertarCanal(SQLiteDatabase db, String nombre, int precioBase, int precioPorVisualizacion, String visibilidad) {
+        ContentValues cv = new ContentValues();
+        cv.put("nombre", nombre);
+        cv.put("precioBase", precioBase);
+        cv.put("precioPorVisualizacion", precioPorVisualizacion);
+        cv.put("visibilidad", visibilidad);
+        db.insert("Canal", null, cv);
+    }
+
+    void insertarBar(SQLiteDatabase db, String nombre) {
+        ContentValues cv = new ContentValues();
+        cv.put("nombre", nombre);
+        db.insert("Bar", null, cv);
+    }
+
+    void insertarSuscripcion(SQLiteDatabase db, int codBar, int codCanal, String nombreCanal, int precioBase, int precioPorVisualizacion, int nVisualizaciones) {
+        ContentValues cv = new ContentValues();
+        cv.put("codBar", codBar);
+        cv.put("codCanal", codCanal);
+        cv.put("nomCanal", nombreCanal);
+        cv.put("nVisualizaciones", nVisualizaciones);
+        cv.put("precioBase", precioBase);
+        cv.put("precioPorVisualizacion", precioPorVisualizacion);
+        db.insert("Suscripcion", null, cv);
+    }
+
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        reset(db);
+    }
+
+    public void reset(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS Canal");
+        db.execSQL("DROP TABLE IF EXISTS Bar");
+        db.execSQL("DROP TABLE IF EXISTS Suscripcion");
+        onCreate(db);
+    }
+}
