@@ -1,7 +1,9 @@
-package UD2;
+package UD2.empresa25.logica;
 
-import UD2.clases.Departamento;
-import UD2.clases.Proyecto;
+import UD2.empresa25.clases.Departamento;
+import UD2.empresa25.clases.Proyecto;
+import UD2.empresa25.otros.TipoSGBD;
+import UD2.empresa25.persistencia.GestorConexion;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package UD2.clases;
+package UD2.empresa25.clases;
 
 public class Departamento {
 
@@ -10,6 +10,11 @@ public class Departamento {
         this.numDepartamento = numDepartamento;
         this.nombre = nombre;
         this.nssDirector = nssDirector;
+    }
+
+    public Departamento(int numDepartamento, String nomeDepartamento) {
+        this.numDepartamento = numDepartamento;
+        this.nombre = nomeDepartamento;
     }
 
     public int getNumDepartamento() { return numDepartamento; }

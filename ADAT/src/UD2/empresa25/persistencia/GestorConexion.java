@@ -1,4 +1,6 @@
-package UD2;
+package UD2.empresa25.persistencia;
+
+import UD2.empresa25.otros.TipoSGBD;
 
 import java.sql.*;
 

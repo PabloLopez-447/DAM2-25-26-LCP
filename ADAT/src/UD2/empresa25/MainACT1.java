@@ -1,8 +1,12 @@
-package UD2;
+package UD2.empresa25;
+
+import UD2.empresa25.logica.EmpresaDAO;
+import UD2.empresa25.otros.TipoSGBD;
+import UD2.empresa25.persistencia.GestorConexion;
 
 import java.sql.Connection;
 
-public class Main {
+public class MainACT1 {
 
     public static void main(String[] args) {
 

@@ -1,4 +1,4 @@
-package UD2.clases;
+package UD2.empresa25.clases;
 
 public class Proyecto {
 
