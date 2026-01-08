@@ -16,8 +16,8 @@ public class Cliente extends Thread {
 
         while ((posibleCoche = vendedor.darCoche()) != null) {
             if (posibleCoche.intentaComprar(this)) {
-                vendedor.removeCoche(posibleCoche);
-                break;
+                vendedor.removeCoche(posibleCoche); // En vez de borrar el coche de la lista deberia tener un boolean ocupado
+                break;                              //que se ponga a true cuando un cliente este intentando comprarlo y se deja a true si lo compra o lo pone a false si no
             }
         }
     }
