@@ -27,7 +27,11 @@ public class GestorConexion {
         };
 
         if (tipo == TipoSGBD.SQLITE) {
-            return DriverManager.getConnection(url);
+            Connection con = DriverManager.getConnection(url);
+            try (Statement st = con.createStatement()){
+                st.execute("PRAGMA foreign_keys=ON;");
+            }
+            return con;
         } else {
             return DriverManager.getConnection(url, usuario, pass);
         }

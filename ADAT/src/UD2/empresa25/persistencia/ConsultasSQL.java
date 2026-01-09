@@ -22,20 +22,20 @@ public class ConsultasSQL {
     }
 
     public ResultSet ejercicio2() {
-        String sql = "SELECT DISTINCT d.NumDepartamento,\n" +
-                "                d.NomeDepartamento,\n" +
-                "                e.Nome,' ' ,\n" +
-                "                e.Apelido1,' ' ,\n" +
-                "                COALESCE(e.Apelido2, '') AS NOMECOMPLETO\n" +
-                "FROM departamento d\n" +
-                "         INNER JOIN empregado e\n" +
-                "                    ON e.NSS = d.NSSDirector\n" +
-                "         INNER JOIN proxecto p\n" +
-                "                    ON d.NumDepartamento = p.NumDepartControla;"; //corregir consulta nga
+        String sql = "SELECT d.NumDepartamento, d.NomeDepartamento, e.Nome, e.Apelido1, e.Apelido2 FROM DEPARTAMENTO d JOIN EMPREGADO e ON d.NSSDIRECTOR = e.NSS WHERE EXISTS (SELECT 1 FROM EMPLEADO_PROXECTO ep WHERE ep.NSSEmpregado=e.NSS)";
         try{
             return GestorConexion.ejecutarConsulta(con, sql);
         }
         catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ResultSet ejercicio3() {
+        String sql = "";
+        try {
+            return GestorConexion.ejecutarConsulta(con, sql);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

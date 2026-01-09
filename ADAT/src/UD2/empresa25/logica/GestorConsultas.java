@@ -1,6 +1,7 @@
 package UD2.empresa25.logica;
 
 import UD2.empresa25.clases.Departamento;
+import UD2.empresa25.dtos.DepartamentoDirectorDTO;
 import UD2.empresa25.persistencia.ConsultasSQL;
 
 import java.sql.Connection;
@@ -31,5 +32,18 @@ public class GestorConsultas {
         }
 
         return departamentos;
+    }
+
+    public List<DepartamentoDirectorDTO> exEjercicio2() throws SQLException {
+        List<DepartamentoDirectorDTO> departamentosDirector = new ArrayList<>();
+        try (ResultSet rs = consultasSQL.ejercicio2()) {
+            while (rs.next()) {
+                departamentosDirector.add(new DepartamentoDirectorDTO(
+                        rs.getInt("NumDepartamento"),
+                        rs.getString("NomeDepartamento"),
+                        rs.getString("Nome")));
+            }
+        }
+        return departamentosDirector;
     }
 }
