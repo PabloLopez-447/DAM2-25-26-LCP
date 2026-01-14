@@ -37,8 +37,8 @@ public class Prueba extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		ConfirmCheckBox confirmCheckBox = new ConfirmCheckBox((String) null);
-		contentPane.add(confirmCheckBox);
+		LockableCheckBox lckblchckbxNiga = new LockableCheckBox((String) null);
+		contentPane.add(lckblchckbxNiga);
 
 	}
 
