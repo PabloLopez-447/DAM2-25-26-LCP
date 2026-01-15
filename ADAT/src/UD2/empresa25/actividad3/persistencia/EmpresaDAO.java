@@ -1,11 +1,10 @@
 package UD2.empresa25.actividad3.persistencia;
 
 import UD2.empresa25.actividad3.clases.*;
-import UD2.empresa25.persistencia.GestorConexion;
 import UD2.empresa25.otros.TipoSGBD;
+import UD2.empresa25.persistencia.GestorConexion;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.List;
 
 public class EmpresaDAO {
@@ -306,4 +305,6 @@ public class EmpresaDAO {
         ps.setInt(1, min);
         return ps.executeQuery();
     }
+
+    // Extra: borrar un empleado -> Reflexiva y todas las tablas en las que pueda ser referenciado
 }
