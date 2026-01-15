@@ -1,11 +1,8 @@
-package UD2.Ejercicios.clienteMultihilo;
+package UD2.Sockets.Ejercicios.clienteMultihilo;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 
 public class ServidorMuchosClientes extends Thread {
     int puerto = 7; // puerto ECHO

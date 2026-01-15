@@ -1,4 +1,4 @@
-package UD2.Ejemplos;
+package UD2.Sockets.Ejemplos;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

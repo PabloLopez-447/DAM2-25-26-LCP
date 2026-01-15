@@ -1,4 +1,4 @@
-package UD2.Ejercicios.clienteSimple;
+package UD2.Sockets.Ejercicios.clienteSimple;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,4 +1,4 @@
-package UD2.Ejercicios.clienteMultihilo;
+package UD2.Sockets.Ejercicios.clienteMultihilo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

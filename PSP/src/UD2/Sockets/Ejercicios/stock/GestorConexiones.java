@@ -1,4 +1,4 @@
-package UD2.Ejercicios.stock;
+package UD2.Sockets.Ejercicios.stock;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package UD2.Ejercicios.stock;
+package UD2.Sockets.Ejercicios.stock;
 
 public class Config {
     static final int PUERTO = 5000;
