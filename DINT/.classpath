@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="//lapaman/alumnos/plopecous/mis_documentos_windows/descargas/okhttp-3.14.9.jar"/>
 	<classpathentry kind="lib" path="//lapaman/alumnos/plopecous/mis_documentos_windows/descargas/okio-1.17.6.jar"/>
 	<classpathentry kind="lib" path="//lapaman/alumnos/plopecous/mis_documentos_windows/descargas/json-20250517.jar"/>
+	<classpathentry kind="lib" path="CustomRadioButton.jar"/>
+	<classpathentry kind="lib" path="MobileJList.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

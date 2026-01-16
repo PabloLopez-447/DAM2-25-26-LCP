@@ -8,7 +8,7 @@ public class SupabaseConfig {
     // Cambia id_proyecto y supabase_annon_key por las credenciales de tu proyecto en Supabase.
 
     public static final String SUPABASE_URL = "https://<id_proyecto>.supabase.co";
-    public static final String SUPABASE_KEY = "<supabase_annon_key>" 
+    public static final String SUPABASE_KEY = "<supabase_annon_key>";
 	 // En el terminal de Windows (set o setx)
 	 // set SUPABASE_KEY=mi_clave_aqui
 	 // set id_proyecto=id_proyecto

@@ -1,4 +1,4 @@
-package customCheckBox;
+package gggggg;
 
 import java.awt.EventQueue;
 
@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class Prueba extends JFrame {
+public class Ggggg extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -18,7 +18,7 @@ public class Prueba extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Prueba frame = new Prueba();
+					Ggggg frame = new Ggggg();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,15 +30,12 @@ public class Prueba extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Prueba() {
+	public Ggggg() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
-		LockableCheckBox lckblchckbxNiga = new LockableCheckBox((String) null);
-		contentPane.add(lckblchckbxNiga);
 
 	}
 
