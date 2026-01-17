@@ -1,4 +1,4 @@
-package UD2.empresa25.otros;
+package UD2.empresa25;
 
 public enum TipoSGBD {
     SQLSERVER,

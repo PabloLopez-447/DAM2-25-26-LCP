@@ -1,8 +1,8 @@
-package UD2.empresa25;
+package UD2.empresa25.actividad1;
 
-import UD2.empresa25.logica.EmpresaDAO;
-import UD2.empresa25.otros.TipoSGBD;
-import UD2.empresa25.persistencia.GestorConexion;
+import UD2.empresa25.actividad1.logica.EmpresaDAO;
+import UD2.empresa25.TipoSGBD;
+import UD2.empresa25.ordenar.persistencia.GestorConexion;
 
 import java.sql.Connection;
 
@@ -12,10 +12,10 @@ public class MainACT1 {
 
 //         CAMBIA AQUÍ EL SGBD QUE QUIERAS PROBAR
 //         --- Para SQLite ---
-        TipoSGBD tipo = TipoSGBD.SQLITE;
-        String bd = "C:\\sqlite3\\bdempresa25.db";
-        String user = null;
-        String pass = null;
+//        TipoSGBD tipo = TipoSGBD.SQLITE;
+//        String bd = "C:\\sqlite3\\bdempresa25.db";
+//        String user = null;
+//        String pass = null;
 
 //         --- Para MySQL ---
 //         TipoSGBD tipo = TipoSGBD.MYSQL;
@@ -24,10 +24,10 @@ public class MainACT1 {
 //         String pass = "abc123.";
 
 //         --- Para SQL Server ---
-//         TipoSGBD tipo = TipoSGBD.SQLSERVER;
-//         String bd = "BDEMPRESA25";
-//         String user = "sa";
-//         String pass = "abc123.";
+         TipoSGBD tipo = TipoSGBD.SQLSERVER;
+         String bd = "BDEMPRESA25";
+         String user = "sa";
+         String pass = "abc123.";
 
         try (Connection con = GestorConexion.getConnection(tipo, bd, user, pass)) {
 

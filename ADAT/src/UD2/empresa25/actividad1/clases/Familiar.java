@@ -1,4 +1,4 @@
-package UD2.empresa25.clases;
+package UD2.empresa25.actividad1.clases;
 
 import java.time.LocalDate;
 

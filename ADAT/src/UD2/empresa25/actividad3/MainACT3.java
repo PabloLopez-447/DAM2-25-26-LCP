@@ -1,72 +1,46 @@
 package UD2.empresa25.actividad3;
 
-import UD2.empresa25.actividad3.clases.*;
 import UD2.empresa25.actividad3.logica.GestorEmpresa;
+import UD2.empresa25.actividad3.persistencia.EmpresaDAO;
+import UD2.empresa25.ordenar.persistencia.GestorConexion;
+import UD2.empresa25.TipoSGBD;
 
-import java.time.LocalDate;
-import java.util.Arrays;
+import java.sql.Connection;
+import java.sql.Date;
 import java.util.List;
 
 public class MainACT3 {
 
     public static void main(String[] args) {
 
-        GestorEmpresa gestor = new GestorEmpresa();
+        String bd = "BDEMPRESA25";
+        String user = "sa";
+        String pass = "abc123.";
 
-        System.out.println("===== EJERCICIO 1: ALTA FAMILIAR =====");
-        Familiar fam = new Familiar(
-                "1111111",
-                "9999999",
-                "Lucia",
-                "Lopez Perez",
-                LocalDate.of(2010, 5, 12),
-                "Hija",
-                'M'
-        );
-        gestor.altaFamiliar(fam);
+        try (Connection con = GestorConexion.getConnection(TipoSGBD.SQLSERVER, bd, user, pass)) {
 
-        System.out.println("\n===== EJERCICIO 2: ALTA VEHÍCULOS =====");
-        VehiculoPropio vp = new VehiculoPropio(
-                "1234ABC",
-                "Toyota",
-                "Corolla",
-                "G",
-                LocalDate.of(2023, 5, 15),
-                15000
-        );
-        gestor.altaVehiculo(vp);
+            EmpresaDAO dao = new EmpresaDAO(con);
+            GestorEmpresa gestor = new GestorEmpresa(dao);
 
-        VehiculoRenting vr = new VehiculoRenting(
-                "5678XYZ",
-                "Ford",
-                "Fiesta",
-                "D",
-                LocalDate.of(2023, 7, 1),
-                200,
-                24
-        );
-        gestor.altaVehiculo(vr);
+            gestor.altaFamiliar("1111111", "F001", "Luis", "López Pérez",
+                    Date.valueOf("2010-05-10"), "Fillo", 'H');
 
-        System.out.println("\n===== EJERCICIO 3: CAMBIAR DEPARTAMENTO PROYECTO =====");
-        gestor.moverProyecto("INNOVACIÓN", "PROXECTO X");
+            gestor.insertarVehiculoPropio(
+                    "1234ABC", "Toyota", "Corolla", "G",
+                    Date.valueOf("2023-05-15"), 15000
+            );
 
-        System.out.println("\n===== EJERCICIO 4: ELIMINAR PROYECTO =====");
-        gestor.borrarProyecto(11);
+            gestor.insertarVehiculoRenting(
+                    "5678XYZ", "Ford", "Fiesta", "D",
+                    Date.valueOf("2023-07-01"), 200, 24
+            );
 
-        System.out.println("\n===== EJERCICIO 5: INCREMENTO SALARIOS (BATCH) =====");
-        List<String> nss = Arrays.asList("0010010", "0110010", "0999900");
-        gestor.subirSalarios(100, nss);
+            gestor.cambiarDeptoProyecto("INNOVACIÓN", "PORTAL");
 
-        System.out.println("\n===== EJERCICIO 6: ALTA PROYECTO CON RESULTSET =====");
-        Proxecto p = new Proxecto(20, "NUEVO PROYECTO JDBC", "VIGO", 3);
-        gestor.altaProyecto(p);
+            gestor.incrementarSalarios(100, List.of("1010001", "1100222"));
 
-        System.out.println("\n===== EJERCICIO 7: SUBIDA POR DEPARTAMENTO =====");
-        gestor.subirSalariosDepartamento(50, 3);
-
-        System.out.println("\n===== EJERCICIO 8: CONSULTA SCROLLABLE =====");
-        gestor.ejecutarConsultaScrollable(1);
-
-        System.out.println("\n--- FIN DE PRUEBAS ---");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
