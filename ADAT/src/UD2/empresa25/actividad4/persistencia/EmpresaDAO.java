@@ -16,98 +16,113 @@ public class EmpresaDAO {
     public void crearObjetos() throws SQLException {
         try (Statement st = con.createStatement()) {
 
+            // ===== pr_CambioDomicilio =====
             st.execute("""
-                IF OBJECT_ID('pr_CambioDomicilio', 'P') IS NOT NULL DROP PROCEDURE pr_CambioDomicilio
-            """);
+            DROP PROCEDURE IF EXISTS pr_CambioDomicilio
+        """);
 
             st.execute("""
-                CREATE PROCEDURE pr_CambioDomicilio
-                    @NSS VARCHAR(15),
-                    @Rua VARCHAR(60),
-                    @Numero VARCHAR(10),
-                    @Piso VARCHAR(10),
-                    @CP VARCHAR(10),
-                    @Localidade VARCHAR(40)
-                AS
-                BEGIN
-                    UPDATE EMPREGADO
-                    SET Rua=@Rua, Numero=@Numero, Piso=@Piso, CodPostal=@CP, Localidade=@Localidade
-                    WHERE NSS=@NSS
-                END
-            """);
+            CREATE PROCEDURE pr_CambioDomicilio
+                @NSS VARCHAR(15),
+                @Rua VARCHAR(60),
+                @Piso VARCHAR(60),
+                @Numero VARCHAR(60),
+                @CP VARCHAR(10),
+                @Localidade VARCHAR(40)
+            AS
+            BEGIN
+                UPDATE EMPREGADO
+                SET Rua = @Rua,
+                    Piso = @Piso,
+                    Numero_Calle = @Numero,
+                    CP = @CP,
+                    Localidade = @Localidade
+                WHERE NSS = @NSS
+            END
+        """);
+
+            // ===== pr_DatosProxectos =====
+            st.execute("""
+            DROP PROCEDURE IF EXISTS pr_DatosProxectos
+        """);
 
             st.execute("""
-                IF OBJECT_ID('pr_DatosProxectos', 'P') IS NOT NULL DROP PROCEDURE pr_DatosProxectos
-            """);
+            CREATE PROCEDURE pr_DatosProxectos
+                @Num INT,
+                @Nome VARCHAR(60) OUT,
+                @Lugar VARCHAR(40) OUT,
+                @Depto VARCHAR(60) OUT
+            AS
+            BEGIN
+                SELECT @Nome = p.NomeProxecto,
+                       @Lugar = p.Lugar,
+                       @Depto = p.NumDepartControla
+                FROM PROXECTO p
+                JOIN DEPARTAMENTO d ON p.NumDepartControla = d.NumDepartamento
+                WHERE p.NumProxecto = @Num
+            END
+        """);
+
+            // ===== pr_DepartControlaProxec =====
+            st.execute("""
+            DROP PROCEDURE IF EXISTS pr_DepartControlaProxec
+        """);
 
             st.execute("""
-                CREATE PROCEDURE pr_DatosProxectos
-                    @Num INT,
-                    @Nome VARCHAR(60) OUT,
-                    @Lugar VARCHAR(40) OUT,
-                    @Depto VARCHAR(60) OUT
-                AS
-                BEGIN
-                    SELECT @Nome = p.NomeProxecto,
-                           @Lugar = p.Lugar,
-                           @Depto = d.NomeDepartamento
-                    FROM PROXECTO p
-                    JOIN DEPARTAMENTO d ON p.NumDepartControla = d.NumDepartamento
-                    WHERE p.NumProxecto = @Num
-                END
-            """);
+            CREATE PROCEDURE pr_DepartControlaProxec
+                @N INT
+            AS
+            BEGIN
+                SELECT d.NumDepartamento, d.NomeDepartamento, COUNT(*) AS Total
+                FROM DEPARTAMENTO d
+                JOIN PROXECTO p ON d.NumDepartamento = p.NumDepartControla
+                GROUP BY d.NumDepartamento, d.NomeDepartamento
+                HAVING COUNT(*) >= @N
+            END
+        """);
+
+            // ===== fn_nEmpDepart =====
+            st.execute("""
+            DROP FUNCTION IF EXISTS fn_nEmpDepart
+        """);
 
             st.execute("""
-                IF OBJECT_ID('pr_DepartControlaProxec', 'P') IS NOT NULL DROP PROCEDURE pr_DepartControlaProxec
-            """);
-
-            st.execute("""
-                CREATE PROCEDURE pr_DepartControlaProxec
-                    @N INT
-                AS
-                BEGIN
-                    SELECT d.NumDepartamento, d.NomeDepartamento, COUNT(*) AS Total
-                    FROM DEPARTAMENTO d
-                    JOIN PROXECTO p ON d.NumDepartamento = p.NumDepartControla
-                    GROUP BY d.NumDepartamento, d.NomeDepartamento
-                    HAVING COUNT(*) >= @N
-                END
-            """);
-
-            st.execute("""
-                IF OBJECT_ID('fn_nEmpDepart', 'FN') IS NOT NULL DROP FUNCTION fn_nEmpDepart
-            """);
-
-            st.execute("""
-                CREATE FUNCTION fn_nEmpDepart(@NomeDepto VARCHAR(60))
-                RETURNS INT
-                AS
-                BEGIN
-                    DECLARE @n INT;
-                    SELECT @n = COUNT(*)
-                    FROM EMPREGADO e
-                    JOIN DEPARTAMENTO d ON e.NumDepartamento = d.NumDepartamento
-                    WHERE d.NomeDepartamento = @NomeDepto;
-                    RETURN ISNULL(@n,0);
-                END
-            """);
+            CREATE FUNCTION fn_nEmpDepart(@NomeDepto VARCHAR(60))
+            RETURNS INT
+            AS
+            BEGIN
+                DECLARE @n INT;
+                SELECT @n = COUNT(*)
+                FROM EMPREGADO e
+                JOIN DEPARTAMENTO d ON e.NumDepartamentoPertenece = d.NumDepartamento
+                WHERE d.NomeDepartamento = @NomeDepto;
+                RETURN ISNULL(@n, 0);
+            END
+        """);
         }
     }
+
 
     // =========================
     // EJERCICIO 1
     // =========================
-    public void cambioDomicilio(String nss, String rua, String num, String piso, String cp, String loc) throws SQLException {
-        try (CallableStatement cs = con.prepareCall("{call pr_CambioDomicilio(?,?,?,?,?,?)}")) {
+    public void cambioDomicilio(String nss, String rua, String piso,
+                                String numero, String cp, String loc)
+            throws SQLException {
+
+        try (CallableStatement cs =
+                     con.prepareCall("{call pr_CambioDomicilio(?,?,?,?,?,?)}")) {
+
             cs.setString(1, nss);
             cs.setString(2, rua);
-            cs.setString(3, num);
-            cs.setString(4, piso);
+            cs.setString(3, piso);
+            cs.setString(4, numero);
             cs.setString(5, cp);
             cs.setString(6, loc);
             cs.execute();
         }
     }
+
 
     // =========================
     // EJERCICIO 2

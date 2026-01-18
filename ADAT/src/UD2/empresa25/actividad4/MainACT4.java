@@ -22,7 +22,7 @@ public class MainACT4 {
 
             gestor.inicializar();
 
-            gestor.cambiarDomicilio("1111111", "Nova Rúa", "12", "3A", "36201", "Vigo");
+            gestor.cambiarDomicilio("1111111", "Nova Rúa", "3A", "12", "36201", "Vigo");
             gestor.mostrarDatosProxecto(1);
             gestor.departamentosConProxectos(1);
             gestor.numeroEmpDepartamento("INNOVACIÓN");

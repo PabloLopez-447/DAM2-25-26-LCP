@@ -54,9 +54,9 @@ public class EmpresaDAO{
     // Ejercicio 3
     public List<EmpleadoEdadDTO> empregadosConIdade() throws SQLException {
         String sql = """
-            SELECT NSS, Nome, Apelido1 + ISNULL(e.Apelido2, ''),
-                   DATEDIFF(YEAR, DataNacemento, GETDATE())
-            FROM EMPREGADO
+            SELECT e.NSS, e.Nome + ' ' + e.Apelido1 + ' ' + ISNULL(e.Apelido2,''),
+                   DATEDIFF(YEAR, DataNacemento, GETDATE()) AS IDADE
+            FROM EMPREGADO e
         """;
         List<EmpleadoEdadDTO> res = new ArrayList<>();
         try (PreparedStatement ps = con.prepareStatement(sql);
@@ -64,7 +64,7 @@ public class EmpresaDAO{
             while (rs.next()) {
                 res.add(new EmpleadoEdadDTO(
                         rs.getString(1), rs.getString(2),
-                        rs.getString(3), rs.getInt(5)));
+                        rs.getString(3), rs.getInt("IDADE")));
             }
         }
         return res;
@@ -74,7 +74,7 @@ public class EmpresaDAO{
     public List<EmpleadoTipoDTO> empregadosPorDepartamento(String nomeDepto) throws SQLException {
         String sql = """
             SELECT e.NSS, e.Nome + ' ' + e.Apelido1 + ' ' + ISNULL(e.Apelido2,''),
-                   CASE WHEN f.NSS IS NOT NULL THEN 'FIXO' ELSE 'TEMPORAL' END
+                   CASE WHEN f.NSS IS NOT NULL THEN 'FIXO' ELSE 'TEMPORAL' END AS TIPO
             FROM EMPREGADO e
             JOIN DEPARTAMENTO d ON e.NumDepartamentoPertenece = d.NumDepartamento
             LEFT JOIN EMPREGADOFIXO f ON e.NSS = f.NSS
@@ -86,7 +86,7 @@ public class EmpresaDAO{
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     res.add(new EmpleadoTipoDTO(
-                            rs.getString(1), rs.getString(2), rs.getString(5)));
+                            rs.getString(1), rs.getString(2), rs.getString("TIPO")));
                 }
             }
         }
@@ -167,7 +167,7 @@ public class EmpresaDAO{
     // Ejercicio 8
     public List<EmpleadoFijoDTO> fixosConSalarioMaior(double v) throws SQLException {
         String sql = """
-            SELECT e.NSS, e.Nome + ' ' + e.Apelido1 + ' ' + ISNULL(e.Apelido2,''), f.Salario
+            SELECT e.NSS, e.Nome + ' ' + e.Apelido1 + ' ' + ISNULL(e.Apelido2,''), f.Salario AS SALARIO
             FROM EMPREGADO e
             JOIN EMPREGADOFIXO f ON e.NSS = f.NSS
             WHERE f.Salario > ?
@@ -178,7 +178,7 @@ public class EmpresaDAO{
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     res.add(new EmpleadoFijoDTO(
-                            rs.getString(1), rs.getString(2), rs.getDouble(5)));
+                            rs.getString(1), rs.getString(2), rs.getDouble("SALARIO")));
                 }
             }
         }

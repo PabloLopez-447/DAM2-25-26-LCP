@@ -3,7 +3,7 @@ package UD2.empresa25.actividad1.logica;
 import UD2.empresa25.actividad1.clases.Departamento;
 import UD2.empresa25.actividad1.clases.Proyecto;
 import UD2.empresa25.TipoSGBD;
-import UD2.empresa25.ordenar.persistencia.GestorConexion;
+import UD2.empresa25.GestorConexion;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -70,21 +70,36 @@ public class EmpresaDAO {
 
         String drop = "DROP TABLE IF EXISTS FAMILIAR";
 
-        String create = """
-                CREATE TABLE FAMILIAR (
-                    NSS_EMP VARCHAR(15),
-                    NUM_FAM INTEGER,
-                    NSS_FAM VARCHAR(15),
-                    NOMBRE VARCHAR(50),
-                    APELLIDOS VARCHAR(80),
-                    FECHA_NAC DATE, my nigga 
-                    PARENTESCO VARCHAR(30),
-                    SEXO CHAR(1) DEFAULT 'M',
-                    CONSTRAINT PK_FAMILIAR PRIMARY KEY (NSS_EMP, NUM_FAM),
-                    CONSTRAINT CK_FAMILIAR_SEXO CHECK (SEXO IN ('H','M'))
-                )
-                """;
-
+        String create = switch (tipo) {
+            case SQLSERVER -> """
+            CREATE TABLE FAMILIAR (
+                NSS_EMP VARCHAR(15),
+                NUM_FAM INT,
+                NSS_FAM VARCHAR(15),
+                NOMBRE VARCHAR(50),
+                APELLIDOS VARCHAR(80),
+                FECHA_NAC DATE,
+                PARENTESCO VARCHAR(30),
+                SEXO CHAR(1) DEFAULT 'M',
+                CONSTRAINT PK_FAMILIAR PRIMARY KEY (NSS_EMP, NUM_FAM),
+                CONSTRAINT CK_FAMILIAR_SEXO CHECK (SEXO IN ('H','M'))
+            )
+            """;
+            default -> """
+            CREATE TABLE FAMILIAR (
+                NSS_EMP VARCHAR(15),
+                NUM_FAM INTEGER,
+                NSS_FAM VARCHAR(15),
+                NOMBRE VARCHAR(50),
+                APELLIDOS VARCHAR(80),
+                FECHA_NAC DATE,
+                PARENTESCO VARCHAR(30),
+                SEXO CHAR(1) DEFAULT 'M',
+                CONSTRAINT PK_FAMILIAR PRIMARY KEY (NSS_EMP, NUM_FAM),
+                CONSTRAINT CK_FAMILIAR_SEXO CHECK (SEXO IN ('H','M'))
+            )
+            """;
+        };
 
         try (Statement st = con.createStatement()) {
             st.execute(drop);
