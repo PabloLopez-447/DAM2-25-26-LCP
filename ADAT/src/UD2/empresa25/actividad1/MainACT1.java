@@ -2,7 +2,7 @@ package UD2.empresa25.actividad1;
 
 import UD2.empresa25.actividad1.logica.EmpresaDAO;
 import UD2.empresa25.TipoSGBD;
-import UD2.empresa25.ordenar.persistencia.GestorConexion;
+import UD2.empresa25.GestorConexion;
 
 import java.sql.Connection;
 
