@@ -99,7 +99,29 @@ public class EmpresaDAO {
                 RETURN ISNULL(@n, 0);
             END
         """);
+
+
+            // ===== fn_nEmpDepart =====
+            st.execute("""
+            DROP FUNCTION IF EXISTS fn_tipoEmp
+        """);
+
+            st.execute("""
+            CREATE FUNCTION fn_tipoEmp(@NSS VARCHAR(60))
+            RETURNS VARCHAR
+            AS
+            BEGIN
+                DECLARE @TIPO VARCHAR(60);
+                SELECT @TIPO =
+                       CASE WHEN EXISTS(SELECT 1 FROM EMPREGADOFIXO WHERE NSS = @NSS)
+                           THEN 'FIXO'
+                           ELSE 'TEMPORAL'
+                           END;
+                RETURN @TIPO;
+            END
+        """);
         }
+
     }
 
 
@@ -172,6 +194,18 @@ public class EmpresaDAO {
             cs.setString(2, nome);
             cs.execute();
             return cs.getInt(1);
+        }
+    }
+
+    // =========================
+    // EXTRA: TIPO EMPLEADO
+    // =========================
+    public String tipoEmpleado(String nss) throws SQLException{
+        try (CallableStatement cs = con.prepareCall("{? = call fn_tipoEmp(?)}")) {
+            cs.registerOutParameter(1, Types.VARCHAR);
+            cs.setString(2, nss);
+            cs.execute();
+            return cs.getString(1);
         }
     }
 }

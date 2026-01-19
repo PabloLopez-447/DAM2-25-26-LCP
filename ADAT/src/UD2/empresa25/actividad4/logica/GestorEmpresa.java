@@ -2,6 +2,8 @@ package UD2.empresa25.actividad4.logica;
 
 import UD2.empresa25.actividad4.persistencia.EmpresaDAO;
 
+import java.sql.SQLException;
+
 public class GestorEmpresa {
 
     private final EmpresaDAO dao;
@@ -53,6 +55,16 @@ public class GestorEmpresa {
             int n = dao.numeroEmpDepartamento(nome);
             System.out.println("Número de empregados: " + n);
         } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void tipoEmpleado(String nss){
+        try {
+            String tipo = dao.tipoEmpleado(nss);
+            System.out.println(tipo);
+
+        } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         }
     }

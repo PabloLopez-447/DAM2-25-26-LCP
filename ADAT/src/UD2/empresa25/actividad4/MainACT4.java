@@ -1,9 +1,9 @@
 package UD2.empresa25.actividad4;
 
-import UD2.empresa25.actividad4.logica.GestorEmpresa;
-import UD2.empresa25.actividad4.persistencia.EmpresaDAO;
 import UD2.empresa25.GestorConexion;
 import UD2.empresa25.TipoSGBD;
+import UD2.empresa25.actividad4.logica.GestorEmpresa;
+import UD2.empresa25.actividad4.persistencia.EmpresaDAO;
 
 import java.sql.Connection;
 
@@ -26,6 +26,7 @@ public class MainACT4 {
             gestor.mostrarDatosProxecto(1);
             gestor.departamentosConProxectos(1);
             gestor.numeroEmpDepartamento("INNOVACIÓN");
+            gestor.tipoEmpleado("1341431");
 
         } catch (Exception e) {
             e.printStackTrace();
