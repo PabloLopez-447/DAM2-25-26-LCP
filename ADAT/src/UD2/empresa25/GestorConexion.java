@@ -43,6 +43,23 @@ public class GestorConexion {
         return stmt.executeQuery();
     }
 
+    public static void ejecutarSentencia(Connection con, String consulta, Object... parametros) throws SQLException {
+        try (
+                PreparedStatement ps = con.prepareStatement(consulta)) {
+            setParametros(ps, parametros);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private static void setParametros(PreparedStatement ps, Object... parametros) throws SQLException {
+        for (int i = 0; i < parametros.length; i++) {
+            ps.setObject(i + 1, parametros[i]);
+        }
+    }
+
+
     public static void borrarTablas(Connection con, String... tablas) throws SQLException {
         try {
             con.setAutoCommit(false);
