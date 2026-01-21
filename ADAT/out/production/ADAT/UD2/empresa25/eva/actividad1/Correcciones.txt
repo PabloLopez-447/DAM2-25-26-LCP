@@ -1,0 +1,11 @@
+EMPRESADAO:
+    añadir constructor
+
+FAMILIAR:
+    añadir restriccion check el sexo
+
+COCHES:
+    - Es clases que extienden de un padre, NO se repite la clave en la clase de Java aunque salga en la tabla
+     en la sentencia SQL se pone como Foreign key normal
+
+    - Hay que hacer un constructor sin el id si ese valor es autoincremental

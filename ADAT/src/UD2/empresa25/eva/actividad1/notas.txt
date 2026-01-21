@@ -1,0 +1,22 @@
+DRIVERS:
+    añadir librerias al proyecto
+
+    conexión -> se añade en data source.
+
+    sqlite: driver de pepa + ruta (jdbc:sqlite:C:/sqlite3/bdempresa25.db)
+    mysql: driver de pepa + jdbc:mysql://localhost:3306/BDEmpresa25?serverTimezone=UT
+    sqlserver: driver de intellij + localhost / 1433 / BDEMPRESA25 -- BORRAR EL ANTERIOR
+                        - el de pepa no coge ApplicationName y asi no lo acepta intellij
+
+ESTRUCTURA:
+    model: clases de la BBDD
+    DTO: clases pequeñitas de transporte de objetos
+    persistencia - EmpresaDAO - acceso a la bbdd
+    lógica - GestorEmpresa - lógica de negocio
+    Main
+
+ACTIVIDAD 2:
+- cuándo se usan DTO
+
+- Notas generales:
+    GestorEmpresa = que tema anterior, aquí va un constructor EmpresaDAO = EmpresaDAO.
