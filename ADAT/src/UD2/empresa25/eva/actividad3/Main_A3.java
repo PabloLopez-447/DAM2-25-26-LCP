@@ -1,23 +1,25 @@
 package UD2.empresa25.eva.actividad3;
+import UD2.empresa25.eva.actividad2.model.Familiar;
 import UD2.empresa25.eva.actividad2.utiles.TipoSGBD;
 import UD2.empresa25.eva.actividad2.utiles.Utilidades;
+import UD2.empresa25.eva.actividad3.persistencia.EmpresaDAO;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
-public class Main_A3 {
+//public class Main_A3 {
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 
-        String bd = "BDEmpresa25";
-        String usuario = "sa";
-        String password = "abc123.";
-
-        try (Connection con =
-                     Utilidades.getConnection(TipoSGBD.SQLSERVER, bd, usuario, password)) {
-
-            //EmpresaDAO.ejercicio1(con, "0010010", "Eva", "Filla");
+//        String bd = "BDEmpresa25";
+//        String usuario = "sa";
+//        String password = "abc123.";
+//
+//        try (Connection con =
+//                     Utilidades.getConnection(TipoSGBD.SQLSERVER, bd, usuario, password)) {
+//
+//            EmpresaDAO.ejercicio1(con, "0010010", "Eva", "Filla");
 //            Familiar f = new Familiar("0010010","0011111","Eva","Otero Názara",Date.valueOf("1998-01-30"),"Filla", 'M');
 //
 //            EmpresaDAO.ejercicio1(con, f);
@@ -51,8 +53,8 @@ public class Main_A3 {
 //                    con, "1111111", "22333421"
 //            );
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
