@@ -36,7 +36,7 @@
         <property name="provincia" type="string">
             <column length="15" name="Provincia"/>
         </property>
-        <property name="dataNacemento" type="timestamp">
+        <property name="dataNacemento" type="java.time.LocalDate">
             <column length="23" name="DataNacemento"/>
         </property>
         <property name="sexo" type="java.lang.Character">

@@ -1,6 +1,7 @@
 package POJOS;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -10,7 +11,7 @@ public class Empregado implements java.io.Serializable {
     private String nome;
     private String apelido1;
     private String apelido2;
-    private Date dataNacemento;
+    private LocalDate dataNacemento;
     private Character sexo;
      private String rua;
      private Integer numeroCalle;
@@ -78,11 +79,11 @@ public class Empregado implements java.io.Serializable {
         this.apelido2 = apelido2;
     }
 
-    public Date getDataNacemento() {
+    public LocalDate getDataNacemento() {
         return this.dataNacemento;
     }
 
-    public void setDataNacemento(Date dataNacemento) {
+    public void setDataNacemento(LocalDate dataNacemento) {
         this.dataNacemento = dataNacemento;
     }
 

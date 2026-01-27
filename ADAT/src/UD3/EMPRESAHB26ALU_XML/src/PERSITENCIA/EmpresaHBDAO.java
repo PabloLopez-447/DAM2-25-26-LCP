@@ -5,6 +5,7 @@ import POJOS.Proxecto;
 import Utilidades.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class EmpresaHBDAO {
 
@@ -34,6 +35,19 @@ public class EmpresaHBDAO {
         }catch (HibernateException e){
             throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
         }
+    }
+
+    public static void crearEmpregado(Empregado empregado) {
+        Transaction tx = null;
+        try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
+            tx = sesion.beginTransaction();
+            sesion.save(empregado);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            throw new RuntimeException("No se pudo buscar el empleado en la base de datos", e);
+            }
     }
 
 }
