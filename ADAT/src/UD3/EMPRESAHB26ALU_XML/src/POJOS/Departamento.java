@@ -1,11 +1,15 @@
 package POJOS;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Departamento  implements java.io.Serializable {
 
 
      private int numDepartamento;
-     private String nomeDepartamento;
+     private java.lang.String nomeDepartamento;
+     private Set<String> funciones = new HashSet<>();
     
 
     public Departamento() {
@@ -19,15 +23,21 @@ public class Departamento  implements java.io.Serializable {
         this.numDepartamento = numDepartamento;
     }
 
-    public String getNomeDepartamento() {
+    public java.lang.String getNomeDepartamento() {
         return nomeDepartamento;
     }
 
-    public void setNomeDepartamento(String nomeDepartamento) {
+    public void setNomeDepartamento(java.lang.String nomeDepartamento) {
         this.nomeDepartamento = nomeDepartamento;
     }
 
-   
+    public Set<String> getFunciones() {
+        return funciones;
+    }
+
+    public void setFunciones(Set<String> funciones) {
+        this.funciones = funciones;
+    }
 }
 
 

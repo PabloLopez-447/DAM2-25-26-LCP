@@ -21,18 +21,18 @@ public class EmpresaHBDAO {
     }
 
     public static Proxecto buscarProxecto(int proxecto) {
-    try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
-        return sesion.get(Proxecto.class, proxecto);
-    } catch (HibernateException e) {
-        // Lanzamos un RuntimeException 
-        throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+        try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
+            return sesion.get(Proxecto.class, proxecto);
+        } catch (HibernateException e) {
+            // Lanzamos un RuntimeException
+            throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+        }
     }
-}
 
-    public static Empregado buscarEmpregado(String nss){
-        try (Session sesion = HibernateUtil.getSessionFactory().openSession()){
+    public static Empregado buscarEmpregado(String nss) {
+        try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
             return sesion.get(Empregado.class, nss);
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
         }
     }
@@ -46,8 +46,9 @@ public class EmpresaHBDAO {
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
-            throw new RuntimeException("No se pudo buscar el empleado en la base de datos", e);
+                throw new RuntimeException("No se pudo buscar el empleado en la base de datos", e);
             }
-    }
+        }
 
+    }
 }
