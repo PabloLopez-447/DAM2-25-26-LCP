@@ -1,6 +1,8 @@
 package io.bloques;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
@@ -13,9 +15,9 @@ public class Mundo {
 
     static List<Bloque> bloques = new ArrayList<>();
 
-    public static void dibujarBloques(ShapeRenderer sr) {
+    public static void dibujarBloques(ShapeRenderer sr, SpriteBatch batch, BitmapFont fuente) {
         for (Bloque bloque : bloques) {
-            bloque.dibujar(sr);
+            bloque.dibujar(sr, batch, fuente);
         }
     }
     public static void actualizarBloques(float delta) {
@@ -26,7 +28,7 @@ public class Mundo {
 
     public static void addFilaBloques(){
         for (int i = 0; i < NUM_BLOQUES_X_FILA; i++) {
-            float x = i * (float) ANCHO / NUM_BLOQUES_X_FILA;
+            float x = (i * (float) ANCHO / NUM_BLOQUES_X_FILA);
             bloques.add(new Bloque(x,-120, (float) ANCHO / NUM_BLOQUES_X_FILA, (float) ANCHO / NUM_BLOQUES_X_FILA, 70));
         }
     }

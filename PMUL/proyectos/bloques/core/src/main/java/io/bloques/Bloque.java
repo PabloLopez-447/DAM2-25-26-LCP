@@ -2,6 +2,9 @@ package io.bloques;
 
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -31,10 +34,12 @@ public class Bloque {
     public void setY(float y) {this.y = y;}
     public float getAncho() {return ancho;}
 
-    public void dibujar(ShapeRenderer sr){
-        sr.rect(x, y, ancho, alto);
+    public void dibujar(ShapeRenderer sr, SpriteBatch batch, BitmapFont fuente){
         sr.setColor(Color.RED);
+        sr.rect(x + 0.5f, y + 0.5f, ancho - 1f, alto - 1f);
+        fuente.draw(batch, String.valueOf(numero), x + ancho / 2, y + alto / 2);
     }
+
 
     public void actualizar(float delta){
         y += velocidad*delta;
