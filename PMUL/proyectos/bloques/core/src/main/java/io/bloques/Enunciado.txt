@@ -1,0 +1,13 @@
+6. Juego Bloques
+Realice un juego con las siguientes características:
+
+v1.
+se desplazan continuamente filas de bloques hacia la parte superior
+cada bloque se identifica por un nº aleatorio / por un color
+el objetivo del juego es durar jugando el tiempo máximo posible teniendo en cuenta que:
+si un bloque toca la parte superior, acaba el juego
+los bloques se eliminan seleccionando consecutivamente dos de ellos que compartan el nº/color
+si tocamos un bloque y tocamos el siguiente de distinto nº/color, acaba el juego
+si tocamos en una posición que no hay ningún bloque, se acaba el juego
+en esta primera versión, se empieza jugando con nºs. El cambio a colores se realizará con un huevo de
+pascua que se activará si el primer toque de pantalla se realiza en el primer segundo en la parte superior derecha de la pantalla.
