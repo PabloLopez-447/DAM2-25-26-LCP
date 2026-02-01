@@ -51,6 +51,10 @@ public class Bloque {
         return ancho;
     }
 
+    public float getAlto() {
+        return alto;
+    }
+
     public boolean isSeleccionado() {
         return seleccionado;
     }

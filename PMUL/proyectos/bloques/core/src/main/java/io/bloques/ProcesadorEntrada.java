@@ -32,10 +32,8 @@ public class ProcesadorEntrada extends InputAdapter {
                 }
 
                 if (b != Mundo.getBloque1() && b.getNumero() == Mundo.getBloque1().getNumero()) {
-                    // marcar para eliminar fuera del bucle
                     toRemove.add(b);
                     toRemove.add(Mundo.getBloque1());
-                    // limpiar selección
                     Mundo.getBloque1().setSeleccionado(false);
                     Mundo.setBloque1(null);
                     break;
@@ -43,7 +41,6 @@ public class ProcesadorEntrada extends InputAdapter {
             }
         }
 
-        // eliminar fuera de la iteración para evitar ConcurrentModificationException
         for (Bloque r : toRemove) {
             Mundo.quitarBloque(r);
         }
