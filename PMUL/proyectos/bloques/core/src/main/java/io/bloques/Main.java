@@ -31,6 +31,7 @@ public class Main extends ApplicationAdapter {
         camara.update();
         batch.setProjectionMatrix(camara.combined); // SpriteBatch
         sr.setProjectionMatrix(camara.combined); // ShapeRenderer
+        Gdx.input.setInputProcessor(new ProcesadorEntrada(camara));
     }
 
     @Override
