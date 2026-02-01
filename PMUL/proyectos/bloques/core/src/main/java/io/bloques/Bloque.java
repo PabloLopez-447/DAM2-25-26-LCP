@@ -27,16 +27,8 @@ public class Bloque {
         this.ancho = ancho;
         this.alto = alto;
         this.velocidad = velocidad;
-        this.numero = rnd.nextInt(5);
+        this.numero = rnd.nextInt(5) + 1;
         this.bloque = new Rectangle(x, y, ancho, alto);
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
     }
 
     public float getY() {
@@ -53,10 +45,6 @@ public class Bloque {
 
     public float getAlto() {
         return alto;
-    }
-
-    public boolean isSeleccionado() {
-        return seleccionado;
     }
 
     public void setSeleccionado(boolean seleccionado) {

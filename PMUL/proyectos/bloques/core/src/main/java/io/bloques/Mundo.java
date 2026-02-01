@@ -13,7 +13,7 @@ public class Mundo {
     public static final int ALTO = 480;
     public static final int POSICION_SPAWN_BLOQUES = -120;
     public static final int NUM_BLOQUES_X_FILA = 5;
-    public static final int VELOCIDAD_BLOQUES = 70;
+    public static final int VELOCIDAD_BLOQUES = 40;
 
     static List<Bloque> bloques = new ArrayList<>();
     private static Bloque bloque1;
