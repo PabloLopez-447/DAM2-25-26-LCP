@@ -1,22 +1,22 @@
 package io.bloques;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.badlogic.gdx.utils.Array;
 
 public class Mundo {
     public static final int ANCHO = 640;
-    public static final int ALTO = 480;
+    public static final int ALTO = 800;
     public static final int POSICION_SPAWN_BLOQUES = -120;
     public static final int NUM_BLOQUES_X_FILA = 5;
-    public static final int VELOCIDAD_BLOQUES = 40;
+    public static final int VELOCIDAD_BLOQUES = 50;
 
-    static List<Bloque> bloques = new ArrayList<>();
+    static Array<Bloque> bloques = new Array<>();
     private static Bloque bloque1;
+    public static boolean fin = false;
+
+
 
     public static void dibujarBloques(ShapeRenderer sr, SpriteBatch batch, BitmapFont fuente) {
         for (Bloque bloque : bloques) {
@@ -28,8 +28,7 @@ public class Mundo {
         for (Bloque bloque : bloques) {
             bloque.actualizar(delta);
             if (bloque.getY() + bloque.getAlto() >= ALTO) {
-                System.out.println("Has perdido");
-                Gdx.app.exit();
+                fin();
                 return;
             }
         }
@@ -43,11 +42,15 @@ public class Mundo {
     }
 
     public static boolean filaNueva() {
-        return bloques.get(bloques.size() - 1).getY() > bloques.get(bloques.size() - 1).getAncho() + POSICION_SPAWN_BLOQUES;
+        return bloques.get(bloques.size - 1).getY() > bloques.get(bloques.size - 1).getAncho() + POSICION_SPAWN_BLOQUES;
+    }
+
+    public static void fin(){
+        fin = true;
     }
 
     public static void quitarBloque(Bloque bloque) {
-        bloques.remove(bloque);
+        bloques.removeValue(bloque, true);
     }
 
     public static void setBloque1(Bloque bloque1) {

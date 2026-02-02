@@ -2,9 +2,7 @@ package io.bloques;
 
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.Random;
 
 public class Bloque {
+    final static int N_MAX = 5;
     final static Random rnd = new Random();
     private float x, y;
     private float ancho, alto;
@@ -27,7 +26,7 @@ public class Bloque {
         this.ancho = ancho;
         this.alto = alto;
         this.velocidad = velocidad;
-        this.numero = rnd.nextInt(5) + 1;
+        this.numero = rnd.nextInt(N_MAX) + 1;
         this.bloque = new Rectangle(x, y, ancho, alto);
     }
 
