@@ -6,17 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "EMPREGADO", schema = "dbo", catalog = "EMPRESAHB26")
@@ -35,7 +25,7 @@ public class Empregado implements java.io.Serializable {
 
     @Column(name = "Apelido2", length = 25)
     private String apelido2;
-  //El tipo de dato Date o Calendar hay que añadir @Temporal(javax.persistence.TemporalType.DATE)
+  //El tipo de dato Date o Calendar hay que aï¿½adir @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "DataNacemento", columnDefinition = "DATE") // columnDefinition = "DATE" es opcional, si gueremos que se guarde en bd coomo date
     private LocalDate dataNacemento;   
 
@@ -56,8 +46,13 @@ public class Empregado implements java.io.Serializable {
     @ElementCollection
     @CollectionTable(name = "FAMILIAR", joinColumns = @JoinColumn(name = "NSS_empregado"))
     //@OrderColumn(name = "Numero") //Nota: en anotaciones el indice comienza en 0 y no se puede modificar. 
-    //si queremos que empiece en 1 esta anotación  no se podria y lo generaríamos por código
+    //si queremos que empiece en 1 esta anotaciï¿½n  no se podria y lo generarï¿½amos por cï¿½digo
     private List<Familiar> familiares = new ArrayList();
+
+    @ManyToOne
+    @JoinColumn(name = "NumDepartamento")
+    private Departamento departamento;
+
 
     
 

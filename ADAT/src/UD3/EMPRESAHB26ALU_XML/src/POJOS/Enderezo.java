@@ -1,14 +1,26 @@
+
 package POJOS;
 
-public class Enderezo {
-    private String rua;
-    private Integer numeroCalle;
-    private String piso;
-    private String cp;
-    private String localidade;
-    private String provincia;
 
-    public Enderezo() { }
+public class Enderezo {
+     private String rua;
+     private Integer numeroCalle;
+     private String piso;
+     private String cp;
+     private String localidade;
+     private String provincia;
+
+    public Enderezo() {
+    }
+
+    public Enderezo(String rua, Integer numeroCalle, String piso, String cp, String localidade, String provincia) {
+        this.rua = rua;
+        this.numeroCalle = numeroCalle;
+        this.piso = piso;
+        this.cp = cp;
+        this.localidade = localidade;
+        this.provincia = provincia;
+    }
 
     public String getRua() {
         return rua;
@@ -57,4 +69,5 @@ public class Enderezo {
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
+    
 }

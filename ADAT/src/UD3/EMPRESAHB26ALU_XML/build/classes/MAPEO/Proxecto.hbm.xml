@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="POJOS.Proxecto" table="PROXECTO" schema="dbo" catalog="EMPRESAHB2_25">
+    <class name="POJOS.Proxecto" table="PROXECTO" schema="dbo" catalog="EMPRESAHB26">
         <id name="numProxecto" type="int">
             <column name="NumProxecto" />
             <generator class="increment" />
@@ -14,5 +14,16 @@
         <property name="lugar" type="string">
             <column name="Lugar" length="25" not-null="true" />
         </property>
+        <!-- mapear las fase de proyecto como componente         -->
+        <set name="fases" table="PROXECTOFASE">
+            <key column="NumProxecto"/> 
+            <composite-element class="POJOS.ProxectoFase">
+                <property name="nomeFase" column="NomeFase"/>   
+                <property name="estado" column="Estado"/> 
+            </composite-element>            
+        </set>
+    
+    
+    
     </class>
 </hibernate-mapping>
