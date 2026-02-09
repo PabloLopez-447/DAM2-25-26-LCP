@@ -1,0 +1,15 @@
+Ejercicio: Dedo (v0.9)
+
+Realice un juego con las siguientes características:
+
+el dedo se desplaza verticalmente por el borde izquierdo
+
+dispara un n.º de balas (ajustado en función de num vidas min y max de los enemigos)
+
+los enemigos se desplazan horizontalmente hacia la izquierda con distintos movimientos
+
+hay hiperspacios, visualizados en la barra de información de la parte inferior
+
+múltiples ajustes (ver región Ajustes en clase Mundo)
+
+/TODO pantallas con elección de balas, records, +enemigos, balas atraviesan, ganar hiperspacios, etc.
