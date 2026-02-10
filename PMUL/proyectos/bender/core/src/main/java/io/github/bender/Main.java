@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
  */
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
+    private BitmapFont font;
     private ShapeRenderer sr;
     OrthographicCamera camara = new OrthographicCamera();
 //    private Texture image;
@@ -21,6 +23,8 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
+        font = new BitmapFont();
+        font.getData().setScale(2f);
         camara.setToOrtho(false, Mundo.ANCHO, Mundo.ALTO);
         camara.update();
 //        image = new Texture("libgdx.png");
@@ -41,7 +45,7 @@ public class Main extends ApplicationAdapter {
         sr.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
 //        batch.draw(image, 140, 210);
-        Mundo.dibujar(sr);
+        Mundo.dibujar(sr, font, batch);
         batch.end();
         sr.end();
     }

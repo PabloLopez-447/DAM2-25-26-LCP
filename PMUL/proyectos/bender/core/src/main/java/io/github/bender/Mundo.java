@@ -1,6 +1,8 @@
 package io.github.bender;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,14 +16,16 @@ import java.util.List;
 public class Mundo {
     public static final int ANCHO = 800;
     public static final int ALTO = 600;
-    private static float TIEMPO_MIN_ENTRE_OBJETOS = 2f;
-    private static float TIEMPO_MAX_ENTRE_OBJETOS = 4f;
+    private static float TIEMPO_MIN_ENTRE_OBJETOS = 1f;
+    private static float TIEMPO_MAX_ENTRE_OBJETOS = 2f;
+    private static float TIEMPO_INICIAL = 10f;
+    private static float TIEMPO_BONUS = 5f;
     private static float DIMENSION = 100;
     static Personaje personaje = new Personaje(0, 0, DIMENSION, DIMENSION);
     static Array<Objeto> objetos = new Array<>();
     static int vidas = 3;
     static Rectangle deposito = new Rectangle(ANCHO - DIMENSION, 0, DIMENSION, DIMENSION);
-    public static float TiempoTotalDeJuego, stateTime, stateTimeProximoObjeto;
+    public static float TiempoTotalDeJuego, stateTime, stateTimeProximoObjeto, tiempoRestante = TIEMPO_INICIAL;
 
     public static void creaObjeto() {
         objetos.add(Objeto.creaNuevoObjeto());
@@ -37,6 +41,11 @@ public class Mundo {
     }
 
     public static void actualizar(float delta) {
+        TiempoTotalDeJuego += delta;
+        tiempoRestante -= delta;
+        if (tiempoRestante <= 0) {
+           fin();
+        }
         personaje.actualizar(delta);
         for (int i = 0; i < objetos.size; i++) {
             objetos.get(i).actualizar(delta);
@@ -51,19 +60,26 @@ public class Mundo {
             }
         }
 
-        if (Intersector.overlaps(personaje.pibe, deposito)){
+        if (Intersector.overlaps(personaje.pibe, deposito) && personaje.cargado){
             personaje.cargado = false;
+            tiempoRestante += TIEMPO_BONUS;
         }
 
         if (vidas <= 0) {
-            Gdx.app.exit();
+            fin();
         }
     }
-    public static void dibujar(ShapeRenderer sr) {
+
+    public static void fin(){
+        Gdx.app.exit();
+    }
+    public static void dibujar(ShapeRenderer sr, BitmapFont font, SpriteBatch batch) {
         personaje.dibujar(sr);
         sr.rect(deposito.x, deposito.y, deposito.width, deposito.height);
         for (int i = 0; i < objetos.size; i++) {
             objetos.get(i).dibujar(sr);
         }
+        font.draw(batch, "Tiempo: " + String.valueOf((int)tiempoRestante), 0, ALTO);
+        font.draw(batch, "Vidas: " + String.valueOf(vidas), ANCHO - DIMENSION, ALTO);
     }
 }
