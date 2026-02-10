@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PantallaJuego extends Pantalla {
     boolean spawn = true;
+    float tiempo = 0;
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 mundo = new Vector3(screenX, screenY, 0);
@@ -53,10 +55,10 @@ public class PantallaJuego extends Pantalla {
             juego.irAPantallaFin();
         }
 
-        Mundo.actualizarBloques(Gdx.graphics.getDeltaTime());
+        Mundo.actualizarBloques(delta);
         juego.sr.begin(ShapeRenderer.ShapeType.Line);
         juego.batch.begin();
-        Mundo.dibujarBloques(juego.sr, juego.batch, juego.fuente);
+        Mundo.dibujarBloques(juego.sr, juego.batch, juego.fuente, tiempo+=delta);
         juego.batch.end();
         juego.sr.end();
     }

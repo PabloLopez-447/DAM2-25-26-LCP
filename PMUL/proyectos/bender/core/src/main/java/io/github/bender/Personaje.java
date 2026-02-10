@@ -12,7 +12,7 @@ public class Personaje {
     float ancho;
     float alto;
     float velocidad;
-    Estado estado = Estado.PARADO; // inicializar estado para evitar NPE
+    Estado estado = Estado.PARADO;
     Rectangle pibe;
 
     public Personaje(float x, float y, float ancho, float alto) {
@@ -40,14 +40,8 @@ public class Personaje {
     }
 
     public void dibujar(ShapeRenderer sr){
-        if (sr == null) return; // defensiva: no intentar dibujar si sr es null
         sr.rect(x, y, ancho, alto);
 
-    }
-
-    // Opcional: exponer dispose si en el futuro se agregan Texturas
-    public void dispose() {
-        // ... ninguna resource por ahora
     }
 
 }

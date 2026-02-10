@@ -13,7 +13,6 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private ShapeRenderer sr;
     OrthographicCamera camara = new OrthographicCamera();
-    Personaje personaje;
 //    private Texture image;
 
     @Override
@@ -25,18 +24,20 @@ public class Main extends ApplicationAdapter {
 //        image = new Texture("libgdx.png");
         batch.setProjectionMatrix(camara.combined); // SpriteBatch
         sr.setProjectionMatrix(camara.combined); // ShapeRenderer
-        personaje = new Personaje(0, 0, 100, 100);
-        Gdx.input.setInputProcessor(new ProcesadorEntrada(personaje));
+
+        Gdx.input.setInputProcessor(new ProcesadorEntrada(Mundo.personaje));
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        personaje.actualizar(Gdx.graphics.getDeltaTime());
+
+        Mundo.creaPez();
+
         sr.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
 //        batch.draw(image, 140, 210);
-        personaje.dibujar(sr);
+
         batch.end();
         sr.end();
     }

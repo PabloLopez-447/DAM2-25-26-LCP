@@ -18,10 +18,11 @@ public class Mundo {
 
 
 
-    public static void dibujarBloques(ShapeRenderer sr, SpriteBatch batch, BitmapFont fuente) {
+    public static void dibujarBloques(ShapeRenderer sr, SpriteBatch batch, BitmapFont fuente, float tiempo) {
         for (Bloque bloque : bloques) {
             bloque.dibujar(sr, batch, fuente);
         }
+        fuente.draw(batch, "Tiempo: " + String.valueOf((int)tiempo), 0, ALTO);
     }
 
     public static void actualizarBloques(float delta) {
