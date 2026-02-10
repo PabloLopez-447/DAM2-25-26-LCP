@@ -8,10 +8,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-import static com.badlogic.gdx.math.MathUtils.random;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Mundo {
     public static final int ANCHO = 800;
@@ -21,9 +20,13 @@ public class Mundo {
     private static float TIEMPO_INICIAL = 10f;
     private static float TIEMPO_BONUS = 5f;
     private static float DIMENSION = 100;
+    public static final int VIDAS_INICIALES = 3;
+    static Random random = new Random();
     static Personaje personaje = new Personaje(0, 0, DIMENSION, DIMENSION);
     static Array<Objeto> objetos = new Array<>();
-    static int vidas = 3;
+    static int vidas = VIDAS_INICIALES;
+    static boolean fin = false;
+
     static Rectangle deposito = new Rectangle(ANCHO - DIMENSION, 0, DIMENSION, DIMENSION);
     public static float TiempoTotalDeJuego, stateTime, stateTimeProximoObjeto, tiempoRestante = TIEMPO_INICIAL;
 
@@ -32,8 +35,8 @@ public class Mundo {
         stateTimeProximoObjeto = stateTime + getRandomProximoObjeto();
     }
 
-    public static void eliminar(Objeto objeto){
-        objetos.removeValue(objeto,true);
+    public static void eliminar(Objeto objeto) {
+        objetos.removeValue(objeto, true);
     }
 
     public static float getRandomProximoObjeto() {
@@ -44,7 +47,7 @@ public class Mundo {
         TiempoTotalDeJuego += delta;
         tiempoRestante -= delta;
         if (tiempoRestante <= 0) {
-           fin();
+            fin();
         }
         personaje.actualizar(delta);
         for (int i = 0; i < objetos.size; i++) {
@@ -60,7 +63,7 @@ public class Mundo {
             }
         }
 
-        if (Intersector.overlaps(personaje.pibe, deposito) && personaje.cargado){
+        if (Intersector.overlaps(personaje.pibe, deposito) && personaje.cargado) {
             personaje.cargado = false;
             tiempoRestante += TIEMPO_BONUS;
         }
@@ -70,16 +73,29 @@ public class Mundo {
         }
     }
 
-    public static void fin(){
-        Gdx.app.exit();
+    public static void fin() {
+        fin = true;
     }
+
+    public static void reset() {
+        vidas = VIDAS_INICIALES;
+        personaje.x = 0;
+        personaje.cargado = false;
+        objetos.clear();
+        tiempoRestante = TIEMPO_INICIAL;
+        stateTime = 0;
+        stateTimeProximoObjeto = 0;
+        TiempoTotalDeJuego = 0;
+        fin = false;
+    }
+
     public static void dibujar(ShapeRenderer sr, BitmapFont font, SpriteBatch batch) {
         personaje.dibujar(sr);
         sr.rect(deposito.x, deposito.y, deposito.width, deposito.height);
         for (int i = 0; i < objetos.size; i++) {
             objetos.get(i).dibujar(sr);
         }
-        font.draw(batch, "Tiempo: " + String.valueOf((int)tiempoRestante), 0, ALTO);
+        font.draw(batch, "Tiempo: " + String.valueOf((int) tiempoRestante), 0, ALTO);
         font.draw(batch, "Vidas: " + String.valueOf(vidas), ANCHO - DIMENSION, ALTO);
     }
 }

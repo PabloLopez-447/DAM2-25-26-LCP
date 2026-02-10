@@ -1,6 +1,7 @@
 package io.github.bender;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,11 +13,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
-public class Main extends ApplicationAdapter {
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private ShapeRenderer sr;
+public class Main extends Game {
+    public SpriteBatch batch;
+    public BitmapFont font;
+    public ShapeRenderer sr;
     OrthographicCamera camara = new OrthographicCamera();
+    public static Pantalla[] pantallas = {new PantallaInicio(), new PantallaJuego()};
+
 //    private Texture image;
 
     @Override
@@ -30,24 +33,8 @@ public class Main extends ApplicationAdapter {
 //        image = new Texture("libgdx.png");
         batch.setProjectionMatrix(camara.combined); // SpriteBatch
         sr.setProjectionMatrix(camara.combined); // ShapeRenderer
-
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
-    }
-
-    @Override
-    public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        float delta = Gdx.graphics.getDeltaTime();
-        Mundo.stateTime += delta;
-        if (Mundo.stateTime > Mundo.stateTimeProximoObjeto) Mundo.creaObjeto();
-        Mundo.actualizar(delta);
-
-        sr.begin(ShapeRenderer.ShapeType.Line);
-        batch.begin();
-//        batch.draw(image, 140, 210);
-        Mundo.dibujar(sr, font, batch);
-        batch.end();
-        sr.end();
+        Pantalla.setJuego(this);
+        setScreen(pantallas[0]);
     }
 
     @Override
@@ -64,5 +51,11 @@ public class Main extends ApplicationAdapter {
 //        image.dispose();
     }
 
+    public void irAPantallaInicio(){
+        setScreen(pantallas[0]);
+    }
 
+    public void irAPantallaJuego(){
+        setScreen(pantallas[1]);
+    }
 }
