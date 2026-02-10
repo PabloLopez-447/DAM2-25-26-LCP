@@ -111,6 +111,25 @@
             <key column="NSS"/>
             <many-to-many class="POJOS.Habilidade"  column="IDHABILIDADE"/>
         </set>
+
+        <!--
+       Mapeo das participacións dun empregado/proxecto.
+       inverse="true":
+           - Indica que este SET NON é o lado propietario da relación.
+           - A FK real está na entidade intermedia EMPREGADO_PROXECTO.
+           - Polo tanto, Hibernate NON debe facer INSERT/UPDATE da FK desde aquí.
+       cascade="all-delete-orphan":
+           - cascade="all": Todas las operaciones de persistencia realizadas sobre la Empregado
+            se propagan automáticamente a las entidades asociadas EMPREGADOPROXECTO.
+           - delete-orphan: se se elimina unha participación deste SET,
+             Hibernate elimina a fila correspondente da táboa EMPREGADO_PROXECTO
+             porque queda “orfá” (sen entidade pai).
+       -->
+
+        <set name="proxectos" inverse="true" cascade="all-delete-orphan">
+            <key column="NSSEmpregado"/>
+            <one-to-many class="POJOS.EmpregadoProxecto"/>
+        </set>
     </class>
     
 </hibernate-mapping>

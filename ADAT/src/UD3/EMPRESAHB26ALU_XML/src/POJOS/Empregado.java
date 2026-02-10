@@ -20,32 +20,34 @@ public class Empregado implements java.io.Serializable {
     private Character sexo;
     //Mapeo como componente
     private Enderezo enderezo;
-   //mapeo componente los telefonos
-  private Map<String, String> telefonos = new HashMap();
-  
-  //mapear familiares como colecci�n List
-  private List<Familiar> familiares = new ArrayList();
-  
-  //se guardamos el superivisor de un empleao
+    //mapeo componente los telefonos
+    private Map<String, String> telefonos = new HashMap();
+
+    //mapear familiares como colecci�n List
+    private List<Familiar> familiares = new ArrayList();
+
+    //se guardamos el superivisor de un empleao
     private Empregado supervisor;
     //mapeo de los supervisados que supervisa un empleado supervisor
     private Set<Empregado> supervisados = new HashSet(0);
- //mapeo del departamento que pertenece un empleado
+    //mapeo del departamento que pertenece un empleado
     private Departamento departamento;
     //mapeo de los empreados proyectos 
     private Set<EmpregadoProxecto> empregadoProxectos = new HashSet(0);
-   
-     //mapeo del vehiculo del empleado
+
+    //mapeo del vehiculo del empleado
     private Vehiculo vehiculo;
 
     // Mapear las Habilidadades de los empregdos
-    private Set<Habilidade> habilidades=new HashSet();
+    private Set<Habilidade> habilidades = new HashSet();
 
+    private Set<EmpregadoProxecto> proxectos = new HashSet<>();
 
 
     public Empregado() {
     }
- public Empregado(String nss) {
+
+    public Empregado(String nss) {
         this.nss = nss;
     }
 
@@ -63,7 +65,7 @@ public class Empregado implements java.io.Serializable {
         this.dataNacemento = dataNacemento;
         this.sexo = sexo;
     }
-   
+
 
     public String getNss() {
         return this.nss;
@@ -73,7 +75,6 @@ public class Empregado implements java.io.Serializable {
         this.nss = nss;
     }
 
-    
 
     public String getNome() {
         return this.nome;
@@ -185,5 +186,13 @@ public class Empregado implements java.io.Serializable {
 
     public void setHabilidades(Set<Habilidade> habilidades) {
         this.habilidades = habilidades;
+    }
+
+    public Set<EmpregadoProxecto> getProxectos() {
+        return proxectos;
+    }
+
+    public void setProxectos(Set<EmpregadoProxecto> proxectos) {
+        this.proxectos = proxectos;
     }
 }

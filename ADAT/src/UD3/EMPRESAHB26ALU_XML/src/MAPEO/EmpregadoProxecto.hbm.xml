@@ -15,7 +15,23 @@
          <property name="horas" type="java.lang.Integer">
             <column name="Horas" />
         </property>
-        
-       
+
+        <!--      Lado propietario porque ten a FK.
+        Relacion co empregado:
+        insert="false" e update="false":
+            - A FK xa esta incluida na clave composta (composite-id).
+            - Esta FK esta controlada pola PK composta.
+            - Hibernate non debe facer INSERT nin UPDATE directamente sobre esta columna.
+            - A columna NSS xa se insire ou actualiza a traves do composite-id.
+            - Se non pomos estes atributos, Hibernate tentaria facer dous INSERT
+              sobre a mesma columna: un polo composite-id e outro polo many-to-one,
+              o que provocaria un erro de columna duplicada.
+        -->
+
+        <many-to-one name="empregado" class="POJOS.Empregado" column="NSSEmpregado" insert="false" update="false"/>
+        <!-- Relacion co proxecto -->
+        <many-to-one name="proxecto" class="POJOS.Proxecto" column="NumProxecto" insert="false" update="false"/>
+
+
     </class>
 </hibernate-mapping>
