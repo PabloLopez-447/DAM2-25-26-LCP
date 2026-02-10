@@ -6,37 +6,33 @@ import com.badlogic.gdx.InputAdapter;
 
 public class ProcesadorEntrada extends InputAdapter {
 
-    Personaje personaje;
-
-    public ProcesadorEntrada(Personaje personaje) {
-        this.personaje = personaje;
-    }
-
     @Override
     public boolean keyUp(int keycode) {
-        if (personaje == null) return false;
-        switch (keycode) {
-            case Input.Keys.LEFT:
-            case Input.Keys.RIGHT:
-                personaje.estado = Personaje.Estado.PARADO;
-                Gdx.app.debug("ProcesadorEntrada", "keyUp -> PARADO");
-                break;
+        switch(keycode) {
+            case Input.Keys.D:
+                if(Gdx.input.isKeyPressed(Input.Keys.A))
+                    Mundo.personaje.izquierda();
+                else
+                    Mundo.personaje.parar(); break;
+            case Input.Keys.A:
+                if(Gdx.input.isKeyPressed(Input.Keys.D))
+                    Mundo.personaje.derecha();
+                else
+                    Mundo.personaje.parar(); break;
+            default: return false;
         }
         return true;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (personaje == null) return false;
         switch (keycode) {
-            case Input.Keys.LEFT:
-                personaje.estado = Personaje.Estado.IZQUIERDA;
-                Gdx.app.debug("ProcesadorEntrada", "keyDown -> IZQUIERDA");
+            case Input.Keys.A:
+                Mundo.personaje.estado = Personaje.Estado.IZQUIERDA;
                 break;
 
-            case Input.Keys.RIGHT:
-                personaje.estado = Personaje.Estado.DERECHA;
-                Gdx.app.debug("ProcesadorEntrada", "keyDown -> DERECHA");
+            case Input.Keys.D:
+                Mundo.personaje.estado = Personaje.Estado.DERECHA;
                 break;
         }
         return true;

@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
+ */
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private ShapeRenderer sr;
@@ -25,19 +27,21 @@ public class Main extends ApplicationAdapter {
         batch.setProjectionMatrix(camara.combined); // SpriteBatch
         sr.setProjectionMatrix(camara.combined); // ShapeRenderer
 
-        Gdx.input.setInputProcessor(new ProcesadorEntrada(Mundo.personaje));
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-
-        Mundo.creaPez();
+        float delta = Gdx.graphics.getDeltaTime();
+        Mundo.stateTime += delta;
+        if (Mundo.stateTime > Mundo.stateTimeProximoObjeto) Mundo.creaObjeto();
+        Mundo.actualizar(delta);
 
         sr.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
 //        batch.draw(image, 140, 210);
-
+        Mundo.dibujar(sr);
         batch.end();
         sr.end();
     }
