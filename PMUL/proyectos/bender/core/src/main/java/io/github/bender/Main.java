@@ -1,14 +1,12 @@
 package io.github.bender;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
@@ -18,6 +16,7 @@ public class Main extends Game {
     public BitmapFont font;
     public ShapeRenderer sr;
     OrthographicCamera camara = new OrthographicCamera();
+    Preferences prefs;
     public static Pantalla[] pantallas = {new PantallaInicio(), new PantallaJuego()};
 
 //    private Texture image;
@@ -35,6 +34,7 @@ public class Main extends Game {
         sr.setProjectionMatrix(camara.combined); // ShapeRenderer
         Pantalla.setJuego(this);
         setScreen(pantallas[0]);
+        prefs = Gdx.app.getPreferences("Bender");
     }
 
     @Override

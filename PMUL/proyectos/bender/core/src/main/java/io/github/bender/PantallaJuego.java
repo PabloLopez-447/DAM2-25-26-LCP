@@ -54,7 +54,13 @@ public class PantallaJuego extends Pantalla {
         juego.batch.end();
         juego.sr.end();
 
-        if (Mundo.fin) juego.irAPantallaInicio();
+        if (Mundo.fin) {
+            if (juego.prefs.getFloat("Tiempo") < Mundo.TiempoTotalDeJuego){
+                juego.prefs.putFloat("Tiempo", Mundo.TiempoTotalDeJuego);
+                juego.prefs.flush();
+            }
+            juego.irAPantallaInicio();
+        }
     }
 
     @Override

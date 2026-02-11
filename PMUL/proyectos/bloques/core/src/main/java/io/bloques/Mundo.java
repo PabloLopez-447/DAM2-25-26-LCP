@@ -11,7 +11,6 @@ public class Mundo {
     public static final int POSICION_SPAWN_BLOQUES = -120;
     public static final int NUM_BLOQUES_X_FILA = 5;
     public static final int VELOCIDAD_BLOQUES = 50;
-
     static Array<Bloque> bloques = new Array<>();
     private static Bloque bloque1;
     public static boolean fin = false;

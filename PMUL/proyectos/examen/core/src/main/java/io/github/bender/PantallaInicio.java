@@ -3,17 +3,15 @@ package io.github.bender;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PantallaInicio extends Pantalla {
 
-    Texture imagen;
 
     @Override
     public void render(float delta) {
-        juego.batch.begin();
-        juego.batch.draw(imagen, 0, 0, Mundo.ANCHO, Mundo.ALTO);
-        juego.font.draw(juego.batch, String.valueOf((int) juego.prefs.getFloat("Tiempo")), Mundo.ANCHO / 2f, Mundo.ALTO / 2f);
-        juego.batch.end();
+        ScreenUtils.clear(0, 0, 0, 1f);
+
     }
 
     @Override
@@ -32,11 +30,6 @@ public class PantallaInicio extends Pantalla {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
-        imagen = new Texture("Titulo.png");
-    }
 
-    @Override
-    public void dispose() {
-        if (imagen != null) imagen.dispose();
     }
 }
