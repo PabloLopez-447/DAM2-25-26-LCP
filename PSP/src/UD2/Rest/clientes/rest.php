@@ -38,22 +38,35 @@ if ($verbo == 'GET') {
         }
     }
 } else if ($verbo == 'POST') {
-    // Manejar las peticiones POST
-    $stringDatosCabecera = file_get_contents('php://input', true); // leer los datos enviados en el cuerpo de la petición
-    parse_str($stringDatosCabecera, $datos); // convertir la cadena en un array asociativo
-    //print_r($datos); // mostrar los datos recibidos (aquí iría la lógica para insertar en la base de datos)
-    $nombre = $datos['nombre'];
-    $codProvincia = $datos['codProvincia'];
-    $vip = $datos['vip'];
-    //TODO validar los datos recibidos
+    if ($rutas[0] == 'clientes') {
+        // Manejar las peticiones POST
+        $stringDatosCabecera = file_get_contents('php://input', true); // leer los datos enviados en el cuerpo de la petición
+        parse_str($stringDatosCabecera, $datos); // convertir la cadena en un array asociativo
+        //print_r($datos); // mostrar los datos recibidos (aquí iría la lógica para insertar en la base de datos)
+        $nombre = $datos['nombre'];
+        $codProvincia = $datos['codProvincia'];
+        $vip = $datos['vip'];
+        //TODO validar los datos recibidos
 
-    $con->insertarCliente($nombre, $codProvincia, $vip);
-    if (true) {
-        http_response_code(201); // Recurso creado
-        exit;
-    } else {
-        http_response_code(422); // Bad Request
-        exit;
+        if ($con->insertarCliente($nombre, $codProvincia, $vip)) {
+            http_response_code(201); // Recurso creado
+            exit;
+        } else {
+            http_response_code(422); // Bad Request
+            exit;
+        }
+    }
+    if ($rutas[0] == 'provincias') {
+        $stringDatosCabecera = file_get_contents('php://input', true); // leer los datos enviados en el cuerpo de la petición
+        parse_str($stringDatosCabecera, $datos); // convertir la cadena en un array asociativo
+        $nombre = $datos['nombre'];
+        if ($con->insertarProvincia($nombre)) {
+            http_response_code(201); // Recurso creado
+            exit;
+        } else {
+            http_response_code(422); // Bad Request
+            exit;
+        }
     }
 } else {
     http_response_code(405); // Método no permitido

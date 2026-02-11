@@ -1,0 +1,49 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="InformeResumenGimnasio" language="java" columnCount="1" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1b2c3d4-e001-4aaa-bbbb-000000000001">
+	<parameter name="NOMBRE_GIMNASIO" class="java.lang.String"/>
+	<parameter name="TITULO_INFORME" class="java.lang.String"/>
+	<field name="item" class="java.lang.String"/>
+	<field name="valor" class="java.lang.Object"/>
+	<title height="100" splitType="Stretch">
+		<element kind="image" uuid="5c01d5df-cb95-4a49-8671-087567b4bd03" stretchType="NoStretch" x="0" y="0" width="80" height="80"/>
+		<element kind="textField" uuid="0d684e10-18ab-474e-ad5e-46bd337894a0" stretchType="NoStretch" x="90" y="0" width="465" height="30" fontSize="18.0" bold="true">
+			<expression><![CDATA[$P{NOMBRE_GIMNASIO}]]></expression>
+		</element>
+		<element kind="textField" uuid="f1abc877-f7b4-42bc-a9a1-f9f6144ad76e" stretchType="NoStretch" x="90" y="35" width="465" height="25" fontSize="14.0" bold="true">
+			<expression><![CDATA[$P{TITULO_INFORME}]]></expression>
+		</element>
+		<element kind="textField" uuid="13882746-943f-4d92-ae24-c5595ad60099" stretchType="NoStretch" x="90" y="65" width="200" height="20" pattern="dd/MM/yyyy HH:mm">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+	</title>
+	<columnHeader height="25" splitType="Stretch">
+		<element kind="staticText" uuid="f41aed12-0d50-4e22-8af9-6c6dfeb21d2c" stretchType="NoStretch" x="0" y="0" width="300" height="25" bold="true">
+			<text><![CDATA[Item]]></text>
+			<box>
+				<pen lineWidth="1.0"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f52d1d31-6a5d-4302-ad0e-6cca2630c844" stretchType="NoStretch" x="300" y="0" width="255" height="25" bold="true">
+			<text><![CDATA[Valor]]></text>
+			<box>
+				<pen lineWidth="1.0"/>
+			</box>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<element kind="textField" uuid="c0761540-d52e-4e52-b05d-90ae06e7839e" stretchType="NoStretch" x="0" y="0" width="300" height="25">
+				<expression><![CDATA[$F{item}]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="aaf3f010-82e3-40e9-9792-430e0951d468" stretchType="NoStretch" x="300" y="0" width="255" height="25">
+				<expression><![CDATA[String.valueOf($F{valor})]]></expression>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+</jasperReport>

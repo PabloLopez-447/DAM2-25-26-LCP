@@ -28,10 +28,16 @@ class Conexion extends PDO
         return $stmt->fetchObject(); // o $stmt->fetch(PDO::FETCH_OBJ);
     }
 
-    function insertarCliente($nombre, $codProvincia, $vip) {
+    function insertarCliente($nombre, $codProvincia, $vip): bool {
         $sql = "insert into clientes (nombre, codProvincia, vip) values (?, ?, ?)";
         $stmt = $this->prepare($sql);
-        $stmt->execute([$nombre, $codProvincia, $vip]);
+        return $stmt->execute([$nombre, $codProvincia, $vip]);
+    }
+
+    function insertarProvincia($nombre): bool {
+        $sql = "insert into provincias (nombre) values (?)";
+        $stmt = $this->prepare($sql);
+        return $stmt->execute([$nombre]);
     }
 }
 
