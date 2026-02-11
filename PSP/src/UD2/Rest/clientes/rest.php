@@ -48,7 +48,8 @@ if ($verbo == 'GET') {
         $vip = $datos['vip'];
         //TODO validar los datos recibidos
 
-        if ($con->insertarCliente($nombre, $codProvincia, $vip)) {
+        if (($codCliente = $con->insertarCliente($nombre, $codProvincia, $vip)) != null) {
+            echo json_encode(['id'=>$codCliente]);
             http_response_code(201); // Recurso creado
             exit;
         } else {
@@ -60,7 +61,8 @@ if ($verbo == 'GET') {
         $stringDatosCabecera = file_get_contents('php://input', true); // leer los datos enviados en el cuerpo de la petición
         parse_str($stringDatosCabecera, $datos); // convertir la cadena en un array asociativo
         $nombre = $datos['nombre'];
-        if ($con->insertarProvincia($nombre)) {
+        if (($codProvincia = $con->insertarProvincia($nombre)) != null) {
+            echo json_encode(['id'=>$codProvincia]);
             http_response_code(201); // Recurso creado
             exit;
         } else {

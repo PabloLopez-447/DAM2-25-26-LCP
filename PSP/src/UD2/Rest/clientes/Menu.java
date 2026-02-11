@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;
+import org.json.JSONObject;
 
 public class Menu {
     static Scanner scanner = new Scanner(System.in);
@@ -16,6 +17,7 @@ public class Menu {
     public static void main(String[] args) {
         displayMenu();
         int choice = scanner.nextInt();
+        scanner.nextLine();
 
         do {
             switch (choice) {
@@ -24,15 +26,17 @@ public class Menu {
                     break;
 
                 case 2:
-                    String nombreProvincia = scanner.nextLine();
-                    insertProvincia(nombreProvincia);
+                    String nombreProvincia;
+                    System.out.println("Insertar nombre de la provincia:");
+                    nombreProvincia = scanner.nextLine();
+                    int codProvincia = insertProvincia(nombreProvincia);
+                    String nombre;
                     System.out.println("Insertar nombre del cliente:");
-                    String nombre = scanner.nextLine();
+                    nombre = scanner.nextLine();
                     do {
-                        inserCliente(nombre, 0, false); // el 0 deberia ser el código de la provincia
-                        
+                        inserCliente(nombre, codProvincia, false);
                     } while (!nombre.isEmpty());
-                    
+
                     break;
                 default:
                     break;
@@ -50,7 +54,8 @@ public class Menu {
         System.out.print("Please select an option: ");
     }
 
-    public static void insertProvincia(String nombreProvincia) {
+    public static int insertProvincia(String nombreProvincia) {
+        String json = "";
         try {
             String parametros = "nombre=" + URLEncoder.encode(nombreProvincia, "UTF-8");
             String strURL = "http://localhost/clientes/rest.php/provincias";
@@ -63,21 +68,30 @@ public class Menu {
             out.close();
 
             con.connect();
-            if (con.getResponseCode() == 201)
-                System.out.printf("Provincia insertada");
-            else
+            if (con.getResponseCode() == 201) {
+                BufferedReader bufferIn = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String linea;
+                while ((linea = bufferIn.readLine()) != null)
+                    json += linea;
+                bufferIn.close();
+                System.out.println("Inserción correcta");
+                JSONObject object = new JSONObject(json);
+                return object.getInt("id");
+            } else
                 System.out.println("Problemas.Respuesta: (" + con.getResponseCode() + ") " + con.getResponseMessage());
+            return -1;
         } catch (IOException ex) {
             System.out.println("Error en la conexión");
         }
+        return -1;
     }
 
-    public static void inserCliente(String nombre, int codProvincia, boolean vip) {
+    public static int inserCliente(String nombre, int codProvincia, boolean vip) {
+        String json = "";
         try {
-            String parametros =
-                    "nombre=" + URLEncoder.encode(nombre, "UTF-8") +
-                            "&codProvincia=" + codProvincia +
-                            "&vip=" + (vip ? 1 : 0);
+            String parametros = "nombre=" + URLEncoder.encode(nombre, "UTF-8") +
+                    "&codProvincia=" + codProvincia +
+                    "&vip=" + (vip ? 1 : 0);
 
             String strURL = "http://localhost/clientes/rest.php/clientes";
             url = new URL(strURL);
@@ -92,15 +106,26 @@ public class Menu {
 
             con.connect();
             if (con.getResponseCode() == 201) {
-                /* Si en la inserción devolvemos un JSON con la clave generada, aquí deberíamos
-                recuperar el JSON y analizarlo para obtenerla por si la necesitamos */
+                /*
+                 * Si en la inserción devolvemos un JSON con la clave generada, aquí deberíamos
+                 * recuperar el JSON y analizarlo para obtenerla por si la necesitamos
+                 */
+                BufferedReader bufferIn = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String linea;
+                while ((linea = bufferIn.readLine()) != null)
+                    json += linea;
+                bufferIn.close();
                 System.out.println("Inserción correcta");
+                JSONObject object = new JSONObject(json);
+                return object.getInt("id");
             } else {
                 System.out.println("Problemas.Respuesta: (" + con.getResponseCode() + ") " + con.getResponseMessage());
+                return -1;
             }
         } catch (IOException ex) {
             System.out.println("Error en la conexión");
         }
+        return -1;
     }
 
     public static void getClientes() {
