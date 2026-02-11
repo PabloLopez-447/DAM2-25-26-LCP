@@ -1,4 +1,4 @@
-package io.github.bender;
+package io.github.examen;
 
 public class Mundo {
     public static final int ANCHO = 640;

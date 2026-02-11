@@ -1,4 +1,4 @@
-package io.github.bender;
+package io.github.dedo;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;

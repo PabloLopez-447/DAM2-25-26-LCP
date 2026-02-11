@@ -1,8 +1,7 @@
-package io.github.bender;
+package io.github.dedo;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PantallaInicio extends Pantalla {
@@ -11,7 +10,9 @@ public class PantallaInicio extends Pantalla {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1f);
-
+        juego.batch.begin();
+        juego.font.draw(juego.batch, "Record: " + juego.prefs.getInteger("puntos", 0), Mundo.ANCHO / 2f, Mundo.ALTO / 2f);
+        juego.batch.end();
     }
 
     @Override
@@ -30,6 +31,5 @@ public class PantallaInicio extends Pantalla {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
-
     }
 }

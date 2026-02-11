@@ -1,4 +1,4 @@
-package io.github.bender;
+package io.github.examen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -29,9 +29,9 @@ public class Main extends Game {
         camara.update();
         batch.setProjectionMatrix(camara.combined);
         sr.setProjectionMatrix(camara.combined);
+        prefs = Gdx.app.getPreferences("Examen");
         Pantalla.setJuego(this);
         setScreen(pantallas[0]);
-        prefs = Gdx.app.getPreferences("Examen");
     }
 
     @Override
@@ -55,3 +55,4 @@ public class Main extends Game {
         setScreen(pantallas[1]);
     }
 }
+

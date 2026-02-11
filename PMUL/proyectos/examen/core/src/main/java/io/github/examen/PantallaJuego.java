@@ -1,4 +1,4 @@
-package io.github.bender;
+package io.github.examen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
