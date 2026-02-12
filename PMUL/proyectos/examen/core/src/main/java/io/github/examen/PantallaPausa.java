@@ -2,25 +2,17 @@ package io.github.examen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class PantallaInicio extends Pantalla {
+public class PantallaPausa extends Pantalla {
 
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1f);
-        int valor = juego.prefs.getInteger("Record" + (int) Mundo.TIEMPO_INICIAL, -1);
-        String str = "Record para " + (int) Mundo.TIEMPO_INICIAL + " s: " + valor;
         juego.batch.begin();
-        if (valor > 0) {
-            juego.font.draw(juego.batch, str, Mundo.ANCHO / 2f, Mundo.ALTO / 2f);
-        } else {
-            juego.font.draw(juego.batch, "SIN RECORD PARA " + (int) Mundo.TIEMPO_INICIAL + " s", Mundo.ANCHO / 2f, Mundo.ALTO / 2f);
-        }
-
-        juego.font.draw(juego.batch, "Pulsa J para jugar", Mundo.ANCHO / 2f, Mundo.ALTO / 2f - 100);
+        juego.font.draw(juego.batch, "PAUSA", Mundo.ANCHO / 2f, Mundo.ALTO / 2f);
+        juego.font.draw(juego.batch, "Pulsa J para reanudar", Mundo.ANCHO / 2f, Mundo.ALTO / 2f - 100);
         juego.font.draw(juego.batch, "Pulsa Esc para salir", Mundo.ANCHO / 2f, Mundo.ALTO / 2f - 200);
         juego.batch.end();
     }
@@ -29,11 +21,9 @@ public class PantallaInicio extends Pantalla {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.J:
+                Mundo.pausar();
                 juego.irAPantallaJuego();
                 return true;
-            case Input.Keys.R:
-                juego.prefs.clear();
-                break;
             case Input.Keys.ESCAPE:
                 Gdx.app.exit();
                 return true;
