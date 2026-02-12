@@ -1,0 +1,1 @@
+/opt/odoo/odoo-env/bin/python3 /opt/odoo/odoo/odoo-bin scaffold nombredelmodulo /opt/odoo/odoo/addons
