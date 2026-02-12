@@ -17,14 +17,13 @@ public class Main extends Game {
     public ShapeRenderer sr;
     OrthographicCamera camara = new OrthographicCamera();
     Preferences prefs;
-    public static Pantalla[] pantallas = {new PantallaInicio(), new PantallaJuego()};
+    public static Pantalla[] pantallas = {new PantallaInicio(), new PantallaJuego(), new PantallaPausa()};
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
         font = new BitmapFont();
-        font.getData().setScale(2f);
         camara.setToOrtho(false, Mundo.ANCHO, Mundo.ALTO);
         camara.update();
         batch.setProjectionMatrix(camara.combined);
@@ -47,12 +46,16 @@ public class Main extends Game {
         batch.dispose();
     }
 
-    public void irAPantallaInicio(){
+    public void irAPantallaInicio() {
         setScreen(pantallas[0]);
     }
 
-    public void irAPantallaJuego(){
+    public void irAPantallaJuego() {
         setScreen(pantallas[1]);
+    }
+
+    public void irApantallaPausa() {
+        setScreen(pantallas[2]);
     }
 }
 
