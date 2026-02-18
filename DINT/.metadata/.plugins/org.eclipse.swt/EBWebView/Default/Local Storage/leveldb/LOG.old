@@ -1,3 +1,2 @@
-2025/11/12-10:57:18.880 7d0 Reusing MANIFEST D:\plopecous\DAM2-25-26-LCP\DINT\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2025/11/12-10:57:18.886 7d0 Recovering log #3
-2025/11/12-10:57:18.887 7d0 Reusing old log D:\plopecous\DAM2-25-26-LCP\DINT\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/000003.log 
+2026/02/18-18:28:20.362 4920 Creating DB D:\Datos\DAM\DAM2-25-26-LCP\DINT\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb since it was missing.
+2026/02/18-18:28:20.790 4920 Reusing MANIFEST D:\Datos\DAM\DAM2-25-26-LCP\DINT\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001

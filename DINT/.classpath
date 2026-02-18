@@ -6,9 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="//lapaman/alumnos/plopecous/mis_documentos_windows/descargas/okhttp-3.14.9.jar"/>
-	<classpathentry kind="lib" path="//lapaman/alumnos/plopecous/mis_documentos_windows/descargas/okio-1.17.6.jar"/>
-	<classpathentry kind="lib" path="//lapaman/alumnos/plopecous/mis_documentos_windows/descargas/json-20250517.jar"/>
 	<classpathentry kind="lib" path="CustomRadioButton.jar"/>
 	<classpathentry kind="lib" path="MobileJList.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.4.jar"/>
@@ -22,9 +19,9 @@
 	<classpathentry kind="lib" path="lib/jasperreports-fonts-7.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-pdf-7.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-j-8.0.31 (1).jar"/>
 	<classpathentry kind="lib" path="lib/openpdf-1.3.32.jar"/>
 	<classpathentry kind="lib" path="lib/stax2-api-4.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/woodstox-core-6.2.8.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-j-8.0.31.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

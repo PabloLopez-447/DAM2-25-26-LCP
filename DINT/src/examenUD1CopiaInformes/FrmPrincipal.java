@@ -32,6 +32,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -66,6 +69,8 @@ public class FrmPrincipal extends JFrame {
 	private JMenuItem mntmNewMenuItem;
 	private JMenuItem mntmNewMenuItem_1;
 	private JMenuItem mntmNewMenuItem_2;
+	private JButton btnVerHistorial;
+	private JButton btnDescargarHistorial;
 
 	/**
 	 * Launch the application.
@@ -191,6 +196,7 @@ public class FrmPrincipal extends JFrame {
 				textHistorial.setText(textHistorial.getText() + "\n" + user.toString());
 				comboBox.setSelectedIndex(-1);
 				combrobarBotonesEntraSale();
+				registrarMovimiento(user.getDni(),"ENTRADA");
 			}
 		});
 		btnEntra.setEnabled(false);
@@ -217,6 +223,7 @@ public class FrmPrincipal extends JFrame {
 				textHistorial.setText(textHistorial.getText() + "\n" + user.toString());
 				comboBox.setSelectedIndex(-1);
 				combrobarBotonesEntraSale();
+				registrarMovimiento(user.getDni(),"SALIDA");
 			}
 		});
 		btnSale.setEnabled(false);
@@ -280,9 +287,9 @@ public class FrmPrincipal extends JFrame {
 		contentPane.add(panelDer);
 		GridBagLayout gbl_panelDer = new GridBagLayout();
 		gbl_panelDer.columnWidths = new int[] { 0, 0 };
-		gbl_panelDer.rowHeights = new int[] { 0, 0, 0 };
+		gbl_panelDer.rowHeights = new int[] { 0, 0, 0, 0, 0 };
 		gbl_panelDer.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panelDer.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panelDer.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panelDer.setLayout(gbl_panelDer);
 
 		textHistorial = new JTextArea();
@@ -300,11 +307,37 @@ public class FrmPrincipal extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_btnLimpiarHistorial = new GridBagConstraints();
+		gbc_btnLimpiarHistorial.insets = new Insets(0, 0, 5, 0);
 		gbc_btnLimpiarHistorial.anchor = GridBagConstraints.NORTH;
 		gbc_btnLimpiarHistorial.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnLimpiarHistorial.gridx = 0;
 		gbc_btnLimpiarHistorial.gridy = 1;
 		panelDer.add(btnLimpiarHistorial, gbc_btnLimpiarHistorial);
+		
+		btnVerHistorial = new JButton("Ver Historial");
+		btnVerHistorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generarReporteHistorialVer();
+			}
+		});
+		GridBagConstraints gbc_btnVerHistorial = new GridBagConstraints();
+		gbc_btnVerHistorial.insets = new Insets(0, 0, 5, 0);
+		gbc_btnVerHistorial.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnVerHistorial.gridx = 0;
+		gbc_btnVerHistorial.gridy = 2;
+		panelDer.add(btnVerHistorial, gbc_btnVerHistorial);
+		
+		btnDescargarHistorial = new JButton("Descargar Historial");
+		btnDescargarHistorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generarReporteHistorialDescargar();
+			}
+		});
+		GridBagConstraints gbc_btnDescargarHistorial = new GridBagConstraints();
+		gbc_btnDescargarHistorial.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnDescargarHistorial.gridx = 0;
+		gbc_btnDescargarHistorial.gridy = 3;
+		panelDer.add(btnDescargarHistorial, gbc_btnDescargarHistorial);
 
 	}
 
@@ -325,6 +358,76 @@ public class FrmPrincipal extends JFrame {
 			btnSale.setEnabled(false);
 		}
 
+	}
+	
+	private void registrarMovimiento(String dni, String tipo){
+
+	    try{
+	    	 String url = "jdbc:mysql://localhost:3306/gym";
+	         String username = "root";
+	         String password = "";
+
+	         Connection con = DriverManager.getConnection(url, username, password);
+
+	        String sql = "INSERT INTO movimientos (dni,tipo) VALUES (?,?)";
+
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, dni);
+	        ps.setString(2, tipo);
+
+	        ps.executeUpdate();
+
+	    }catch(Exception e){
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void generarReporteHistorialVer() {
+	    try {
+	        File jasperFile = new File("src\\examenUD1CopiaInformes\\InformeHistorial.jrxml");
+	        JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
+
+	        String url = "jdbc:mysql://localhost:3306/gym";   
+	        String username = "root";                                      
+	        String password = "";                                  
+	        Connection conn = DriverManager.getConnection(url, username, password);
+
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+
+	       
+	        JasperViewer view1 = new JasperViewer(jasperPrint, false);
+	        view1.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+	        view1.setVisible(true);
+
+	        conn.close();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void generarReporteHistorialDescargar() {
+
+	    try {
+	        File jasperFile = new File("src\\examenUD1CopiaInformes\\InformeHistorial.jrxml");
+	        JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
+
+	        String url = "jdbc:mysql://localhost:3306/gym";   
+	        String username = "root";                                      
+	        String password = "";                                  
+	        Connection conn = DriverManager.getConnection(url, username, password);
+
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+
+	        JasperExportManager.exportReportToPdfFile(jasperPrint, "HistorialGimnasio.pdf");
+
+	        System.out.println("Reporte generado correctamente.");
+
+	        conn.close();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 }

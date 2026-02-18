@@ -20,6 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 
@@ -257,6 +260,27 @@ public class DlgRegistro extends JDialog {
 		nombre = textNombre.getText();
 		apellidos = textApellidos.getText();
 		edad = Integer.valueOf(textEdad.getText());
+		
+	    try{
+	    	 String url = "jdbc:mysql://localhost:3306/gym";
+	         String username = "root";
+	         String password = "";
+
+	         Connection con = DriverManager.getConnection(url, username, password);
+
+	        String sql = "INSERT INTO usuarios (dni,nombre,apellidos,edad) VALUES (?,?,?,?)";
+
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, dni);
+	        ps.setString(2, nombre);
+	        ps.setString(3, apellidos);
+	        ps.setInt(4, edad);
+
+	        ps.executeUpdate();
+
+	    }catch(Exception e){
+	        e.printStackTrace();
+	    }
 
 		return new Usuario(dni, nombre, apellidos, edad);
 
