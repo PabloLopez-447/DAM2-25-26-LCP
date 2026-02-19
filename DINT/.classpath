@@ -23,5 +23,6 @@
 	<classpathentry kind="lib" path="lib/stax2-api-4.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/woodstox-core-6.2.8.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-j-8.0.31.jar"/>
+	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

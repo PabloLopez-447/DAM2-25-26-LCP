@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ayuda - Control de Acceso Gimnasio</title>
+
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 25px;
+    background-color: #f5f5f5;
+}
+
+h1{
+    color:#2c3e50;
+}
+
+h2{
+    color:#34495e;
+    border-bottom: 2px solid #cccccc;
+    padding-bottom:5px;
+}
+
+.caja{
+    background:white;
+    padding:15px;
+    margin-bottom:20px;
+    border-radius:8px;
+    box-shadow:0px 0px 5px rgba(0,0,0,0.2);
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Ayuda — Aplicación Control de Acceso</h1>
+
+<p>
+Esta aplicación permite gestionar la entrada y salida de usuarios
+en el gimnasio y consultar su historial de accesos.
+</p>
+
+<!-- COMPONENTE 1 -->
+<div class="caja">
+<h2>1. Selector de Usuario (ComboBox)</h2>
+
+<p>
+El desplegable de usuarios permite seleccionar la persona sobre la que
+se realizará una acción.
+</p>
+
+<ul>
+<li>Muestra todos los usuarios registrados.</li>
+<li>Debe seleccionarse un usuario antes de pulsar cualquier botón.</li>
+<li>Activa automáticamente los botones disponibles.</li>
+</ul>
+</div>
+
+<!-- COMPONENTE 2 -->
+<div class="caja">
+<h2>2. Botón "Entra"</h2>
+
+<p>
+Registra la entrada del usuario seleccionado al gimnasio.
+</p>
+
+<ul>
+<li>Añade al usuario a la lista de personas dentro.</li>
+<li>Guarda el movimiento en la base de datos.</li>
+<li>Actualiza el historial automáticamente.</li>
+</ul>
+</div>
+
+<!-- COMPONENTE 3 -->
+<div class="caja">
+<h2>3. Botón "Sale"</h2>
+
+<p>
+Registra la salida del usuario del gimnasio.
+</p>
+
+<ul>
+<li>Elimina al usuario de la lista de personas dentro.</li>
+<li>Registra una salida en la base de datos.</li>
+<li>Actualiza el historial mostrado.</li>
+</ul>
+</div>
+
+<!-- COMPONENTE 4 -->
+<div class="caja">
+<h2>4. Panel de Historial</h2>
+
+<p>
+El historial muestra todos los movimientos realizados durante la sesión.
+</p>
+
+<ul>
+<li>Se añaden automáticamente entradas y salidas.</li>
+<li>Puede limpiarse usando el botón "Limpiar historial".</li>
+<li>Permite generar informes en PDF.</li>
+</ul>
+</div>
+
+<hr>
+
+<p><b>Consejo:</b> Pulse la tecla <b>F1</b> en cualquier momento para abrir esta ayuda.</p>
+
+</body>
+</html>

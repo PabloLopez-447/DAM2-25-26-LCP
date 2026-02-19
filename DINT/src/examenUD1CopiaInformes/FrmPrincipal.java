@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.help.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
@@ -32,6 +33,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -71,6 +74,8 @@ public class FrmPrincipal extends JFrame {
 	private JMenuItem mntmNewMenuItem_2;
 	private JButton btnVerHistorial;
 	private JButton btnDescargarHistorial;
+	private JButton btnVerFicha;
+	private JButton btnDescargarFicha;
 
 	/**
 	 * Launch the application.
@@ -159,9 +164,9 @@ public class FrmPrincipal extends JFrame {
 		panelzq.add(panelControlAcceso, gbc_panelControlAcceso);
 		GridBagLayout gbl_panelControlAcceso = new GridBagLayout();
 		gbl_panelControlAcceso.columnWidths = new int[] { 0, 0, 0 };
-		gbl_panelControlAcceso.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_panelControlAcceso.rowHeights = new int[] { 0, 0, 0, 0, 0 };
 		gbl_panelControlAcceso.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_panelControlAcceso.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panelControlAcceso.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panelControlAcceso.setLayout(gbl_panelControlAcceso);
 
 		comboBox = new JComboBox<>();
@@ -196,7 +201,7 @@ public class FrmPrincipal extends JFrame {
 				textHistorial.setText(textHistorial.getText() + "\n" + user.toString());
 				comboBox.setSelectedIndex(-1);
 				combrobarBotonesEntraSale();
-				registrarMovimiento(user.getDni(),"ENTRADA");
+				registrarMovimiento(user.getDni(), "ENTRADA");
 			}
 		});
 		btnEntra.setEnabled(false);
@@ -223,7 +228,7 @@ public class FrmPrincipal extends JFrame {
 				textHistorial.setText(textHistorial.getText() + "\n" + user.toString());
 				comboBox.setSelectedIndex(-1);
 				combrobarBotonesEntraSale();
-				registrarMovimiento(user.getDni(),"SALIDA");
+				registrarMovimiento(user.getDni(), "SALIDA");
 			}
 		});
 		btnSale.setEnabled(false);
@@ -245,12 +250,39 @@ public class FrmPrincipal extends JFrame {
 //generarReporte();
 			}
 		});
+
+		btnVerFicha = new JButton("Ver Ficha");
+		btnVerFicha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario user = (Usuario) comboBox.getSelectedItem();
+				generarReporteFichaVer(user.getDni());
+			}
+		});
+		GridBagConstraints gbc_btnVerFicha = new GridBagConstraints();
+		gbc_btnVerFicha.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnVerFicha.insets = new Insets(0, 0, 5, 5);
+		gbc_btnVerFicha.gridx = 0;
+		gbc_btnVerFicha.gridy = 2;
+		panelControlAcceso.add(btnVerFicha, gbc_btnVerFicha);
+
+		btnDescargarFicha = new JButton("Descargar Ficha");
+		btnDescargarFicha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario user = (Usuario) comboBox.getSelectedItem();
+				generarReporteFichaDescargar(user.getDni());
+			}
+		});
+		GridBagConstraints gbc_btnDescargarFicha = new GridBagConstraints();
+		gbc_btnDescargarFicha.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnDescargarFicha.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDescargarFicha.gridx = 1;
+		gbc_btnDescargarFicha.gridy = 2;
+		panelControlAcceso.add(btnDescargarFicha, gbc_btnDescargarFicha);
 		GridBagConstraints gbc_btnReporte = new GridBagConstraints();
 		gbc_btnReporte.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnReporte.gridwidth = 2;
-		gbc_btnReporte.insets = new Insets(0, 0, 0, 5);
 		gbc_btnReporte.gridx = 0;
-		gbc_btnReporte.gridy = 2;
+		gbc_btnReporte.gridy = 3;
 		panelControlAcceso.add(btnReporte, gbc_btnReporte);
 
 		btnRegistro = new JButton("Registro");
@@ -313,7 +345,7 @@ public class FrmPrincipal extends JFrame {
 		gbc_btnLimpiarHistorial.gridx = 0;
 		gbc_btnLimpiarHistorial.gridy = 1;
 		panelDer.add(btnLimpiarHistorial, gbc_btnLimpiarHistorial);
-		
+
 		btnVerHistorial = new JButton("Ver Historial");
 		btnVerHistorial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -326,7 +358,7 @@ public class FrmPrincipal extends JFrame {
 		gbc_btnVerHistorial.gridx = 0;
 		gbc_btnVerHistorial.gridy = 2;
 		panelDer.add(btnVerHistorial, gbc_btnVerHistorial);
-		
+
 		btnDescargarHistorial = new JButton("Descargar Historial");
 		btnDescargarHistorial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -338,6 +370,8 @@ public class FrmPrincipal extends JFrame {
 		gbc_btnDescargarHistorial.gridx = 0;
 		gbc_btnDescargarHistorial.gridy = 3;
 		panelDer.add(btnDescargarHistorial, gbc_btnDescargarHistorial);
+		
+		generateHelp();
 
 	}
 
@@ -346,9 +380,13 @@ public class FrmPrincipal extends JFrame {
 		if (comboBox.getSelectedIndex() == -1) {
 			btnEntra.setEnabled(false);
 			btnSale.setEnabled(false);
+			btnVerFicha.setEnabled(false);
+			btnDescargarFicha.setEnabled(false);
 			return;
 		}
 		Usuario user = (Usuario) comboBox.getSelectedItem();
+		btnVerFicha.setEnabled(true);
+		btnDescargarFicha.setEnabled(true);
 
 		if (user.isDentro()) {
 			btnEntra.setEnabled(false);
@@ -359,75 +397,149 @@ public class FrmPrincipal extends JFrame {
 		}
 
 	}
-	
-	private void registrarMovimiento(String dni, String tipo){
 
-	    try{
-	    	 String url = "jdbc:mysql://localhost:3306/gym";
-	         String username = "root";
-	         String password = "";
+	private void registrarMovimiento(String dni, String tipo) {
 
-	         Connection con = DriverManager.getConnection(url, username, password);
+		try {
+			String url = "jdbc:mysql://localhost:3306/gym";
+			String username = "root";
+			String password = "";
 
-	        String sql = "INSERT INTO movimientos (dni,tipo) VALUES (?,?)";
+			Connection con = DriverManager.getConnection(url, username, password);
 
-	        PreparedStatement ps = con.prepareStatement(sql);
-	        ps.setString(1, dni);
-	        ps.setString(2, tipo);
+			String sql = "INSERT INTO movimientos (dni,tipo) VALUES (?,?)";
 
-	        ps.executeUpdate();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, dni);
+			ps.setString(2, tipo);
 
-	    }catch(Exception e){
-	        e.printStackTrace();
-	    }
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void generarReporteHistorialVer() {
-	    try {
-	        File jasperFile = new File("src\\examenUD1CopiaInformes\\InformeHistorial.jrxml");
-	        JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
+		try {
+			File jasperFile = new File("src\\examenUD1CopiaInformes\\InformeHistorial.jrxml");
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
 
-	        String url = "jdbc:mysql://localhost:3306/gym";   
-	        String username = "root";                                      
-	        String password = "";                                  
-	        Connection conn = DriverManager.getConnection(url, username, password);
+			String url = "jdbc:mysql://localhost:3306/gym";
+			String username = "root";
+			String password = "";
+			Connection conn = DriverManager.getConnection(url, username, password);
 
-	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
 
-	       
-	        JasperViewer view1 = new JasperViewer(jasperPrint, false);
-	        view1.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-	        view1.setVisible(true);
+			JasperViewer view1 = new JasperViewer(jasperPrint, false);
+			view1.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+			view1.setVisible(true);
 
-	        conn.close();
+			conn.close();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void generarReporteHistorialDescargar() {
 
-	    try {
-	        File jasperFile = new File("src\\examenUD1CopiaInformes\\InformeHistorial.jrxml");
-	        JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
+		try {
+			File jasperFile = new File("src\\examenUD1CopiaInformes\\InformeHistorial.jrxml");
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
 
-	        String url = "jdbc:mysql://localhost:3306/gym";   
-	        String username = "root";                                      
-	        String password = "";                                  
-	        Connection conn = DriverManager.getConnection(url, username, password);
+			String url = "jdbc:mysql://localhost:3306/gym";
+			String username = "root";
+			String password = "";
+			Connection conn = DriverManager.getConnection(url, username, password);
 
-	        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
 
-	        JasperExportManager.exportReportToPdfFile(jasperPrint, "HistorialGimnasio.pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "HistorialGimnasio.pdf");
 
-	        System.out.println("Reporte generado correctamente.");
+			System.out.println("Reporte generado correctamente.");
 
-	        conn.close();
+			conn.close();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void generarReporteFichaVer(String dni) {
+		try {
+			File jasperFile = new File("src\\examenUD1CopiaInformes\\FichaUsuario.jrxml");
+
+			String url = "jdbc:mysql://localhost:3306/gym";
+			String username = "root";
+			String password = "";
+			Connection conn = DriverManager.getConnection(url, username, password);
+
+			Map<String, Object> params = new HashMap<>();
+			params.put("dniUsuario", dni);
+
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
+
+			JasperViewer view1 = new JasperViewer(jasperPrint, false);
+			view1.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+			view1.setVisible(true);
+
+			conn.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void generarReporteFichaDescargar(String dni) {
+
+		try {
+			File jasperFile = new File("src\\examenUD1CopiaInformes\\FichaUsuario.jrxml");
+
+			String url = "jdbc:mysql://localhost:3306/gym";
+			String username = "root";
+			String password = "";
+			Connection conn = DriverManager.getConnection(url, username, password);
+
+			Map<String, Object> params = new HashMap<>();
+			params.put("dniUsuario", dni);
+
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile.getAbsolutePath());
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
+
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "FichaUsuario.pdf");
+
+			System.out.println("Reporte generado correctamente.");
+
+			conn.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void generateHelp() {
+		try {
+			File fichero = new File("resources" + File.separator + "helpset.hs");
+			URL hsURL = fichero.toURI().toURL();
+			HelpSet hs = new HelpSet(getClass().getClassLoader(), hsURL);
+			HelpBroker hb = hs.createHelpBroker();
+			// Se lanza la ayuda al pulsar al botón.
+//			hb.enableHelpOnButton(help, "intro", hs);
+//			hb.enableHelpOnButton(hLimpiar, "limpiar", hs);
+//			hb.enableHelpOnButton(hregistrar, "registrar", hs);
+//			hb.enableHelpOnButton(hmenu, "menu", hs);
+			// F1 general (por defecto) - Panel principal
+			hb.enableHelpKey(getRootPane(), "intro", hs);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HelpSetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
