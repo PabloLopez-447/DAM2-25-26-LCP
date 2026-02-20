@@ -1,0 +1,207 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="InformeGlobal" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c6f9db8c-6184-44fe-b386-98b94277d35e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<dataset name="DatasetExamen" uuid="c78a8eb3-2e39-426b-8fbd-35896547e88d">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+		<query language="sql"><![CDATA[]]></query>
+	</dataset>
+	<query language="sql"><![CDATA[SELECT 
+    a.dni AS alumno_dni,
+    a.nombre AS alumno_nombre,
+    a.apellidos AS alumno_apellidos,
+    c.id AS curso_id,
+    c.nombre AS curso_nombre,
+    c.num_total_sesiones AS curso_num_total_sesiones,
+    ca.nota_ev1 AS nota_ev1,
+    ca.nota_ev2 AS nota_ev2,
+    ca.nota_ev3 AS nota_ev3,
+    ca.faltas AS faltas
+ 
+FROM alumnos a
+JOIN curso_alumno ca ON a.dni = ca.dni_alumno
+JOIN cursos c ON ca.id_curso = c.id
+ORDER BY c.nombre, a.apellidos, a.nombre
+]]></query>
+	<field name="alumno_dni" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dni"/>
+		<property name="com.jaspersoft.studio.field.label" value="alumno_dni"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alumnos"/>
+	</field>
+	<field name="alumno_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="alumno_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alumnos"/>
+	</field>
+	<field name="alumno_apellidos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="apellidos"/>
+		<property name="com.jaspersoft.studio.field.label" value="alumno_apellidos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alumnos"/>
+	</field>
+	<field name="curso_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="curso_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cursos"/>
+	</field>
+	<field name="curso_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="curso_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cursos"/>
+	</field>
+	<field name="curso_num_total_sesiones" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="num_total_sesiones"/>
+		<property name="com.jaspersoft.studio.field.label" value="curso_num_total_sesiones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cursos"/>
+	</field>
+	<field name="nota_ev1" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nota_ev1"/>
+		<property name="com.jaspersoft.studio.field.label" value="nota_ev1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<field name="nota_ev2" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nota_ev2"/>
+		<property name="com.jaspersoft.studio.field.label" value="nota_ev2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<field name="nota_ev3" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nota_ev3"/>
+		<property name="com.jaspersoft.studio.field.label" value="nota_ev3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<field name="faltas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="faltas"/>
+		<property name="com.jaspersoft.studio.field.label" value="faltas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<variable name="curso_id1" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{curso_id}]]></expression>
+	</variable>
+	<variable name="alumno_dni1" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{alumno_dni}]]></expression>
+	</variable>
+	<variable name="curso_id2" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{curso_id}]]></expression>
+	</variable>
+	<variable name="nota_ev11" calculation="Average" class="java.lang.Integer">
+		<expression><![CDATA[$F{nota_ev1}]]></expression>
+	</variable>
+	<variable name="nota_ev21" calculation="Average" class="java.lang.Integer">
+		<expression><![CDATA[$F{nota_ev2}]]></expression>
+	</variable>
+	<variable name="nota_ev31" calculation="Average" class="java.lang.Integer">
+		<expression><![CDATA[$F{nota_ev3}]]></expression>
+	</variable>
+	<variable name="faltas1" calculation="Average" class="java.lang.Integer">
+		<expression><![CDATA[$F{faltas}]]></expression>
+	</variable>
+	<variable name="faltas2" calculation="Highest" class="java.lang.Integer">
+		<expression><![CDATA[$F{faltas}]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<pageHeader height="191" splitType="Stretch">
+		<element kind="staticText" uuid="9c8e295d-3237-473e-acbb-dcf5d0808292" x="201" y="84" width="188" height="30">
+			<text><![CDATA[Concello		Marín]]></text>
+			<box>
+				<topPen lineStyle="Solid"/>
+				<leftPen lineStyle="Solid"/>
+				<bottomPen lineStyle="Solid"/>
+				<rightPen lineStyle="Solid"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="94b658dd-68b0-4f95-a7e6-4f731c110db2" x="201" y="115" width="188" height="30">
+			<text><![CDATA[Cod.Postal	36911]]></text>
+			<box>
+				<topPen lineStyle="Solid"/>
+				<leftPen lineStyle="Solid"/>
+				<bottomPen lineStyle="Solid"/>
+				<rightPen lineStyle="Solid"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="fe94eaa3-6210-4bb1-97fc-bda2bcd77185" x="200" y="24" width="189" height="30">
+			<text><![CDATA[Enderezo	Rúa Chan do Monte]]></text>
+			<box>
+				<topPen lineStyle="Solid"/>
+				<leftPen lineStyle="Solid"/>
+				<bottomPen lineStyle="Solid"/>
+				<rightPen lineStyle="Solid"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="25c27332-f70a-4bd2-9953-82d0147a497f" x="199" y="54" width="188" height="30">
+			<text><![CDATA[Localidade	Mogor (San Xurxo)]]></text>
+			<box>
+				<topPen lineStyle="Solid"/>
+				<leftPen lineStyle="Solid"/>
+				<bottomPen lineStyle="Solid"/>
+				<rightPen lineStyle="Solid"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="abdbb8c5-79c2-4c54-b91e-4e23bff4fe58" x="202" y="146" width="189" height="30">
+			<text><![CDATA[Provincia	Pontevedra]]></text>
+			<box>
+				<topPen lineStyle="Solid"/>
+				<leftPen lineStyle="Solid"/>
+				<bottomPen lineStyle="Solid"/>
+				<rightPen lineStyle="Solid"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="68fcafd3-ca27-479d-a4f7-247a77b46f6e" x="11" y="58" width="140" height="30">
+			<text><![CDATA[Nome	IES Chan do Monte]]></text>
+		</element>
+		<element kind="staticText" uuid="c412d7e7-ff22-4182-b243-05defc182b9d" x="10" y="24" width="130" height="30">
+			<text><![CDATA[Código centro	36015159 ]]></text>
+		</element>
+		<element kind="staticText" uuid="d8e1233d-63cc-439f-a729-4e7ea83299e1" x="10" y="120" width="140" height="30">
+			<text><![CDATA[Teléfono		886151275]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader height="45" splitType="Stretch">
+		<element kind="staticText" uuid="cb34139f-e64b-4e24-a52c-80b3c168af36" mode="Opaque" x="0" y="10" width="554" height="31" backcolor="#E33734" fontSize="18.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[INFORME GLOBAL]]></text>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+	</columnHeader>
+	<summary height="162" splitType="Stretch">
+		<element kind="staticText" uuid="c231bde7-3a18-44b9-adfa-c7eb06a48430" x="170" y="0" width="121" height="24" hTextAlign="Left">
+			<text><![CDATA[Numero total de cursos]]></text>
+		</element>
+		<element kind="staticText" uuid="583f47a8-c60b-4da1-bdbf-c3109cf451ef" x="170" y="24" width="121" height="24" hTextAlign="Left">
+			<text><![CDATA[Numero total de alumnos]]></text>
+		</element>
+		<element kind="staticText" uuid="e497040f-e171-43a4-93dd-ca704659ff6f" x="170" y="48" width="121" height="24" hTextAlign="Left">
+			<text><![CDATA[Nota media EV1]]></text>
+		</element>
+		<element kind="staticText" uuid="27031628-00a7-4eed-9638-7e5f57d2cb3b" x="170" y="72" width="121" height="24" hTextAlign="Left">
+			<text><![CDATA[Nota media EV2]]></text>
+		</element>
+		<element kind="staticText" uuid="a43d78ef-8ab2-46f4-88e6-e088cc327c36" x="170" y="94" width="121" height="24" hTextAlign="Left">
+			<text><![CDATA[Nota media EV3]]></text>
+		</element>
+		<element kind="staticText" uuid="5bbbad3a-06da-4ea9-8c9b-d36d81c13782" x="170" y="114" width="121" height="24" hTextAlign="Left">
+			<text><![CDATA[Numero de faltas media]]></text>
+		</element>
+		<element kind="staticText" uuid="1321be88-1c88-41c0-bec5-b8d0a69895d6" x="170" y="138" width="121" height="24" hTextAlign="Left">
+			<text><![CDATA[Nº de faltas máximo]]></text>
+		</element>
+		<element kind="textField" uuid="5ceee408-e960-4b96-ad82-a3ab621f7890" x="291" y="24" width="100" height="24" hTextAlign="Left">
+			<expression><![CDATA[$V{alumno_dni1}]]></expression>
+		</element>
+		<element kind="textField" uuid="df298420-836d-4bf5-a05b-e6e8466c4af1" x="291" y="0" width="100" height="24" hTextAlign="Left">
+			<expression><![CDATA[$V{curso_id2}]]></expression>
+		</element>
+		<element kind="textField" uuid="bd60ddc7-3974-45f8-bb0c-88e42ef9265a" x="291" y="48" width="100" height="24" hTextAlign="Left">
+			<expression><![CDATA[$V{nota_ev11}]]></expression>
+		</element>
+		<element kind="textField" uuid="c6da2f8b-8ca6-4028-b650-b310125dd33e" x="291" y="72" width="100" height="24" hTextAlign="Left">
+			<expression><![CDATA[$V{nota_ev21}]]></expression>
+		</element>
+		<element kind="textField" uuid="ee1df992-2639-48d5-9399-e92e5e54c95d" x="291" y="96" width="100" height="22" hTextAlign="Left">
+			<expression><![CDATA[$V{nota_ev31}]]></expression>
+		</element>
+		<element kind="textField" uuid="2dae47c1-e58d-4b79-aa26-11c2d0bc6570" x="291" y="118" width="100" height="20" hTextAlign="Left">
+			<expression><![CDATA[$V{faltas1}]]></expression>
+		</element>
+		<element kind="textField" uuid="b0438aa3-8872-4b57-af9e-d6835ae30b4f" x="291" y="138" width="100" height="24" hTextAlign="Left">
+			<expression><![CDATA[$V{faltas2}]]></expression>
+		</element>
+	</summary>
+</jasperReport>

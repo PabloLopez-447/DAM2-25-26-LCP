@@ -120,8 +120,7 @@ public class DlgReporte extends JDialog {
 			params.put("TITULO_INFORME", "Informe resumen de actividad");
 
 			// -------- CARGA INFORME --------
-			JasperReport report = JasperCompileManager
-					.compileReport("src\\examenUD1CopiaInformes\\Gym.jrxml");
+			JasperReport report = JasperCompileManager.compileReport("src\\examenUD1CopiaInformes\\Gym.jrxml");
 
 			JasperPrint print = JasperFillManager.fillReport(report, params, dataSource);
 

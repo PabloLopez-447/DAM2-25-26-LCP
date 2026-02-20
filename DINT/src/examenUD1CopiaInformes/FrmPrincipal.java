@@ -370,7 +370,7 @@ public class FrmPrincipal extends JFrame {
 		gbc_btnDescargarHistorial.gridx = 0;
 		gbc_btnDescargarHistorial.gridy = 3;
 		panelDer.add(btnDescargarHistorial, gbc_btnDescargarHistorial);
-		
+
 		generateHelp();
 
 	}
