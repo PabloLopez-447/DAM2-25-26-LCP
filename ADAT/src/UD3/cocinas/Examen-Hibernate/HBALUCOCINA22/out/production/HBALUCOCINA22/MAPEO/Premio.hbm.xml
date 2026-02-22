@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-mar-2016 19:35:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="COCINAHB22" name="POJOS.Premio" schema="dbo" table="PREMIO">
+    <id name="idPremio" type="int">
+      <column name="IDPREMIO"/>
+      <generator class="increment"/>
+    </id>
+    <property name="nomePremio" type="string">
+      <column length="50" name="PREMIO" not-null="true"/>
+    </property>
+    <property name="ano" type="int">
+      <column length="15" name="ANHO"/>
+    </property>
+    <many-to-one class="POJOS.Cocinero" name="cocinero" fetch="select">
+        <column name="CODCOCINERO"/>
+    </many-to-one>
+   </class>
+</hibernate-mapping>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- mapeo cocineros examen hb -->
+<hibernate-mapping>
+    <class catalog="COCINAHB22" name="POJOS.Cocinero" schema="dbo" table="COCINERO">
+        <id name="codigo" type="int">
+            <column name="CODIGO"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="nombre" type="string">
+            <column length="50" name="NOMBRE" not-null="true"/>
+        </property>
+        <property name="apellido1" type="string">
+            <column length="50" name="APELLIDO1" not-null="true"/>
+        </property>
+        <property name="apellido2" type="string">
+            <column length="50" name="APELLIDO2"/>
+        </property>
+        <property name="sexo" type="java.lang.Character">
+            <column length="1" name="SEXO"/>
+        </property>
+        <property name="apodo" type="string" unique="true">
+            <column length="35" name="APODO"/>
+        </property>      
+    </class>
+</hibernate-mapping>

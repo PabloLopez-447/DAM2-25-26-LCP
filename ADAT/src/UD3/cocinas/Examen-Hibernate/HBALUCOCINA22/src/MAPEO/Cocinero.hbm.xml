@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- mapeo cocineros examen hb -->
+<hibernate-mapping>
+    <class catalog="COCINAHB22" name="POJOS.Cocinero" schema="dbo" table="COCINERO">
+        <id name="codigo" type="int">
+            <column name="CODIGO"/>
+            <generator class="increment"/>
+        </id>
+        <property name="nombre" type="string">
+            <column length="50" name="NOMBRE" not-null="true"/>
+        </property>
+        <property name="apellido1" type="string">
+            <column length="50" name="APELLIDO1" not-null="true"/>
+        </property>
+        <property name="apellido2" type="string">
+            <column length="50" name="APELLIDO2"/>
+        </property>
+        <property name="sexo" type="java.lang.Character">
+            <column length="1" name="SEXO"/>
+        </property>
+        <property name="apodo" type="string" unique="true">
+            <column length="35" name="APODO"/>
+        </property>
+
+        <set name="premios" fetch="select" inverse="true">
+            <key column="CODCOCINERO"/>
+            <one-to-many class="POJOS.Premio"/>
+        </set>
+
+        <set name="recetas" fetch="select" cascade="all-delete-orphan" inverse="true">
+            <key column="CODCOCINERO"/>
+            <one-to-many class="POJOS.Receta"/>
+        </set>
+
+        <one-to-one class="POJOS.Contactococinero" name="contactococinero"/>
+
+        <list name="restaurantes" table="RESTAURANTE">
+            <key>
+                <column name="CODCOCINERO"/>
+            </key>
+            <list-index base="1" column="NUMERO"/>
+            <composite-element class="POJOS.Restaurante">
+                <property name="nombrerestaurante" column="NOMBRERESTAURANTE" length="50"/>
+                <property name="tenedores" column="TENEDORES" length="100"/>
+                <property name="localidad" column="LOCALIDAD" length="100"/>
+            </composite-element>
+        </list>
+    </class>
+</hibernate-mapping>
