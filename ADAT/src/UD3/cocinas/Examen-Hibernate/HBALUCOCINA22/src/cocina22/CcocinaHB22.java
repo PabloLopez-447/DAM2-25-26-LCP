@@ -33,28 +33,28 @@ public class CcocinaHB22 {
         sesion.close();
 //
         //1 DATOS Y EXEC DEL METODO:
-//        Cocinero cocineroBien = new Cocinero("Pablo", "Lopez", "Couso", 'H', "Manin");
-//        Contactococinero contacto = new Contactococinero("pablo@dominio.com", "211222333", "333222211");
+        Cocinero cocineroBien = new Cocinero("Eve", "Marie", "Nazare", 'H', "espoa");
+        Contactococinero contacto = new Contactococinero("eve@dominio.com", "212322333", "333232211");
 //
-//        ArrayList<Premio> premios = new ArrayList<>();
+        ArrayList<Premio> premios = new ArrayList<>();
 //        Premio p1 = new Premio ("CUCHILLO PLATINO", 2020); //Repetido
-//        Premio p2 = new Premio ("CUCHILLO PLATINO", 2025); //Nuevo
+        Premio p2 = new Premio ("CUCHILLO PLATINO", 2025); //Nuevo
 //        premios.add(p1);
-//        premios.add(p2);
+        premios.add(p2);
 //
         CocinaDAO dao = new CocinaDAO();
-//        dao.insertarCocineroPremioContacto(cocineroBien, premios, contacto);
-//        System.out.println("-----------");
+        dao.insertarCocineroPremioContacto(cocineroBien, premios, contacto);
+        System.out.println("-----------");
 
         // 3 BORRAR RECETA MOSTRANDO INFO AUTOR
 //        System.out.println("\n----------METODO 3----------");
 //        dao.borrarReceta(14);
 //        dao.borrarReceta(300);
 
-        // 4 MOSTRAR DUEÑO DADO UN RESTAURANTE
-        System.out.println("\n----------METODO 4----------");
-        dao.mostrarDueño("Casa Xian");
-        dao.mostrarDueño("incorrecto");
+//        // 4 MOSTRAR DUEÑO DADO UN RESTAURANTE
+//        System.out.println("\n----------METODO 4----------");
+//        dao.mostrarDueño("Casa Xian");
+//        dao.mostrarDueño("incorrecto");
     }
     
 }

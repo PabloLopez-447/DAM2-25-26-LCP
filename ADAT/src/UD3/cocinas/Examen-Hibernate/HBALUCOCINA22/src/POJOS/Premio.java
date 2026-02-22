@@ -1,5 +1,7 @@
 package POJOS;
 
+import java.util.Objects;
+
 public class Premio implements java.io.Serializable {
     private int idPremio;
     private String nomePremio;
@@ -45,4 +47,17 @@ public class Premio implements java.io.Serializable {
     public void setCocinero(Cocinero cocinero) {
         this.cocinero = cocinero;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Premio premio)) return false;
+        return ano == premio.ano && Objects.equals(nomePremio, premio.nomePremio);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nomePremio, ano);
+    }
 }
+
+
