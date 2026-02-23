@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!--Pablo López Couso DNI:77550221V-->
+<!-- Generated 17 mar. 2024 15:28:42 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOS.Producto" table="PRODUCTO" schema="dbo" catalog="HBPASTELERIA26" >
+       <id name="codigo" type="int">
+            <column name="Codigo" />
+           <generator class="identity" /> <!-- codigo generado por hibernate-->
+        </id>
+     <property name="nome" type="string" unique="true"> <!-- nombre unico -->
+            <column name="Nome" length="30" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="Descripcion" length="100" />
+        </property>
+        <property name="precio" type="float">
+            <column name="Precio" />
+        </property>
+        <property name="categoria" type="string">
+            <column name="Categoria" length="25" />
+        </property>
+
+        <!-- mapeo pastelerias -->
+        <set name="pastelerias" table="PASTELERIAPRODUCTO">
+            <key column="codproducto"/>
+            <many-to-many class="POJOS.Pasteleria" column="codpasteleria"/>
+        </set>
+    </class>
+</hibernate-mapping>
