@@ -1,4 +1,4 @@
-package UD2.Rest.clientes;
+package UD2.Rest.instituto;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,56 +11,70 @@ import java.util.Scanner;
 import org.json.JSONObject;
 
 public class Menu {
-    static Scanner scanner = new Scanner(System.in);
 
     static URL url = null;
     static HttpURLConnection con = null;
 
     public static void main(String[] args) {
         displayMenu();
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = new Scanner(System.in).nextInt();
 
         do {
             switch (choice) {
                 case 1:
-                    getClientes();
+                    String nombreCurso;
+                    int aforo;
+                    System.out.println("Insertar nombre del curso:");
+                    nombreCurso = new Scanner(System.in).nextLine();
+                    System.out.println("Insertar el aforo del curso:");
+                    aforo = new Scanner(System.in).nextInt();
+                    int codCurso = insertCurso(nombreCurso, aforo);
+                    String nombreAlumno;
+                    int alumnosInsertados = 0;
+                    System.out.println("Insertar nombre del alumno:");
+                    do {
+                        nombreAlumno = new Scanner(System.in).nextLine();
+                        insertAlumno(nombreAlumno, codCurso);
+                        alumnosInsertados++;
+                        System.out.println("Insertar nombre del alumno:");
+                    } while (!nombreAlumno.isEmpty() || alumnosInsertados < aforo);
+
                     break;
 
                 case 2:
-                    String nombreProvincia;
-                    System.out.println("Insertar nombre de la provincia:");
-                    nombreProvincia = scanner.nextLine();
-                    int codProvincia = insertProvincia(nombreProvincia);
-                    String nombre;
-                    System.out.println("Insertar nombre del cliente:");
-                    nombre = scanner.nextLine();
-                    do {
-                        inserCliente(nombre, codProvincia, false);
-                    } while (!nombre.isEmpty());
-
+                    System.out.println("Inserta nombre del curso para ver los alumnos");
+                    nombreCurso = new Scanner(System.in).nextLine();
+                    getAlumnosPorCurso(nombreCurso);
                     break;
+
+                case 3:
+                    System.out.println("Inserta nombre del curso para borrar");
+                    nombreCurso = new Scanner(System.in).nextLine();
+                    borrarCurso(nombreCurso);
+                    break;
+
                 default:
                     break;
             }
             displayMenu();
-            choice = scanner.nextInt();
-        } while (choice != 3);
+            choice = new Scanner(System.in).nextInt();
+        } while (choice != 4);
     }
 
     public static void displayMenu() {
         System.out.println("Menu:");
-        System.out.println("1. GET Clientes");
-        System.out.println("2. POST Provincia");
-        System.out.println("3. Exit");
-        System.out.print("Please select an option: ");
+        System.out.println("1. Insertar Curso");
+        System.out.println("2. Ver alumnos");
+        System.out.println("3. Borrar Curso");
+        System.out.println("4. Exit");
+        System.out.print("Selecciona una opcion: ");
     }
 
-    public static int insertProvincia(String nombreProvincia) {
+    public static int insertCurso(String nombreCurso, int aforo) {
         String json = "";
         try {
-            String parametros = "nombre=" + URLEncoder.encode(nombreProvincia, "UTF-8");
-            String strURL = "http://localhost/clientes/rest.php/provincias";
+            String parametros = "nombre=" + URLEncoder.encode(nombreCurso, "UTF-8") + "&aforo=" + aforo;
+            String strURL = "http://localhost/instituto/index.php/cursos";
             url = new URL(strURL);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -88,14 +102,16 @@ public class Menu {
         return -1;
     }
 
-    public static int inserCliente(String nombre, int codProvincia, boolean vip) {
+    public static int insertAlumno(String nombre, int idCurso) {
         String json = "";
+        if (nombre.isEmpty()) {
+            return -1;
+        }
         try {
             String parametros = "nombre=" + URLEncoder.encode(nombre, "UTF-8") +
-                    "&codProvincia=" + codProvincia +
-                    "&vip=" + (vip ? 1 : 0);
+                    "&idCurso=" + idCurso;
 
-            String strURL = "http://localhost/clientes/rest.php/clientes";
+            String strURL = "http://localhost/instituto/index.php/alumnos";
             url = new URL(strURL);
             con = (HttpURLConnection) url.openConnection();
 
@@ -130,10 +146,10 @@ public class Menu {
         return -1;
     }
 
-    public static void getClientes() {
+    public static void getAlumnosPorCurso(String nombreCurso) {
         try {
             String json = "";
-            String strURL = "http://localhost/clientes/rest.php/clientes";
+            String strURL = "http://localhost/instituto/index.php/alumnos/" + nombreCurso;
             url = new URL(strURL);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -145,6 +161,24 @@ public class Menu {
                     json += linea;
                 bufferIn.close();
                 System.out.println(json);
+            } else {
+                System.out.println("Problemas.Respuesta: (" + con.getResponseCode() + ") " + con.getResponseMessage());
+            }
+        } catch (IOException ex) {
+            System.out.println("Error en la conexión");
+        }
+    }
+
+    public static void borrarCurso(String nombreCurso) {
+        try {
+
+            String strURL = "http://localhost/instituto/index.php/cursos/" + nombreCurso;
+            url = new URL(strURL);
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("DELETE");
+            con.connect();
+            if (con.getResponseCode() == 204) {
+                System.out.println("Se borro el curso: " + nombreCurso);
             } else {
                 System.out.println("Problemas.Respuesta: (" + con.getResponseCode() + ") " + con.getResponseMessage());
             }
